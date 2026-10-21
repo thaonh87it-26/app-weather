@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thời tiết 10 ngày tới</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2f86c9">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+/* ===== CSS: phần "lớp sơn" - màu sắc và bố cục ===== */
+:root{--chu:#12303f;--chinh:#0f5f8c;--nang:#e08a00;--kinh:rgba(255,255,255,.84)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--chu);font-family:system-ui,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.3}
+.bg{position:fixed;inset:0;z-index:-1}
+.bg svg{width:100%;height:100%;display:block}
+main{max-width:720px;margin:0 auto;padding:8px 8px 16px}
+h1{margin:2px 4px 6px;font-size:19px;color:#fff;text-shadow:0 1px 5px #0007}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.phai{max-width:46%;text-align:right}
+.ban{font-size:10px;line-height:1.25;color:#fff;text-shadow:0 1px 3px #0008;margin-top:3px}
+.co{display:flex;gap:6px;justify-content:flex-end;margin-top:4px}
+.co button{padding:0;border:2px solid transparent;border-radius:5px;background:none;line-height:0;cursor:pointer;opacity:.65}
+.co button.on{border-color:#fff;opacity:1}
+.co svg{width:26px;height:17px;display:block;border-radius:2px}
+.tabs{display:flex;gap:5px;margin:0 0 6px;overflow-x:auto;padding-bottom:2px}
+.tabs button{padding:4px 10px;border:0;border-radius:999px;background:rgba(255,255,255,.6);color:var(--chu);font:inherit;font-size:13px;font-weight:600;white-space:nowrap;cursor:pointer}
+.tabs button.on{background:var(--chu);color:#fff}
+.tabs button:focus-visible,.co button:focus-visible{outline:2px solid var(--nang);outline-offset:1px}
+.tabs button span{margin-left:5px;opacity:.7}
+.tabs .them{background:transparent;border:1px dashed #fff;color:#fff;text-shadow:0 1px 3px #0007}
+.box{background:var(--kinh);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:12px;padding:8px 10px;margin-bottom:6px;box-shadow:0 2px 8px #0002}
+.box h2{margin:0 0 4px;font-size:13px;font-weight:600;opacity:.75}
+#msg,#tip{color:#fff;text-shadow:0 1px 3px #0008;padding:2px 4px;font-size:13px}
+#msg:empty,#tip:empty{display:none}
+.now{display:flex;align-items:center;gap:10px}
+.now .icon{font-size:38px;line-height:1}
+.now .temp{font-size:32px;font-weight:700;line-height:1}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:6px}
+.chip{background:#fff9;border-radius:8px;padding:3px 6px;font-size:12px;text-align:center}
+.chip b{display:block;font-size:14px}
+.days{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.day{flex:0 0 100px;background:#fffb;border-radius:10px;padding:5px 4px;text-align:center;display:flex;flex-direction:column;gap:1px;font-size:12px;cursor:pointer;border:2px solid transparent}
+.day.sel{background:#fff;border-color:#f2b705}
+.day .ic{font-size:24px;line-height:1.1}
+.day .t{font-size:16px;font-weight:700}
+.cao{color:#c77d00}.thap{color:var(--chinh)}
+.aqi{border-radius:6px;color:#fff;font-weight:700;font-size:11px;padding:0 4px}
+.note{font-size:11px;opacity:.7;margin:3px 0 0}
+svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block}
+.legend{font-size:12px;margin-top:2px}
+.tim input{width:100%;padding:8px 10px;font:inherit;border:1px solid var(--chinh);border-radius:8px}
+.tim ul{list-style:none;margin:6px 0 0;padding:0}
+.tim li{padding:8px 6px;border-bottom:1px solid #0001;cursor:pointer}
+.tim li.trong{opacity:.6;cursor:default}
+.tim .dong{float:right;background:none;border:0;font:inherit;font-size:13px;cursor:pointer;color:var(--chinh)}
+.kieu{display:flex;gap:14px;margin-bottom:2px;overflow-x:auto}
+.kieu button{background:none;border:0;border-bottom:2px solid transparent;font:inherit;font-size:13px;padding:2px 0;cursor:pointer;color:var(--chu);white-space:nowrap}
+.kieu button.on{border-color:#f2b705;font-weight:700}
+#diachi{color:#fff;text-shadow:0 1px 3px #0008;font-size:13px;padding:0 4px 6px}
+#diachi:empty{display:none}
+</style>
+</head>
+<body>
+<div class="bg">
+  <svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="troi" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f86c9"/><stop offset=".6" stop-color="#8fcbf0"/><stop offset="1" stop-color="#e3f4ff"/>
+    </linearGradient></defs>
+    <rect width="400" height="800" fill="url(#troi)"/>
+    <circle cx="320" cy="90" r="70" fill="#ffe08a" opacity=".35"/>
+    <circle cx="320" cy="90" r="38" fill="#ffd54a"/>
+    <g fill="#fff" opacity=".85">
+      <ellipse cx="90" cy="150" rx="55" ry="18"/><ellipse cx="125" cy="138" rx="36" ry="18"/><ellipse cx="60" cy="140" rx="28" ry="14"/>
+      <ellipse cx="270" cy="270" rx="60" ry="18"/><ellipse cx="300" cy="258" rx="34" ry="16"/>
+      <ellipse cx="60" cy="430" rx="50" ry="15"/><ellipse cx="90" cy="420" rx="30" ry="14"/>
+    </g>
+    <path d="M0 700 Q100 630 200 690 T400 660 V800 H0Z" fill="#5aa878" opacity=".9"/>
+    <path d="M0 750 Q120 700 230 745 T400 725 V800 H0Z" fill="#3f8a5d"/>
+  </svg>
+</div>
+
+<main>
+  <div class="topbar">
+    <h1 data-i="title"></h1>
+    <div class="phai">
+      <div class="ban" data-i="copy"></div>
+      <!-- Hai lá cờ để đổi ngôn ngữ (vẽ bằng SVG nên hiện đúng trên mọi máy) -->
+      <div class="co">
+        <button id="cVi" title="Tiếng Việt" aria-label="Tiếng Việt">
+          <svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#da251d"/><polygon fill="#ffff00" points="15,4.5 16.35,8.64 20.71,8.65 17.19,11.21 18.53,15.35 15,12.8 11.47,15.35 12.81,11.21 9.29,8.65 13.65,8.64"/></svg>
+        </button>
+        <button id="cEn" title="English" aria-label="English">
+          <svg viewBox="0 0 60 30"><clipPath id="uks"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="ukt"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#uks)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukt)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div id="diachi"></div>
+  <div class="box tim" id="tim" hidden>
+    <button class="dong" id="dongBtn" data-i="close"></button>
+    <h2 data-i="findTitle"></h2>
+    <input id="q" type="search" autocomplete="off">
+    <ul id="gy"></ul>
+  </div>
+  <div id="tip"></div>
+  <div id="msg"></div>
+  <div id="out"></div>
+</main>
+
+<script>
+/* ===== JavaScript: phần "điện nước" - xử lý khi bấm nút ===== */
+
+// Toàn bộ chữ hiển thị nằm ở đây, mỗi ngôn ngữ một bộ
+const TXT = {
+vi:{
+  title:"Thời tiết 10 ngày tới", copy:"Copyright by thaonh3810@gmail.com, Hà Nội Oct 2026",
+  here:"Vị trí của bạn", add:"Thêm", close:"Đóng", del:"Xóa thành phố này",
+  findTitle:"Tìm thành phố", ph:"Gõ tên thành phố, ví dụ: Đà Nẵng",
+  none:"Không tìm thấy. Thử gõ tên khác.", netErr:"Không tìm được. Hãy kiểm tra kết nối mạng.",
+  locating:"Đang lấy vị trí của bạn...", noLoc:"Chưa lấy được vị trí. Hãy cho phép trình duyệt truy cập vị trí rồi tải lại trang.",
+  loading:"Đang tải dữ liệu...", loadErr:"Không tải được dữ liệu. Hãy kiểm tra kết nối mạng rồi bấm lại tên địa điểm.",
+  empty:"Chưa có thành phố nào. Bấm Thêm để chọn thành phố.", findAddr:"Đang xác định địa chỉ...",
+  updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
+  hourly:"Theo giờ", next24:"24 giờ tới (từ {h}:00)", fullDay:"(0h – 23h)",
+  tTemp:"Nhiệt độ", tRain:"Khả năng mưa", tWind:"Gió (km/h)",
+  days:"10 ngày tới (bấm vào một ngày để xem theo giờ)", today:"Hôm nay", nowShort:"Nay",
+  note:"💧 khả năng mưa · 💨 gió mạnh nhất · 💦 độ ẩm · AQI: chỉ số không khí (chỉ có dự báo cho khoảng 7 ngày đầu)",
+  chartT:"Đồ thị nhiệt độ và khả năng mưa", hi:"Cao nhất", lo:"Thấp nhất", na:"Chưa có",
+  wx:["Nắng đẹp","Nắng, ít mây","Nhiều mây","Sương mù","Mưa phùn","Mưa","Mưa rào","Dông"],
+  aq:["Tốt","Trung bình","Kém","Xấu","Rất xấu","Nguy hại"]
+},
+en:{
+  title:"10-day weather", copy:"Copyright by thaonh3810@gmail.com, Hanoi Oct 2026",
+  here:"Your location", add:"Add", close:"Close", del:"Remove this city",
+  findTitle:"Find a city", ph:"Type a city name, e.g. Da Nang",
+  none:"Not found. Try another name.", netErr:"Search failed. Please check your connection.",
+  locating:"Getting your location...", noLoc:"Could not get your location. Allow location access in your browser, then reload the page.",
+  loading:"Loading data...", loadErr:"Could not load data. Check your connection, then tap the place name again.",
+  empty:"No city yet. Tap Add to choose one.", findAddr:"Finding address...",
+  updated:"updated at", feels:"feels like", hum:"Humidity", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
+  hourly:"Hourly", next24:"next 24 hours (from {h}:00)", fullDay:"(0:00 – 23:00)",
+  tTemp:"Temperature", tRain:"Chance of rain", tWind:"Wind (km/h)",
+  days:"Next 10 days (tap a day for the hourly view)", today:"Today", nowShort:"Now",
+  note:"💧 chance of rain · 💨 max wind · 💦 humidity · AQI: air quality index (forecast only for the first ~7 days)",
+  chartT:"Temperature and chance of rain", hi:"High", lo:"Low", na:"N/A",
+  wx:["Clear","Mostly sunny","Cloudy","Fog","Drizzle","Rain","Showers","Thunderstorm"],
+  aq:["Good","Moderate","Poor","Unhealthy","Very unhealthy","Hazardous"]
+}};
+const ICONS = ["☀️","🌤️","☁️","🌫️","🌦️","🌧️","🌦️","⛈️"];
+const MAU_AQI = ["#2e8b57","#b58900","#d2691e","#c62f3a","#7d3c98","#5b1a2a"];
+
+// Ngôn ngữ mặc định là tiếng Việt; lần sau mở lại sẽ nhớ lựa chọn của bạn
+let lang = "vi";
+try{ if(localStorage.getItem("tpLang")==="en") lang = "en"; }catch(e){}
+const t = k => TXT[lang][k];
+const ngay = (dt, kieuChu) => dt.toLocaleDateString(lang==="vi" ? "vi-VN" : "en-US", {weekday:kieuChu});
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const msg = document.getElementById("msg"), tip = document.getElementById("tip");
+const out = document.getElementById("out"), tabs = document.getElementById("tabs");
+const tim = document.getElementById("tim"), q = document.getElementById("q"), gy = document.getElementById("gy");
+let msgKey = "", tipKey = "";
+function setMsg(k){ msgKey = k; msg.textContent = k ? t(k) : ""; }
+function setTip(k){ tipKey = k; tip.textContent = k ? t(k) : ""; }
+
+// Trạng thái của app
+let daLuu = [];       // thành phố do bạn thêm (lưu trong trình duyệt)
+try{ daLuu = JSON.parse(localStorage.getItem("tpDaLuu") || "[]"); }catch(e){}
+let viTri = null;     // vị trí hiện tại của điện thoại
+let chon = null;      // địa điểm đang xem
+let DL = null;        // dữ liệu thời tiết đang xem
+let ngayChon = 0;     // ngày đang chọn (0 = hôm nay)
+let kieu = "nhiet";   // loại đồ thị theo giờ: nhiet / mua / gio
+const CACHE = {};
+const tatCa = () => [viTri, ...daLuu].filter(Boolean);
+const ten = p => p===viTri ? t("here") : p.name.split(",")[0].trim();
+
+// Đổi chữ cố định trên trang theo ngôn ngữ
+function applyStatic(){
+  document.documentElement.lang = lang;
+  document.title = t("title");
+  document.querySelectorAll("[data-i]").forEach(el=>el.textContent = t(el.dataset.i));
+  q.placeholder = t("ph");
+  document.getElementById("cVi").classList.toggle("on", lang==="vi");
+  document.getElementById("cEn").classList.toggle("on", lang==="en");
+  setMsg(msgKey); setTip(tipKey);
+}
+function setLang(l){
+  lang = l;
+  try{ localStorage.setItem("tpLang", l); }catch(e){}
+  applyStatic(); veTabs();
+  if(chon) tai(chon);
+}
+document.getElementById("cVi").onclick = ()=>setLang("vi");
+document.getElementById("cEn").onclick = ()=>setLang("en");
+document.getElementById("dongBtn").onclick = ()=>{ tim.hidden = true; };
+
+function moTa(c){
+  const i = c===0 ? 0 : c<=2 ? 1 : c===3 ? 2 : c<=48 ? 3 : c<=57 ? 4 : c<=67 ? 5 : c<=82 ? 6 : 7;
+  return [ICONS[i], t("wx")[i]];
+}
+function mucAqi(v){
+  if(v==null) return [t("na"), "#7a8a94"];
+  const i = v<=50 ? 0 : v<=100 ? 1 : v<=150 ? 2 : v<=200 ? 3 : v<=300 ? 4 : 5;
+  return [t("aq")[i], MAU_AQI[i]];
+}
+function trungBinhNgay(gio, giaTri){
+  const nhom = {};
+  gio.forEach((tm,i)=>{
+    if(giaTri[i]==null) return;
+    const d = tm.slice(0,10);
+    (nhom[d] = nhom[d] || []).push(giaTri[i]);
+  });
+  const kq = {};
+  for(const d in nhom) kq[d] = Math.round(nhom[d].reduce((a,b)=>a+b,0)/nhom[d].length);
+  return kq;
+}
+
+// Đồ thị tổng hợp các ngày: 2 đường nhiệt độ + cột khả năng mưa
+function veDoThi(d){
+  const n = d.time.length, x = i => 22 + i*(376/(n-1));
+  const hi = d.temperature_2m_max, lo = d.temperature_2m_min;
+  const mx = Math.max(...hi)+2, mn = Math.min(...lo)-2;
+  const y = v => 22 + (mx-v)/(mx-mn)*78;
+  const duong = (arr,mau) => '<polyline fill="none" stroke="'+mau+'" stroke-width="2" points="'+arr.map((v,i)=>x(i)+','+y(v)).join(' ')+'"/>'
+    + arr.map((v,i)=>'<circle cx="'+x(i)+'" cy="'+y(v)+'" r="2.5" fill="'+mau+'"/>').join('');
+  let s = '<svg class="chart" viewBox="0 0 420 180">';
+  d.time.forEach((tm,i)=>{
+    const p = d.precipitation_probability_max[i] || 0, h = p/100*22;
+    s += '<rect x="'+(x(i)-11)+'" y="'+(146-h)+'" width="22" height="'+h+'" rx="3" fill="#4aa3df" opacity=".75"/>'
+      +  '<text x="'+x(i)+'" y="159" font-size="11" text-anchor="middle" fill="currentColor">'+p+'%</text>'
+      +  '<text x="'+x(i)+'" y="174" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor">'+(i===0 ? t("nowShort") : ngay(new Date(tm+"T00:00:00"),"short"))+'</text>';
+  });
+  s += duong(hi,"#e08a00") + duong(lo,"#0f5f8c");
+  hi.forEach((v,i)=>{ s += '<text x="'+x(i)+'" y="'+(y(v)-7)+'" font-size="12" font-weight="700" text-anchor="middle" fill="#c77d00">'+Math.round(v)+'°</text>'; });
+  lo.forEach((v,i)=>{ s += '<text x="'+x(i)+'" y="'+(y(v)+15)+'" font-size="12" font-weight="700" text-anchor="middle" fill="#0f5f8c">'+Math.round(v)+'°</text>'; });
+  return s + '</svg><div class="legend"><b class="cao">●</b> '+t("hi")+' &nbsp; <b class="thap">●</b> '+t("lo")+' &nbsp; <b style="color:#4aa3df">▮</b> '+t("tRain")+'</div>';
+}
+
+// Đồ thị theo giờ của ngày đang chọn (hôm nay: từ giờ hiện tại, 24 giờ tới)
+function veGio(){
+  const h = DL.hourly;
+  const base = ngayChon===0 ? parseInt(DL.current.time.slice(11,13),10) : ngayChon*24;
+  const cfg = {
+    nhiet:{k:"temperature_2m", dv:"°", mau:"#e0a000"},
+    mua:  {k:"precipitation_probability", dv:"%", mau:"#2f86c9"},
+    gio:  {k:"wind_speed_10m", dv:"", mau:"#3a9d6b"}
+  }[kieu];
+  const v = h[cfg.k].slice(base, base+24).map(a=>a==null?0:a);
+  const top = 24, bot = 106, x = i => 16 + i*388/23;
+  let lo, hi;
+  if(kieu==="mua"){ lo = 0; hi = 100; }
+  else if(kieu==="gio"){ lo = 0; hi = Math.max(...v)+2; }
+  else { lo = Math.min(...v)-2; hi = Math.max(...v)+2; }
+  if(hi-lo<1) hi = lo+1;
+  const y = val => top + (hi-val)/(hi-lo)*(bot-top);
+  const pts = v.map((val,i)=>x(i)+","+y(val)).join(" ");
+  let s = '<svg class="chart" viewBox="0 0 420 140">'
+    + '<polygon points="'+x(0)+','+bot+' '+pts+' '+x(23)+','+bot+'" fill="'+cfg.mau+'" opacity=".22"/>'
+    + '<polyline fill="none" stroke="'+cfg.mau+'" stroke-width="1.8" stroke-linejoin="round" points="'+pts+'"/>';
+  for(let i=0;i<24;i+=3){
+    s += '<circle cx="'+x(i)+'" cy="'+y(v[i])+'" r="2.5" fill="'+cfg.mau+'"/>'
+      +  '<text x="'+x(i)+'" y="'+(y(v[i])-9)+'" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor">'+Math.round(v[i])+cfg.dv+'</text>'
+      +  '<text x="'+x(i)+'" y="132" font-size="11" text-anchor="middle" fill="currentColor" opacity=".75">'+h.time[base+i].slice(11,16)+'</text>';
+  }
+  return s + '</svg>';
+}
+
+function capNhatGio(){
+  const dt = new Date(DL.daily.time[ngayChon]+"T00:00:00");
+  document.getElementById("gioTieuDe").textContent = t("hourly") + " · " + (ngayChon===0
+    ? t("next24").replace("{h}", DL.current.time.slice(11,13))
+    : ngay(dt,"long") + " " + dt.getDate() + "/" + (dt.getMonth()+1) + " " + t("fullDay"));
+  document.querySelectorAll(".kieu button").forEach(b=>b.classList.toggle("on", b.dataset.k===kieu));
+  document.querySelectorAll(".day").forEach((el,k)=>el.classList.toggle("sel", k===ngayChon));
+  document.getElementById("gioVe").innerHTML = veGio();
+}
+
+// Hiện địa chỉ đầy đủ của nơi đang chọn.
+// Vị trí điện thoại: tra tên nơi từ tọa độ (BigDataCloud, miễn phí). Thành phố đã thêm: dùng địa chỉ lưu lúc thêm.
+async function veDiaChi(){
+  const el = document.getElementById("diachi");
+  if(!chon){ el.textContent = ""; return; }
+  const p = chon, L = lang;
+  if(p!==viTri){ el.textContent = "📍 " + (p.diaChi || p.name); return; }
+  p.dc = p.dc || {};
+  if(p.dc[L]){ el.textContent = "📍 " + p.dc[L]; return; }
+  el.textContent = "📍 " + t("findAddr");
+  let a = p.lat.toFixed(3) + ", " + p.lon.toFixed(3);   // nếu tra không được thì hiện tọa độ
+  try{
+    const r = await fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude="+p.lat+"&longitude="+p.lon+"&localityLanguage="+L).then(r=>r.json());
+    const ds = [r.locality, r.city, r.principalSubdivision, r.countryName].filter(Boolean);
+    const rieng = ds.filter((v,i)=>ds.indexOf(v)===i);
+    if(rieng.length) a = rieng.join(", ");
+  }catch(e){}
+  p.dc[L] = a;
+  if(chon===p && lang===L) el.textContent = "📍 " + a;
+}
+
+// ----- Danh sách thành phố -----
+function luu(){ try{ localStorage.setItem("tpDaLuu", JSON.stringify(daLuu)); }catch(e){} }
+
+function moDauTien(){
+  const ds = tatCa();
+  if(ds.length){ tai(ds[0]); return; }
+  chon = null; DL = null; out.innerHTML = ""; veTabs(); veDiaChi();
+  setMsg("empty");
+  tim.hidden = false;
+}
+function xoa(p){
+  daLuu = daLuu.filter(x=>x!==p);
+  luu();
+  if(chon===p) moDauTien(); else veTabs();
+}
+function veTabs(){
+  tabs.innerHTML = "";
+  tatCa().forEach(p=>{
+    const b = document.createElement("button");
+    b.textContent = (p===viTri ? "📍 " : "") + ten(p);
+    if(p===chon) b.className = "on";
+    b.onclick = ()=>tai(p);
+    if(daLuu.includes(p)){
+      const x = document.createElement("span");
+      x.textContent = "✕"; x.title = t("del");
+      x.onclick = e=>{ e.stopPropagation(); xoa(p); };
+      b.appendChild(x);
+    }
+    tabs.appendChild(b);
+  });
+  const nutThem = document.createElement("button");
+  nutThem.className = "them"; nutThem.textContent = t("add");
+  nutThem.onclick = ()=>{ tim.hidden = !tim.hidden; if(!tim.hidden) q.focus(); };
+  tabs.appendChild(nutThem);
+}
+
+// Gõ tên thành phố -> hiện gợi ý (chờ 0,3 giây sau khi ngừng gõ)
+let hen;
+q.oninput = ()=>{
+  clearTimeout(hen);
+  const tx = q.value.trim();
+  if(tx.length<2){ gy.innerHTML = ""; return; }
+  hen = setTimeout(async ()=>{
+    try{
+      const r = await fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(tx)+"&count=6&language="+lang).then(r=>r.json());
+      const ds = r.results || [];
+      gy.innerHTML = ds.length ? "" : '<li class="trong">'+t("none")+'</li>';
+      ds.forEach(o=>{
+        const li = document.createElement("li");
+        li.textContent = [o.name,o.admin1,o.country].filter(Boolean).join(", ");
+        const dc = [o.name,o.admin2,o.admin1,o.country].filter(Boolean);
+        li.onclick = ()=>themTP({name:o.name, diaChi:dc.filter((v,i)=>dc.indexOf(v)===i).join(", "), lat:o.latitude, lon:o.longitude});
+        gy.appendChild(li);
+      });
+    }catch(e){ gy.innerHTML = '<li class="trong">'+t("netErr")+'</li>'; }
+  }, 300);
+};
+function themTP(p){
+  const co = tatCa().find(x=>Math.abs(x.lat-p.lat)<0.01 && Math.abs(x.lon-p.lon)<0.01);
+  if(co){ tai(co); } else { daLuu.push(p); luu(); tai(p); }
+  tim.hidden = true; q.value = ""; gy.innerHTML = "";
+}
+
+// Lấy vị trí điện thoại khi mở app
+function layViTri(){
+  veTabs();
+  if(!navigator.geolocation){ moDauTien(); return; }
+  setMsg("locating");
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      viTri = {name:"", lat:pos.coords.latitude, lon:pos.coords.longitude};
+      setTip(""); tai(viTri);
+    },
+    ()=>{ setTip("noLoc"); moDauTien(); },
+    {timeout:10000, maximumAge:600000}
+  );
+}
+
+// ----- Tải và hiển thị dữ liệu -----
+async function layDuLieu(p){
+  const kc = p.lat+","+p.lon, cu = CACHE[kc];
+  if(cu && Date.now()-cu.t < 600000) return cu;   // dùng lại dữ liệu mới tải trong 10 phút
+  const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}`
+    +`&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,cloud_cover,precipitation`
+    +`&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max`
+    +`&hourly=relative_humidity_2m,temperature_2m,precipitation_probability,wind_speed_10m&timezone=Asia%2FBangkok&forecast_days=10`).then(r=>r.json());
+  let aqi = {}, aqiNow = null;
+  try{
+    const a = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${p.lat}&longitude=${p.lon}`
+      +`&current=us_aqi&hourly=us_aqi&timezone=Asia%2FBangkok&forecast_days=7`).then(r=>r.json());
+    aqi = trungBinhNgay(a.hourly.time, a.hourly.us_aqi);
+    aqiNow = a.current ? a.current.us_aqi : null;
+  }catch(e){}
+  const kq = {t:Date.now(), w, aqi, aqiNow};
+  if(w.current) CACHE[kc] = kq;
+  return kq;
+}
+
+async function tai(p){
+  chon = p; veTabs(); veDiaChi(); setMsg("loading"); out.innerHTML = "";
+  try{
+    const {w, aqi, aqiNow} = await layDuLieu(p);
+    if(chon!==p) return;   // bạn đã chuyển sang nơi khác trong lúc chờ
+    const doAm = trungBinhNgay(w.hourly.time, w.hourly.relative_humidity_2m);
+    const c = w.current, d = w.daily;
+    DL = w; ngayChon = 0;
+    const [icon, chu] = moTa(c.weather_code);
+    const [mucNow, mauNow] = mucAqi(aqiNow);
+
+    // Ô 1: thông số hiện tại
+    let html = '<div class="box"><h2>'+esc(ten(p))+' · '+t("updated")+' '+c.time.slice(11,16)+'</h2>'
+      +'<div class="now"><div class="icon">'+icon+'</div><div><div class="temp">'+Math.round(c.temperature_2m)+'°C</div>'
+      +'<div>'+chu+' · '+t("feels")+' '+Math.round(c.apparent_temperature)+'°</div></div></div>'
+      +'<div class="chips">'
+      +'<div class="chip">'+t("hum")+'<b>'+Math.round(c.relative_humidity_2m)+'%</b></div>'
+      +'<div class="chip">'+t("wind")+'<b>'+Math.round(c.wind_speed_10m)+' km/h</b></div>'
+      +'<div class="chip">'+t("cloud")+'<b>'+Math.round(c.cloud_cover)+'%</b></div>'
+      +'<div class="chip">'+t("precip")+'<b>'+c.precipitation+' mm</b></div>'
+      +'<div class="chip" style="grid-column:span 2">'+t("air")+'<b style="color:'+mauNow+'">'+(aqiNow!=null ? aqiNow+' – ' : '')+mucNow+'</b></div>'
+      +'</div></div>';
+
+    // Ô 2: đồ thị theo giờ
+    html += '<div class="box"><h2 id="gioTieuDe"></h2>'
+      + '<div class="kieu"><button data-k="nhiet">'+t("tTemp")+'</button><button data-k="mua">'+t("tRain")+'</button><button data-k="gio">'+t("tWind")+'</button></div>'
+      + '<div id="gioVe"></div></div>';
+
+    // Ô 3: các ngày xếp ngang
+    html += '<div class="box"><h2>'+t("days")+'</h2><div class="days">'
+      + d.time.map((tm,k)=>{
+          const dt = new Date(tm+"T00:00:00");
+          const [ic, ch] = moTa(d.weather_code[k]);
+          const [, mau] = mucAqi(aqi[tm]);
+          return '<div class="day"><div><b>'+(k===0 ? t("today") : ngay(dt,"short"))+'</b> '+dt.getDate()+'/'+(dt.getMonth()+1)+'</div>'
+            +'<div class="ic">'+ic+'</div><div>'+ch+'</div>'
+            +'<div class="t"><span class="cao">'+Math.round(d.temperature_2m_max[k])+'°</span> <span class="thap">'+Math.round(d.temperature_2m_min[k])+'°</span></div>'
+            +'<div>💧 '+(d.precipitation_probability_max[k] ?? "–")+'%</div>'
+            +'<div>💨 '+Math.round(d.wind_speed_10m_max[k])+' km/h</div>'
+            +'<div>💦 '+(doAm[tm] ?? "–")+'%</div>'
+            +'<div class="aqi" style="background:'+mau+'">'+(aqi[tm]!=null ? 'AQI '+aqi[tm] : t("na"))+'</div></div>';
+        }).join('')
+      + '</div><p class="note">'+t("note")+'</p></div>';
+
+    // Ô 4: đồ thị tổng hợp
+    html += '<div class="box"><h2>'+t("chartT")+'</h2>'+veDoThi(d)+'</div>';
+
+    out.innerHTML = html;
+    document.querySelectorAll(".kieu button").forEach(b=>b.onclick=()=>{ kieu = b.dataset.k; capNhatGio(); });
+    document.querySelectorAll(".day").forEach((el,k)=>el.onclick=()=>{ ngayChon = k; capNhatGio(); });
+    capNhatGio();
+    setMsg("");
+  }catch(e){
+    if(chon===p) setMsg("loadErr");
+  }
+}
+
+applyStatic();
+layViTri();
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>

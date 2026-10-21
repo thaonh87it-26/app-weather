@@ -54,12 +54,32 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 .tim ul{list-style:none;margin:6px 0 0;padding:0}
 .tim li{padding:8px 6px;border-bottom:1px solid #0001;cursor:pointer}
 .tim li.trong{opacity:.6;cursor:default}
-.tim .dong{float:right;background:none;border:0;font:inherit;font-size:13px;cursor:pointer;color:var(--chinh)}
+.tim .dong{position:relative;z-index:2;float:right;background:none;border:0;font:inherit;font-size:13px;cursor:pointer;color:var(--chinh)}
 .kieu{display:flex;gap:14px;margin-bottom:2px;overflow-x:auto}
 .kieu button{background:none;border:0;border-bottom:2px solid transparent;font:inherit;font-size:13px;padding:2px 0;cursor:pointer;color:var(--chu);white-space:nowrap}
 .kieu button.on{border-color:#f2b705;font-weight:700}
-#diachi{color:#fff;text-shadow:0 1px 3px #0008;font-size:13px;padding:0 4px 6px}
-#diachi:empty{display:none}
+[hidden]{display:none!important}
+#diachi{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:3px 10px;color:#fff;text-shadow:0 1px 3px #0008;font-size:13px;padding:0 4px 6px}
+#dc{flex:1 1 auto;min-width:0}
+#amlich{margin-left:auto;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.7);color:#fff;text-shadow:inherit;border-radius:999px;padding:2px 10px;font:inherit;font-size:12px;cursor:pointer;white-space:nowrap}
+.gio{font-size:13px;margin:0 0 6px}
+.lich-bg{position:fixed;inset:0;background:rgba(10,30,45,.55);display:flex;align-items:center;justify-content:center;padding:10px;z-index:50}
+.lich{width:100%;max-width:420px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px #0006}
+.lich-h{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#0f5f8c;color:#fff}
+.lich-h b{font-size:20px}
+.lich-h button{background:rgba(255,255,255,.22);border:0;color:#fff;font-size:22px;line-height:1;width:36px;height:36px;border-radius:50%;cursor:pointer}
+.lich-w,.lich-g{display:grid;grid-template-columns:repeat(7,1fr)}
+.lich-w div{text-align:center;padding:5px 0;font-weight:700;font-size:13px;background:#e9f2f6}
+.lich-g div{position:relative;height:54px;border:1px solid #e3ebf0;padding:3px 5px}
+.lich-g .s{font-size:19px;font-weight:700}
+.lich-g .a{position:absolute;right:5px;bottom:2px;font-size:11px;color:#0b2f66}
+.lich-g .kh{opacity:.35}
+.t7{color:#8a2b2b}.cn{color:#d32f2f}
+.lich-g .nay{background:#5bc8cf}
+.lich-f{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;font-size:12px;color:#5f7380}
+.lich-f button{border:0;border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;background:#dcebf4;color:#12303f;white-space:nowrap}
+.lich-f .bt{display:flex;gap:6px;flex:none}
+</style>
 </style>
 </head>
 <body>
@@ -98,7 +118,7 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
     </div>
   </div>
   <div class="tabs" id="tabs"></div>
-  <div id="diachi"></div>
+  <div id="diachi" hidden><span id="dc"></span><button id="amlich" type="button" hidden></button></div>
   <div class="box tim" id="tim" hidden>
     <button class="dong" id="dongBtn" data-i="close"></button>
     <h2 data-i="findTitle"></h2>
@@ -109,6 +129,7 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
   <div id="msg"></div>
   <div id="out"></div>
 </main>
+<div class="lich-bg" id="lichPop" hidden></div>
 
 <script>
 /* ===== JavaScript: phần "điện nước" - xử lý khi bấm nút ===== */
@@ -123,6 +144,7 @@ vi:{
   locating:"Đang lấy vị trí của bạn...", noLoc:"Chưa lấy được vị trí. Hãy cho phép trình duyệt truy cập vị trí rồi tải lại trang.",
   loading:"Đang tải dữ liệu...", loadErr:"Không tải được dữ liệu. Hãy kiểm tra kết nối mạng rồi bấm lại tên địa điểm.",
   empty:"Chưa có thành phố nào. Bấm Thêm để chọn thành phố.", findAddr:"Đang xác định địa chỉ...",
+  lunar:"Âm lịch", leap:"nhuận", lichNote:"Số lớn: dương lịch, số nhỏ: âm lịch", wd:["T2","T3","T4","T5","T6","T7","CN"],
   updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
   hourly:"Theo giờ", next24:"24 giờ tới (từ {h}:00)", fullDay:"(0h – 23h)",
   tTemp:"Nhiệt độ", tRain:"Khả năng mưa", tWind:"Gió (km/h)",
@@ -140,6 +162,7 @@ en:{
   locating:"Getting your location...", noLoc:"Could not get your location. Allow location access in your browser, then reload the page.",
   loading:"Loading data...", loadErr:"Could not load data. Check your connection, then tap the place name again.",
   empty:"No city yet. Tap Add to choose one.", findAddr:"Finding address...",
+  lunar:"Lunar", leap:"leap", lichNote:"Large: solar date, small: lunar date", wd:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
   updated:"updated at", feels:"feels like", hum:"Humidity", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
   hourly:"Hourly", next24:"next 24 hours (from {h}:00)", fullDay:"(0:00 – 23:00)",
   tTemp:"Temperature", tRain:"Chance of rain", tWind:"Wind (km/h)",
@@ -193,10 +216,141 @@ function setLang(l){
   try{ localStorage.setItem("tpLang", l); }catch(e){}
   applyStatic(); veTabs();
   if(chon) tai(chon);
+  if(!lichPop.hidden) veLich();
+  veDongHo();
 }
 document.getElementById("cVi").onclick = ()=>setLang("vi");
 document.getElementById("cEn").onclick = ()=>setLang("en");
 document.getElementById("dongBtn").onclick = ()=>{ tim.hidden = true; };
+
+// ===== Đổi dương lịch sang âm lịch Việt Nam (múi giờ UTC+7) =====
+// Thuật toán thiên văn của Hồ Ngọc Đức: tính ngày trăng mới và vị trí Mặt Trời.
+const INT = d => Math.floor(d);
+function jdFromDate(dd, mm, yy){
+  const a = INT((14-mm)/12), y = yy+4800-a, m = mm+12*a-3;
+  let jd = dd + INT((153*m+2)/5) + 365*y + INT(y/4) - INT(y/100) + INT(y/400) - 32045;
+  if(jd < 2299161) jd = dd + INT((153*m+2)/5) + 365*y + INT(y/4) - 32083;
+  return jd;
+}
+function newMoon(k){
+  const T=k/1236.85, T2=T*T, T3=T2*T, dr=Math.PI/180;
+  let Jd1 = 2415020.75933 + 29.53058868*k + 0.0001178*T2 - 0.000000155*T3;
+  Jd1 += 0.00033*Math.sin((166.56 + 132.87*T - 0.009173*T2)*dr);
+  const M = 359.2242 + 29.10535608*k - 0.0000333*T2 - 0.00000347*T3;
+  const Mpr = 306.0253 + 385.81691806*k + 0.0107306*T2 + 0.00001236*T3;
+  const F = 21.2964 + 390.67050646*k - 0.0016528*T2 - 0.00000239*T3;
+  let C1 = (0.1734 - 0.000393*T)*Math.sin(M*dr) + 0.0021*Math.sin(2*dr*M);
+  C1 -= 0.4068*Math.sin(Mpr*dr); C1 += 0.0161*Math.sin(dr*2*Mpr); C1 -= 0.0004*Math.sin(dr*3*Mpr);
+  C1 += 0.0104*Math.sin(dr*2*F); C1 -= 0.0051*Math.sin(dr*(M+Mpr));
+  C1 -= 0.0074*Math.sin(dr*(M-Mpr)); C1 += 0.0004*Math.sin(dr*(2*F+M));
+  C1 -= 0.0004*Math.sin(dr*(2*F-M)); C1 -= 0.0006*Math.sin(dr*(2*F+Mpr));
+  C1 += 0.0010*Math.sin(dr*(2*F-Mpr)); C1 += 0.0005*Math.sin(dr*(2*Mpr+M));
+  const dt = T < -11 ? 0.001 + 0.000839*T + 0.0002261*T2 - 0.00000845*T3 - 0.000000081*T*T3
+                     : -0.000278 + 0.000265*T + 0.000262*T2;
+  return Jd1 + C1 - dt;
+}
+function sunLongitude(jdn){
+  const T=(jdn-2451545.0)/36525, T2=T*T, dr=Math.PI/180;
+  const M = 357.52910 + 35999.05030*T - 0.0001559*T2 - 0.00000048*T*T2;
+  const L0 = 280.46645 + 36000.76983*T + 0.0003032*T2;
+  let DL = (1.914600 - 0.004817*T - 0.000014*T2)*Math.sin(dr*M);
+  DL += (0.019993 - 0.000101*T)*Math.sin(dr*2*M) + 0.000290*Math.sin(dr*3*M);
+  let L = (L0 + DL)*dr; L -= Math.PI*2*INT(L/(Math.PI*2));
+  return L;
+}
+const sunLong = (day, tz) => INT(sunLongitude(day - 0.5 - tz/24)/Math.PI*6);
+const newMoonDay = (k, tz) => INT(newMoon(k) + 0.5 + tz/24);
+function lunarMonth11(yy, tz){
+  const off = jdFromDate(31,12,yy) - 2415021, k = INT(off/29.530588853);
+  let nm = newMoonDay(k, tz);
+  if(sunLong(nm, tz) >= 9) nm = newMoonDay(k-1, tz);
+  return nm;
+}
+function leapMonthOffset(a11, tz){
+  const k = INT((a11 - 2415021.076998695)/29.530588853 + 0.5);
+  let last = 0, i = 1, arc = sunLong(newMoonDay(k+i, tz), tz);
+  do { last = arc; i++; arc = sunLong(newMoonDay(k+i, tz), tz); } while(arc !== last && i < 14);
+  return i-1;
+}
+// Trả về [ngày âm, tháng âm, năm âm, 1 nếu là tháng nhuận]
+function amLich(dd, mm, yy, tz=7){
+  const dayNumber = jdFromDate(dd,mm,yy), k = INT((dayNumber - 2415021.076998695)/29.530588853);
+  let monthStart = newMoonDay(k+1, tz);
+  if(monthStart > dayNumber) monthStart = newMoonDay(k, tz);
+  let a11 = lunarMonth11(yy, tz), b11 = a11, lunarYear;
+  if(a11 >= monthStart){ lunarYear = yy; a11 = lunarMonth11(yy-1, tz); }
+  else { lunarYear = yy+1; b11 = lunarMonth11(yy+1, tz); }
+  const lunarDay = dayNumber - monthStart + 1, diff = INT((monthStart - a11)/29);
+  let leap = 0, lunarMonth = diff + 11;
+  if(b11 - a11 > 365){
+    const ld = leapMonthOffset(a11, tz);
+    if(diff >= ld){ lunarMonth = diff + 10; if(diff === ld) leap = 1; }
+  }
+  if(lunarMonth > 12) lunarMonth -= 12;
+  if(lunarMonth >= 11 && diff < 4) lunarYear -= 1;
+  return [lunarDay, lunarMonth, lunarYear, leap];
+}
+const CAN = ["Giáp","Ất","Bính","Đinh","Mậu","Kỷ","Canh","Tân","Nhâm","Quý"];
+const CHI = ["Tý","Sửu","Dần","Mão","Thìn","Tỵ","Ngọ","Mùi","Thân","Dậu","Tuất","Hợi"];
+const canChi = y => CAN[(y+6)%10] + " " + CHI[(y+8)%12];
+
+// ----- Đồng hồ và ngày âm lịch theo múi giờ của thành phố đang chọn -----
+const lichPop = document.getElementById("lichPop"), amBtn = document.getElementById("amlich");
+const p2 = n => String(n).padStart(2,"0");
+const homNay = () => new Date().toLocaleDateString("en-CA", {timeZone:DL.timezone});   // YYYY-MM-DD tại thành phố
+const nhanAm = (d,m,y) => { const a = amLich(d,m,y); return t("lunar")+": "+a[0]+"/"+a[1]+(a[3] ? " "+t("leap") : "")+" "+canChi(a[2]); };
+let amKey = "";
+function veDongHo(){
+  if(!DL){ amBtn.hidden = true; amKey = ""; return; }
+  const tz = DL.timezone, now = new Date(), loc = lang==="vi" ? "vi-VN" : "en-GB";
+  const gio = now.toLocaleTimeString(loc, {timeZone:tz, hour:"2-digit", minute:"2-digit", second:"2-digit", hourCycle:"h23"});
+  const ng = now.toLocaleDateString(loc, {timeZone:tz, weekday:"long", day:"2-digit", month:"2-digit", year:"numeric"});
+  const o = Math.abs(DL.utc_offset_seconds)/3600, nua = o%1 ? ":"+p2(Math.round(o%1*60)) : "";
+  const gmt = "GMT"+(DL.utc_offset_seconds<0 ? "-" : "+")+Math.floor(o)+nua;
+  const el = document.getElementById("dongho");
+  if(el) el.innerHTML = "🕒 <b>"+gio+"</b> · "+ng+" · "+gmt;
+  const hom = homNay(), key = tz+hom+lang;
+  if(key!==amKey){                       // chỉ tính lại âm lịch khi đổi ngày hoặc ngôn ngữ
+    amKey = key; const [y,m,d] = hom.split("-").map(Number);
+    const a = amLich(d,m,y);
+    amBtn.textContent = "🌙 " + t("lunar") + " " + a[0] + "/" + a[1] + (a[3] ? " " + t("leap") : "");
+    amBtn.title = nhanAm(d,m,y);
+  }
+  amBtn.hidden = false;
+}
+
+// ----- Lịch dương + âm (popup) -----
+let lichY = 0, lichM = 0;
+function moLich(){
+  if(!DL) return;
+  const [y,m] = homNay().split("-").map(Number); lichY = y; lichM = m;
+  veLich(); lichPop.hidden = false;
+}
+function dongLich(){ lichPop.hidden = true; }
+function doiThang(n){ lichM += n; if(lichM<1){ lichM = 12; lichY--; } if(lichM>12){ lichM = 1; lichY++; } veLich(); }
+function veLich(){
+  const hom = homNay(), off = (new Date(Date.UTC(lichY, lichM-1, 1)).getUTCDay()+6)%7;   // tuần bắt đầu từ thứ Hai
+  const [hy,hm,hd] = hom.split("-").map(Number);
+  let cells = "";
+  for(let i=0;i<42;i++){
+    const dt = new Date(Date.UTC(lichY, lichM-1, 1-off+i));
+    const y = dt.getUTCFullYear(), m = dt.getUTCMonth()+1, d = dt.getUTCDate(), a = amLich(d,m,y);
+    const cls = (m!==lichM ? "kh " : "") + (i%7===5 ? "t7 " : "") + (i%7===6 ? "cn " : "") + (y+"-"+p2(m)+"-"+p2(d)===hom ? "nay" : "");
+    cells += '<div class="'+cls+'"><span class="s">'+d+'</span><span class="a">'+(a[0]===1 ? a[0]+"/"+a[1] : a[0])+'</span></div>';
+  }
+  lichPop.innerHTML = '<div class="lich" role="dialog" aria-modal="true">'
+    + '<div class="lich-h"><button id="lP" aria-label="‹">‹</button><b>'+p2(lichM)+'/'+lichY+'</b><button id="lN" aria-label="›">›</button></div>'
+    + '<div class="lich-w">'+t("wd").map((x,i)=>'<div class="'+(i===5?"t7":i===6?"cn":"")+'">'+x+'</div>').join("")+'</div>'
+    + '<div class="lich-g">'+cells+'</div>'
+    + '<div class="lich-f"><span>'+t("lichNote")+'<br><b>'+t("today")+':</b> '+nhanAm(hd,hm,hy)+'</span><span class="bt"><button id="lH">'+t("today")+'</button><button id="lC">'+t("close")+'</button></span></div></div>';
+  document.getElementById("lP").onclick = ()=>doiThang(-1);
+  document.getElementById("lN").onclick = ()=>doiThang(1);
+  document.getElementById("lH").onclick = moLich;
+  document.getElementById("lC").onclick = dongLich;
+}
+amBtn.onclick = moLich;
+lichPop.onclick = e => { if(e.target===lichPop) dongLich(); };
+document.addEventListener("keydown", e => { if(e.key==="Escape") dongLich(); });
 
 function moTa(c){
   const i = c===0 ? 0 : c<=2 ? 1 : c===3 ? 2 : c<=48 ? 3 : c<=57 ? 4 : c<=67 ? 5 : c<=82 ? 6 : 7;
@@ -282,7 +436,8 @@ function capNhatGio(){
 // Hiện địa chỉ đầy đủ của nơi đang chọn.
 // Vị trí điện thoại: tra tên nơi từ tọa độ (BigDataCloud, miễn phí). Thành phố đã thêm: dùng địa chỉ lưu lúc thêm.
 async function veDiaChi(){
-  const el = document.getElementById("diachi");
+  const el = document.getElementById("dc"), hang = document.getElementById("diachi");
+  hang.hidden = !chon;
   if(!chon){ el.textContent = ""; return; }
   const p = chon, L = lang;
   if(p!==viTri){ el.textContent = "📍 " + (p.diaChi || p.name); return; }
@@ -385,11 +540,11 @@ async function layDuLieu(p){
   const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}`
     +`&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,cloud_cover,precipitation`
     +`&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max`
-    +`&hourly=relative_humidity_2m,temperature_2m,precipitation_probability,wind_speed_10m&timezone=Asia%2FBangkok&forecast_days=10`).then(r=>r.json());
+    +`&hourly=relative_humidity_2m,temperature_2m,precipitation_probability,wind_speed_10m&timezone=auto&forecast_days=10`).then(r=>r.json());
   let aqi = {}, aqiNow = null;
   try{
     const a = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${p.lat}&longitude=${p.lon}`
-      +`&current=us_aqi&hourly=us_aqi&timezone=Asia%2FBangkok&forecast_days=7`).then(r=>r.json());
+      +`&current=us_aqi&hourly=us_aqi&timezone=auto&forecast_days=7`).then(r=>r.json());
     aqi = trungBinhNgay(a.hourly.time, a.hourly.us_aqi);
     aqiNow = a.current ? a.current.us_aqi : null;
   }catch(e){}
@@ -399,7 +554,7 @@ async function layDuLieu(p){
 }
 
 async function tai(p){
-  chon = p; veTabs(); veDiaChi(); setMsg("loading"); out.innerHTML = "";
+  chon = p; DL = null; veDongHo(); veTabs(); veDiaChi(); setMsg("loading"); out.innerHTML = "";
   try{
     const {w, aqi, aqiNow} = await layDuLieu(p);
     if(chon!==p) return;   // bạn đã chuyển sang nơi khác trong lúc chờ
@@ -411,6 +566,7 @@ async function tai(p){
 
     // Ô 1: thông số hiện tại
     let html = '<div class="box"><h2>'+esc(ten(p))+' · '+t("updated")+' '+c.time.slice(11,16)+'</h2>'
+      +'<div class="gio" id="dongho"></div>'
       +'<div class="now"><div class="icon">'+icon+'</div><div><div class="temp">'+Math.round(c.temperature_2m)+'°C</div>'
       +'<div>'+chu+' · '+t("feels")+' '+Math.round(c.apparent_temperature)+'°</div></div></div>'
       +'<div class="chips">'
@@ -449,6 +605,7 @@ async function tai(p){
     document.querySelectorAll(".kieu button").forEach(b=>b.onclick=()=>{ kieu = b.dataset.k; capNhatGio(); });
     document.querySelectorAll(".day").forEach((el,k)=>el.onclick=()=>{ ngayChon = k; capNhatGio(); });
     capNhatGio();
+    veDongHo();
     setMsg("");
   }catch(e){
     if(chon===p) setMsg("loadErr");
@@ -457,6 +614,7 @@ async function tai(p){
 
 applyStatic();
 layViTri();
+setInterval(veDongHo, 1000);
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>

@@ -86,6 +86,14 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 .lich-f button{border:0;border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;background:#dcebf4;color:#12303f;white-space:nowrap}
 .lich-f .bt{display:flex;gap:6px;flex:none}
 .lich-f button.dg{background:#fde8ea;color:#c62f3a}
+/* Hộp lịch: tiêu đề và nút cuối luôn nhìn thấy, danh sách dài cuộn bên trong */
+.lich-bg{padding:10px;overflow:hidden}
+.lich{display:flex;flex-direction:column;max-height:calc(100vh - 20px);max-height:calc(100dvh - 20px);overflow-y:auto}
+.lich>*{flex:none}
+.lich>.gcp{flex:1 1 auto;min-height:110px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.lich>.gcp .gcp-h{position:sticky;top:0;z-index:2;background:#fff;padding-bottom:4px;margin-bottom:2px}
+.lkb{background:#eef6fb;border-radius:10px;padding:8px;margin:6px 0}
+.lkb .note{margin:0 0 6px;opacity:.85}
 .lich{max-height:calc(100vh - 20px);overflow-y:auto}
 .lich-g div{height:46px;cursor:pointer}
 .lich-g .gc{background:#ffe3a1}
@@ -134,7 +142,7 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 /* ===== Bổ sung: menu, cửa sổ phụ, mã QR, giọng nói ===== */
 .co .mn{border:0;border-radius:6px;background:rgba(255,255,255,.28);color:#fff;font-size:18px;line-height:1;width:32px;height:26px;opacity:1;text-shadow:0 1px 3px #0007}
 #appPop{z-index:70}
-.ap{width:100%;max-width:400px;background:#fff;border-radius:16px;box-shadow:0 8px 30px #0006;max-height:calc(100vh - 20px);overflow-y:auto;padding:14px 16px}
+.ap{width:100%;max-width:400px;background:#fff;border-radius:16px;box-shadow:0 8px 30px #0006;max-height:calc(100vh - 20px);max-height:calc(100dvh - 20px);overflow-y:auto;padding:14px 16px}
 .ap h3{margin:0 0 8px;font-size:17px}
 .ap p,.ap li{font-size:13.5px;margin:4px 0}
 .ap ul{padding-left:18px;margin:4px 0 8px}
@@ -1158,7 +1166,7 @@ vi:{
   nSumYD:"Lặp vào ngày {d}/{m} dương lịch hằng năm", nSumYA:"Lặp vào ngày {d}/{m} âm lịch hằng năm",
   nDelAsk:"Xóa ghi chú này? Tất cả các ngày lặp lại cũng sẽ bị xóa.", nEditHint:"Sửa ghi chú sẽ thay đổi tất cả các ngày lặp lại.",
   nErrC:"Hãy nhập nội dung.", nErrD:"Hãy chọn ngày.", nErrR:"Ngày kết thúc không được trước ngày bắt đầu.", lichNote:"Số lớn: dương lịch, số nhỏ: âm lịch", wd:["T2","T3","T4","T5","T6","T7","CN"], wdF:["Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ nhật"],
-  nShare:"Chia sẻ", shT:"Chia sẻ lịch", shHint:"Người nhận bấm vào liên kết để mở ứng dụng và lưu lịch. Cũng có thể quét mã QR trong ảnh bằng nút QR của ứng dụng.", shZalo:"Zalo", shMess:"Messenger", shCopy:"Sao chép liên kết", shGo:"Bấm Zalo hoặc Messenger rồi chọn ứng dụng trong bảng chia sẻ: ảnh, tiêu đề và liên kết được gửi cùng nhau.", shCopied:"Đã sao chép tiêu đề và liên kết. Hãy dán vào Zalo hoặc Messenger để gửi.", shCopyErr:"Không sao chép được. Hãy lưu ảnh và gửi thủ công.", shNoLink:"Ứng dụng đang mở từ file nên chưa tạo được liên kết. Hãy đưa ứng dụng lên web (https) để chia sẻ bằng liên kết.", lkRecv:"Lịch nhận từ liên kết chia sẻ. Hãy kiểm tra, chỉnh sửa nếu cần rồi bấm Lưu.", lkBad:"Liên kết lịch không hợp lệ hoặc đã bị cắt bớt. Hãy nhờ người gửi chia sẻ lại.", shSave:"Lưu ảnh", shSend:"Gửi", shLong:"Nội dung lịch quá dài để tạo mã QR. Hãy rút gọn nội dung rồi thử lại.",
+  nShare:"Chia sẻ", shT:"Chia sẻ lịch", shHint:"Người nhận bấm vào liên kết để mở ứng dụng và lưu lịch. Cũng có thể quét mã QR trong ảnh bằng nút QR của ứng dụng.", shZalo:"Zalo", shMess:"Messenger", shCopy:"Sao chép liên kết", shGo:"Bấm Zalo hoặc Messenger rồi chọn ứng dụng trong bảng chia sẻ: ảnh, tiêu đề và liên kết được gửi cùng nhau.", shCopied:"Đã sao chép tiêu đề và liên kết. Hãy dán vào Zalo hoặc Messenger để gửi.", shCopyErr:"Không sao chép được. Hãy lưu ảnh và gửi thủ công.", shNoLink:"Ứng dụng đang mở từ file nên chưa tạo được liên kết. Hãy đưa ứng dụng lên web (https) để chia sẻ bằng liên kết.", lkRecv:"Lịch nhận từ liên kết chia sẻ. Hãy kiểm tra, chỉnh sửa nếu cần rồi bấm Lưu.", lkBad:"Liên kết lịch không hợp lệ hoặc đã bị cắt bớt. Hãy nhờ người gửi chia sẻ lại.", lkTab:"Bạn đang xem trong cửa sổ tạm (Zalo, Messenger hoặc trình duyệt). Muốn lưu vào ứng dụng đã cài trên máy, bấm “Mở trong ứng dụng”; hoặc bấm Lưu để lưu ngay tại đây.", lkOpen:"Mở trong ứng dụng", shSave:"Lưu ảnh", shSend:"Gửi", shLong:"Nội dung lịch quá dài để tạo mã QR. Hãy rút gọn nội dung rồi thử lại.",
   qrBtn:"Quét QR", qrT:"Quét mã QR nhận lịch", qrPick:"Chọn ảnh QR", qrAim:"Đưa mã QR vào khung hình.", qrOpening:"Đang mở camera...", qrNoCam:"Không mở được camera. Hãy chọn ảnh QR có sẵn trong máy.", qrBad:"Mã QR không hợp lệ: đây không phải mã lịch của ứng dụng này.", qrNoRead:"Không đọc được mã QR trong ảnh. Hãy chọn ảnh rõ hơn.", qrLib:"Không tải được bộ đọc mã QR (cần có mạng ở lần đầu). Hãy kiểm tra kết nối rồi thử lại.", qrRecv:"Lịch nhận từ mã QR. Hãy kiểm tra, chỉnh sửa nếu cần rồi bấm Lưu.", qrReading:"Đang đọc ảnh...",
   dup:"Trùng lịch: đã có lịch cùng ngày, giờ và nội dung này.",
   menu:"Menu", wxT:"Xem thời tiết", bkT:"Sao lưu - Đồng bộ", bkOut:"Sao lưu lịch ra file", bkOutD:"Tải về một file chứa toàn bộ lịch hiện có ({n} ghi chú).", bkIn:"Đồng bộ từ file sao lưu", bkInD:"Chọn file đã sao lưu trước đó để thêm lịch vào máy này.", bkEmpty:"Chưa có lịch nào để sao lưu.", bkSaved:"Đã tạo file sao lưu: {f}", bkBad:"File không hợp lệ: đây không phải file sao lưu lịch của ứng dụng này.", bkSum:"File có {a} lịch: {b} lịch mới, {c} lịch trùng (sẽ bỏ qua).", bkBadN:"Có {d} mục lỗi trong file, đã bỏ qua.", bkMerge:"Gộp {b} lịch mới", bkRep:"Thay thế toàn bộ", bkRepAsk:"Xóa {n} ghi chú hiện có và thay bằng {a} lịch trong file?", bkYes:"Đồng ý thay thế", bkDoneM:"Đã đồng bộ: thêm {b} lịch mới.", bkDoneR:"Đã khôi phục {a} lịch từ file.", bkNone:"Không có lịch mới để thêm.",
@@ -1197,7 +1205,7 @@ en:{
   nSumYD:"Repeats every year on {d}/{m} (solar)", nSumYA:"Repeats every year on lunar {d}/{m}",
   nDelAsk:"Delete this note? Every repeat of it will be removed too.", nEditHint:"Editing changes every repeat of this note.",
   nErrC:"Please enter some content.", nErrD:"Please pick a date.", nErrR:"The end date must not be before the start date.", lichNote:"Large: solar date, small: lunar date", wd:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], wdF:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
-  nShare:"Share", shT:"Share note", shHint:"The receiver taps the link to open the app and save the note. They can also scan the QR code in the image with the app’s QR button.", shZalo:"Zalo", shMess:"Messenger", shCopy:"Copy link", shGo:"Tap Zalo or Messenger, then pick the app in the share sheet: the image, title and link are sent together.", shCopied:"Title and link copied. Paste them into Zalo or Messenger to send.", shCopyErr:"Could not copy. Save the image and send it manually.", shNoLink:"The app is opened from a file, so no link can be made. Host the app on the web (https) to share by link.", lkRecv:"Note received from a shared link. Check it, edit if needed, then tap Save.", lkBad:"This note link is invalid or was cut short. Ask the sender to share it again.", shSave:"Save image", shSend:"Send", shLong:"This note is too long for a QR code. Please shorten it and try again.",
+  nShare:"Share", shT:"Share note", shHint:"The receiver taps the link to open the app and save the note. They can also scan the QR code in the image with the app’s QR button.", shZalo:"Zalo", shMess:"Messenger", shCopy:"Copy link", shGo:"Tap Zalo or Messenger, then pick the app in the share sheet: the image, title and link are sent together.", shCopied:"Title and link copied. Paste them into Zalo or Messenger to send.", shCopyErr:"Could not copy. Save the image and send it manually.", shNoLink:"The app is opened from a file, so no link can be made. Host the app on the web (https) to share by link.", lkRecv:"Note received from a shared link. Check it, edit if needed, then tap Save.", lkBad:"This note link is invalid or was cut short. Ask the sender to share it again.", lkTab:"You are viewing this in a temporary window (Zalo, Messenger or a browser). To save it in the app installed on your phone, tap “Open in app”; or tap Save to keep it here.", lkOpen:"Open in app", shSave:"Save image", shSend:"Send", shLong:"This note is too long for a QR code. Please shorten it and try again.",
   qrBtn:"Scan QR", qrT:"Scan a QR code to receive a note", qrPick:"Pick QR image", qrAim:"Point the camera at the QR code.", qrOpening:"Opening camera...", qrNoCam:"Could not open the camera. Pick a QR image from your device instead.", qrBad:"Invalid QR code: this is not a note code from this app.", qrNoRead:"No QR code found in the image. Try a clearer picture.", qrLib:"Could not load the QR reader (needs internet the first time). Check your connection and try again.", qrRecv:"Note received from a QR code. Check it, edit if needed, then tap Save.", qrReading:"Reading image...",
   dup:"Duplicate: a note with the same date, time and content already exists.",
   menu:"Menu", wxT:"View weather", bkT:"Backup - Sync", bkOut:"Back up notes to a file", bkOutD:"Download a file with all your notes ({n} notes).", bkIn:"Sync from a backup file", bkInD:"Pick a previously saved backup file to add its notes to this device.", bkEmpty:"No notes to back up yet.", bkSaved:"Backup file created: {f}", bkBad:"Invalid file: this is not a notes backup file from this app.", bkSum:"The file has {a} notes: {b} new, {c} duplicates (will be skipped).", bkBadN:"{d} invalid entries in the file were skipped.", bkMerge:"Merge {b} new notes", bkRep:"Replace everything", bkRepAsk:"Delete your {n} current notes and replace them with the {a} notes in the file?", bkYes:"Yes, replace", bkDoneM:"Synced: {b} new notes added.", bkDoneR:"Restored {a} notes from the file.", bkNone:"No new notes to add.",
@@ -1537,7 +1545,7 @@ function ngayMacDinh(){
   return (hy===lichY && hm===lichM) ? hom : dstr(lichY,lichM,1);
 }
 function dongLich(){
-  lichPop.hidden = true; lichRecv = false; vcHeard = ""; vcWarn = false;
+  lichPop.hidden = true; veLich.vk = ""; lichRecv = false; vcHeard = ""; vcWarn = false;
   if(rec && vcOn){ try{ rec.abort(); }catch(e){} } vcOn = false;
 }
 function doiThang(n){
@@ -1589,6 +1597,7 @@ function panelForm(){
   return '<div class="fm"><div class="gcp-h"><b>'+t(lichId ? "nEditT" : "nAddT")+'</b></div>'
     + (lichId ? '<div class="note">'+t("nEditHint")+'</div>' : '')
     + (lichRecv ? '<div class="ok">'+t(typeof lichRecv==="string" ? lichRecv : "qrRecv")+'</div>' : '')
+    + (lichRecv==="lkRecv" && lkHash && laAndroid && !laApp() ? '<div class="lkb"><div class="note">ℹ️ '+t("lkTab")+'</div><button class="btn" data-a="openApp">📲 '+t("lkOpen")+'</button></div>' : '')
     + (!lichId ? '<div class="vc"><button class="btn" data-a="mic" id="micBtn">'+t(vcOn ? "vcStop" : "vcBtn")+'</button><small>'+t("vcHint")+'</small>'
         + '<div class="note" id="vcSt">'+(vcHeard ? t("vcHeard")+': “'+esc(vcHeard)+'”'+(vcWarn ? '<br><span class="err">'+t("vcNoDate")+'</span>' : '') : '')+'</div></div>' : '')
     + '<label>'+t("nContent")+'</label><textarea data-f="nd" rows="3" placeholder="'+t("nPh")+'">'+esc(f.nd)+'</textarea>'
@@ -1617,9 +1626,12 @@ function veTatCa(){                // màn hình "Tất cả ghi chú" kèm nút
 }
 function veLich(){
   const cu = lichPop.querySelector(".lich"), cuon = cu ? cu.scrollTop : 0;
+  const gp0 = lichPop.querySelector(".gcp"), gs = gp0 ? gp0.scrollTop : 0, vk = lichView+"|"+lichSel, giu = vk===veLich.vk; veLich.vk = vk;
+  const khoiPhuc = () => { const g1 = lichPop.querySelector(".gcp"); if(g1 && giu) g1.scrollTop = gs; };
   if(lichView==="all"){
     lichPop.innerHTML = veTatCa();
     const m = lichPop.querySelector(".lich"); if(m) m.scrollTop = cuon;
+    khoiPhuc();
     return;
   }
   const hom = homNay(), off = (new Date(Date.UTC(lichY, lichM-1, 1)).getUTCDay()+6)%7;   // tuần bắt đầu từ thứ Hai
@@ -1642,6 +1654,7 @@ function veLich(){
     + '<div class="gcp"'+(gon ? ' style="border-top:0"' : '')+'>'+panel+'</div>'
     + '<div class="lich-f"><span>'+t("lichNote")+'<br><b>'+t("today")+':</b> '+nhanAm(hd,hm,hy)+'</span><span class="bt"><button data-a="today">'+t("today")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
   const moi = lichPop.querySelector(".lich"); if(moi) moi.scrollTop = cuon;
+  khoiPhuc();
 }
 function luuForm(){
   const f = FM;
@@ -1668,6 +1681,7 @@ lichPop.onclick = e => {
   else if(a==="next") doiThang(1);
   else if(a==="today") chonNgay(homNay());
   else if(a==="close") dongLich();
+  else if(a==="openApp") moTrongApp();
   else if(a==="delAll") hoiXoaHet();
   else if(a==="wholeMonth"){ lichSel = ""; lichView = "list"; veLich(); }
   else if(a==="add"){ if(lichView==="all"){ lichBack = "all"; batDauThem(homNay()); } else batDauThem(ngayMacDinh()); }
@@ -1959,9 +1973,19 @@ function qrXuLy(text){                              // true = mã hợp lệ và
   moNhan(o, "qrRecv"); return true;
 }
 // Người nhận bấm vào liên kết chia sẻ (…#lich=…): mở ứng dụng và hiện form để lưu lịch
+let lkHash = "";
+const laAndroid = /Android/i.test(navigator.userAgent);
+const laApp = () => { try{ return matchMedia("(display-mode: standalone)").matches || navigator.standalone===true; }catch(e){ return false; } };
+// Mở lại liên kết này bằng ứng dụng đã cài (Android): hệ thống tự chọn ứng dụng nhận liên kết của trang; không có thì quay về trang này
+function moTrongApp(){
+  if(!lkHash) return;
+  const u = location.origin + location.pathname + "#lich=" + lkHash;
+  location.href = "intent://" + location.host + location.pathname + "#lich=" + lkHash + "#Intent;scheme=" + location.protocol.replace(":","") + ";action=android.intent.action.VIEW;S.browser_fallback_url=" + encodeURIComponent(u) + ";end";
+}
 function nhanLink(){
   if(location.hash.indexOf("#lich=")!==0) return;
-  const o = docLink(location.hash.slice(6));
+  lkHash = location.hash.slice(6);
+  const o = docLink(lkHash);
   try{ history.replaceState(null, "", location.pathname+location.search); }catch(e){}
   if(o) moNhan(o, "lkRecv");
   else moApp('<h3>📥 '+t("shT")+'</h3><div class="err">'+t("lkBad")+'</div>'+btnDong.replace("{c}", t("close")));
@@ -2438,6 +2462,16 @@ applyStatic();
 layViTri();
 nhanLink();
 window.addEventListener("hashchange", nhanLink);
+// Lịch có thể vừa được lưu ở một cửa sổ khác của cùng trang: nạp lại khi quay về ứng dụng để không mất hoặc ghi đè lịch mới
+function dongBoGC(){
+  let m; try{ m = JSON.parse(localStorage.getItem("tpGhiChu") || "[]"); }catch(e){ return; }
+  if(!Array.isArray(m) || JSON.stringify(m)===JSON.stringify(GC)) return;
+  GC = m; veSapToi(); if(!lichPop.hidden && lichView!=="form") veLich();
+}
+window.addEventListener("storage", e => { if(e.key===null || e.key==="tpGhiChu") dongBoGC(); });
+document.addEventListener("visibilitychange", () => { if(!document.hidden) dongBoGC(); });
+window.addEventListener("focus", dongBoGC);
+window.addEventListener("pageshow", dongBoGC);
 veDongHo();
 setInterval(veDongHo, 1000);
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thời tiết 10 ngày tới</title>
+<title>Thời tiết - Lịch</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2f86c9">
 <link rel="icon" href="icon-192.png">
@@ -16,7 +16,10 @@ body{margin:0;color:var(--chu);font-family:system-ui,"Segoe UI",Roboto,sans-seri
 .bg{position:fixed;inset:0;z-index:-1}
 .bg svg{width:100%;height:100%;display:block}
 main{max-width:720px;margin:0 auto;padding:8px 8px 16px}
-h1{margin:2px 4px 6px;font-size:19px;color:#fff;text-shadow:0 1px 5px #0007}
+h1{margin:2px 4px 6px;font-size:18px;line-height:1.25;color:#fff;text-shadow:0 1px 5px #0007}
+#amlich{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-shadow:inherit;text-align:left;cursor:pointer}
+#amlich span{display:inline-block}
+#amlich:focus-visible{outline:2px solid var(--nang);outline-offset:2px;border-radius:4px}
 .topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .phai{max-width:46%;text-align:right}
 .ban{font-size:10px;line-height:1.25;color:#fff;text-shadow:0 1px 3px #0008;margin-top:3px}
@@ -61,7 +64,6 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 [hidden]{display:none!important}
 #diachi{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:3px 10px;color:#fff;text-shadow:0 1px 3px #0008;font-size:13px;padding:0 4px 6px}
 #dc{flex:1 1 auto;min-width:0}
-#amlich{margin-left:auto;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.7);color:#fff;text-shadow:inherit;border-radius:999px;padding:2px 10px;font:inherit;font-size:12px;cursor:pointer;white-space:nowrap}
 .gio{font-size:13px;margin:0 0 6px}
 .lich-bg{position:fixed;inset:0;background:rgba(10,30,45,.55);display:flex;align-items:center;justify-content:center;padding:10px;z-index:50}
 .lich{width:100%;max-width:420px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px #0006}
@@ -85,7 +87,7 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 .lich-g .nay.gc{background:#5bc8cf;box-shadow:inset 0 0 0 3px #f2b705}
 .lich-g .chon{outline:2px solid #0f5f8c;outline-offset:-2px}
 .gcp{padding:8px 12px;border-top:1px solid #e3ebf0;font-size:13px}
-.gcp-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.gcp-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 8px;margin-bottom:6px}
 .gc-it{display:flex;gap:8px;padding:7px 8px;border-radius:8px;background:#f3f8fb;margin-bottom:5px;cursor:pointer}
 .gc-it .g{flex:none;min-width:58px;font-weight:700;color:#0f5f8c}
 .gc-it small{display:block;color:#5f7380;font-size:11px}
@@ -103,9 +105,44 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 .err{color:#c62f3a;font-size:12px;margin-top:6px}
 #up{padding:6px 10px}
 .up-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px;font-size:13px;font-weight:700}
-.up-it{display:flex;gap:8px;padding:4px 0;font-size:13px;border-top:1px solid #0001;cursor:pointer}
-.up-it .u{flex:none;min-width:92px;color:#0f5f8c;font-weight:700}
-.up-it span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.seg{display:flex;gap:5px;margin:4px 0}
+.seg button{border:0;border-radius:999px;padding:3px 11px;font:inherit;font-size:12px;font-weight:600;background:rgba(15,95,140,.12);color:var(--chu);cursor:pointer}
+.seg button.on{background:var(--chu);color:#fff}
+.up-list{position:relative;max-height:min(32vh,210px);overflow-y:auto;overscroll-behavior:contain}
+.up-it{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px;border-top:1px solid #0001;cursor:pointer}
+.up-it .u{flex:none;min-width:70px;color:#0f5f8c;font-weight:700}
+.up-it .gi{flex:none;min-width:38px;font-weight:600}
+.up-it .nd{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.up-it.qua{opacity:.5}
+.up-f{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.xd{flex:none;border:0;border-radius:8px;background:#fde8ea;color:#c62f3a;width:32px;height:32px;font-size:15px;line-height:1;cursor:pointer;align-self:center}
+.up-it .xd{width:26px;height:26px;font-size:13px}
+.mh{font-size:12px;font-weight:700;color:#5f7380;margin:9px 0 4px;cursor:pointer}
+.mh.hn{color:#0f5f8c}
+.bt2{display:flex;gap:6px}
+.gc-it .g.dl{min-width:74px}
+.gc-m{flex:1;min-width:0;word-break:break-word}
+#xnPop{z-index:60}
+.xn-box{padding:16px;max-width:340px}
+.xn-t{font-size:16px;font-weight:700;margin-bottom:6px}
+.xn-n{font-size:14px;margin-bottom:6px;word-break:break-word}
+
+/* ===== Bổ sung: menu, cửa sổ phụ, mã QR, giọng nói ===== */
+.co .mn{border:0;border-radius:6px;background:rgba(255,255,255,.28);color:#fff;font-size:18px;line-height:1;width:32px;height:26px;opacity:1;text-shadow:0 1px 3px #0007}
+#appPop{z-index:70}
+.ap{width:100%;max-width:400px;background:#fff;border-radius:16px;box-shadow:0 8px 30px #0006;max-height:calc(100vh - 20px);overflow-y:auto;padding:14px 16px}
+.ap h3{margin:0 0 8px;font-size:17px}
+.ap p,.ap li{font-size:13.5px;margin:4px 0}
+.ap ul{padding-left:18px;margin:4px 0 8px}
+.mi{display:block;width:100%;text-align:left;border:0;background:#f3f8fb;border-radius:10px;padding:11px 12px;margin-bottom:6px;font:inherit;font-size:15px;font-weight:600;color:var(--chu);cursor:pointer}
+.qr-c{display:block;margin:6px auto;max-width:100%;height:auto;border:1px solid #e3ebf0;border-radius:8px}
+.vid{background:#000;border-radius:10px;overflow:hidden;aspect-ratio:4/3}
+.vid video{width:100%;height:100%;object-fit:cover;display:block}
+.ok{color:#2e7d32;font-size:12px;margin-top:6px}
+#apSt.ok,#vcSt.ok{font-size:13px}
+#apSt,#vcSt{margin-top:6px;font-size:13px}
+.vc{background:#eef6fb;border-radius:10px;padding:8px;margin:6px 0}
+.vc small{color:#5f7380;font-size:11px;margin-left:4px}
 </style>
 </head>
 <body>
@@ -129,11 +166,12 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 
 <main>
   <div class="topbar">
-    <h1 data-i="title"></h1>
+    <h1><button id="amlich" type="button"></button></h1>
     <div class="phai">
       <div class="ban" data-i="copy"></div>
       <!-- Hai lá cờ để đổi ngôn ngữ (vẽ bằng SVG nên hiện đúng trên mọi máy) -->
       <div class="co">
+        <button id="menuBtn" class="mn" type="button" aria-label="Menu">☰</button>
         <button id="cVi" title="Tiếng Việt" aria-label="Tiếng Việt">
           <svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#da251d"/><polygon fill="#ffff00" points="15,4.5 16.35,8.64 20.71,8.65 17.19,11.21 18.53,15.35 15,12.8 11.47,15.35 12.81,11.21 9.29,8.65 13.65,8.64"/></svg>
         </button>
@@ -145,7 +183,7 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
   </div>
   <div class="box" id="up"></div>
   <div class="tabs" id="tabs"></div>
-  <div id="diachi"><span id="dc"></span><button id="amlich" type="button"></button></div>
+  <div id="diachi"><span id="dc"></span></div>
   <div class="box tim" id="tim" hidden>
     <button class="dong" id="dongBtn" data-i="close"></button>
     <h2 data-i="findTitle"></h2>
@@ -157,14 +195,918 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
   <div id="out"></div>
 </main>
 <div class="lich-bg" id="lichPop" hidden></div>
+<div class="lich-bg" id="xnPop" hidden></div>
+<div class="lich-bg" id="appPop" hidden></div>
 
+<script>
+/* Bộ tạo mã QR: QRCode for JavaScript, (c) 2009 Kazuhiko Arase, giấy phép MIT (http://www.d-project.com/). "QR Code" là nhãn hiệu của DENSO WAVE. */
+(function(){var M={},C={};function R(p){p=p.replace("./","");if(C[p])return C[p].exports;var m=C[p]={exports:{}};M[p](m,m.exports,R);return m.exports;}
+M["QRMode"]=function(module,exports,require){module.exports = {
+    MODE_NUMBER :       1 << 0,
+    MODE_ALPHA_NUM :    1 << 1,
+    MODE_8BIT_BYTE :    1 << 2,
+    MODE_KANJI :        1 << 3
+};
+
+};
+M["QRErrorCorrectLevel"]=function(module,exports,require){module.exports = {
+	L : 1,
+	M : 0,
+	Q : 3,
+	H : 2
+};
+
+};
+M["QRMaskPattern"]=function(module,exports,require){module.exports = {
+	PATTERN000 : 0,
+	PATTERN001 : 1,
+	PATTERN010 : 2,
+	PATTERN011 : 3,
+	PATTERN100 : 4,
+	PATTERN101 : 5,
+	PATTERN110 : 6,
+	PATTERN111 : 7
+};
+
+};
+M["QRMath"]=function(module,exports,require){var QRMath = {
+	glog : function(n) {
+		if (n < 1) {
+			throw new Error("glog(" + n + ")");
+		}
+		return QRMath.LOG_TABLE[n];
+	},
+	gexp : function(n) {
+		while (n < 0) {
+			n += 255;
+		}
+		while (n >= 256) {
+			n -= 255;
+		}
+		return QRMath.EXP_TABLE[n];
+	},
+	EXP_TABLE : new Array(256),
+	LOG_TABLE : new Array(256)
+};
+for (var i = 0; i < 8; i++) {
+	QRMath.EXP_TABLE[i] = 1 << i;
+}
+for (var i = 8; i < 256; i++) {
+	QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4]
+		^ QRMath.EXP_TABLE[i - 5]
+		^ QRMath.EXP_TABLE[i - 6]
+		^ QRMath.EXP_TABLE[i - 8];
+}
+for (var i = 0; i < 255; i++) {
+	QRMath.LOG_TABLE[QRMath.EXP_TABLE[i] ] = i;
+}
+module.exports = QRMath;
+
+};
+M["QRPolynomial"]=function(module,exports,require){var QRMath = require('./QRMath');
+function QRPolynomial(num, shift) {
+	if (num.length === undefined) {
+		throw new Error(num.length + "/" + shift);
+	}
+	var offset = 0;
+	while (offset < num.length && num[offset] === 0) {
+		offset++;
+	}
+	this.num = new Array(num.length - offset + shift);
+	for (var i = 0; i < num.length - offset; i++) {
+		this.num[i] = num[i + offset];
+	}
+}
+QRPolynomial.prototype = {
+	get : function(index) {
+		return this.num[index];
+	},
+	getLength : function() {
+		return this.num.length;
+	},
+	multiply : function(e) {
+		var num = new Array(this.getLength() + e.getLength() - 1);
+		for (var i = 0; i < this.getLength(); i++) {
+			for (var j = 0; j < e.getLength(); j++) {
+				num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i) ) + QRMath.glog(e.get(j) ) );
+			}
+		}
+		return new QRPolynomial(num, 0);
+	},
+	mod : function(e) {
+		if (this.getLength() - e.getLength() < 0) {
+			return this;
+		}
+		var ratio = QRMath.glog(this.get(0) ) - QRMath.glog(e.get(0) );
+		var num = new Array(this.getLength() );
+		for (var i = 0; i < this.getLength(); i++) {
+			num[i] = this.get(i);
+		}
+		for (var x = 0; x < e.getLength(); x++) {
+			num[x] ^= QRMath.gexp(QRMath.glog(e.get(x) ) + ratio);
+		}
+		return new QRPolynomial(num, 0).mod(e);
+	}
+};
+module.exports = QRPolynomial;
+
+};
+M["QRUtil"]=function(module,exports,require){var QRMode = require('./QRMode');
+var QRPolynomial = require('./QRPolynomial');
+var QRMath = require('./QRMath');
+var QRMaskPattern = require('./QRMaskPattern');
+var QRUtil = {
+    PATTERN_POSITION_TABLE : [
+        [],
+        [6, 18],
+        [6, 22],
+        [6, 26],
+        [6, 30],
+        [6, 34],
+        [6, 22, 38],
+        [6, 24, 42],
+        [6, 26, 46],
+        [6, 28, 50],
+        [6, 30, 54],        
+        [6, 32, 58],
+        [6, 34, 62],
+        [6, 26, 46, 66],
+        [6, 26, 48, 70],
+        [6, 26, 50, 74],
+        [6, 30, 54, 78],
+        [6, 30, 56, 82],
+        [6, 30, 58, 86],
+        [6, 34, 62, 90],
+        [6, 28, 50, 72, 94],
+        [6, 26, 50, 74, 98],
+        [6, 30, 54, 78, 102],
+        [6, 28, 54, 80, 106],
+        [6, 32, 58, 84, 110],
+        [6, 30, 58, 86, 114],
+        [6, 34, 62, 90, 118],
+        [6, 26, 50, 74, 98, 122],
+        [6, 30, 54, 78, 102, 126],
+        [6, 26, 52, 78, 104, 130],
+        [6, 30, 56, 82, 108, 134],
+        [6, 34, 60, 86, 112, 138],
+        [6, 30, 58, 86, 114, 142],
+        [6, 34, 62, 90, 118, 146],
+        [6, 30, 54, 78, 102, 126, 150],
+        [6, 24, 50, 76, 102, 128, 154],
+        [6, 28, 54, 80, 106, 132, 158],
+        [6, 32, 58, 84, 110, 136, 162],
+        [6, 26, 54, 82, 110, 138, 166],
+        [6, 30, 58, 86, 114, 142, 170]
+    ],
+    G15 : (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0),
+    G18 : (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0),
+    G15_MASK : (1 << 14) | (1 << 12) | (1 << 10)    | (1 << 4) | (1 << 1),
+    getBCHTypeInfo : function(data) {
+        var d = data << 10;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) >= 0) {
+            d ^= (QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) ) );    
+        }
+        return ( (data << 10) | d) ^ QRUtil.G15_MASK;
+    },
+    getBCHTypeNumber : function(data) {
+        var d = data << 12;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) >= 0) {
+            d ^= (QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) ) );    
+        }
+        return (data << 12) | d;
+    },
+    getBCHDigit : function(data) {
+        var digit = 0;
+        while (data !== 0) {
+            digit++;
+            data >>>= 1;
+        }
+        return digit;
+    },
+    getPatternPosition : function(typeNumber) {
+        return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1];
+    },
+    getMask : function(maskPattern, i, j) {
+        switch (maskPattern) {
+        case QRMaskPattern.PATTERN000 : return (i + j) % 2 === 0;
+        case QRMaskPattern.PATTERN001 : return i % 2 === 0;
+        case QRMaskPattern.PATTERN010 : return j % 3 === 0;
+        case QRMaskPattern.PATTERN011 : return (i + j) % 3 === 0;
+        case QRMaskPattern.PATTERN100 : return (Math.floor(i / 2) + Math.floor(j / 3) ) % 2 === 0;
+        case QRMaskPattern.PATTERN101 : return (i * j) % 2 + (i * j) % 3 === 0;
+        case QRMaskPattern.PATTERN110 : return ( (i * j) % 2 + (i * j) % 3) % 2 === 0;
+        case QRMaskPattern.PATTERN111 : return ( (i * j) % 3 + (i + j) % 2) % 2 === 0;
+        default :
+            throw new Error("bad maskPattern:" + maskPattern);
+        }
+    },
+    getErrorCorrectPolynomial : function(errorCorrectLength) {
+        var a = new QRPolynomial([1], 0);
+        for (var i = 0; i < errorCorrectLength; i++) {
+            a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0) );
+        }
+        return a;
+    },
+    getLengthInBits : function(mode, type) {
+        if (1 <= type && type < 10) {
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 10;
+            case QRMode.MODE_ALPHA_NUM  : return 9;
+            case QRMode.MODE_8BIT_BYTE  : return 8;
+            case QRMode.MODE_KANJI      : return 8;
+            default :
+                throw new Error("mode:" + mode);
+            }
+        } else if (type < 27) {
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 12;
+            case QRMode.MODE_ALPHA_NUM  : return 11;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 10;
+            default :
+                throw new Error("mode:" + mode);
+            }
+        } else if (type < 41) {
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 14;
+            case QRMode.MODE_ALPHA_NUM  : return 13;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 12;
+            default :
+                throw new Error("mode:" + mode);
+            }
+        } else {
+            throw new Error("type:" + type);
+        }
+    },
+    getLostPoint : function(qrCode) {
+        var moduleCount = qrCode.getModuleCount();
+        var lostPoint = 0;
+        var row = 0; 
+        var col = 0;
+        for (row = 0; row < moduleCount; row++) {
+            for (col = 0; col < moduleCount; col++) {
+                var sameCount = 0;
+                var dark = qrCode.isDark(row, col);
+                for (var r = -1; r <= 1; r++) {
+                    if (row + r < 0 || moduleCount <= row + r) {
+                        continue;
+                    }
+                    for (var c = -1; c <= 1; c++) {
+                        if (col + c < 0 || moduleCount <= col + c) {
+                            continue;
+                        }
+                        if (r === 0 && c === 0) {
+                            continue;
+                        }
+                        if (dark === qrCode.isDark(row + r, col + c) ) {
+                            sameCount++;
+                        }
+                    }
+                }
+                if (sameCount > 5) {
+                    lostPoint += (3 + sameCount - 5);
+                }
+            }
+        }
+        for (row = 0; row < moduleCount - 1; row++) {
+            for (col = 0; col < moduleCount - 1; col++) {
+                var count = 0;
+                if (qrCode.isDark(row,     col    ) ) count++;
+                if (qrCode.isDark(row + 1, col    ) ) count++;
+                if (qrCode.isDark(row,     col + 1) ) count++;
+                if (qrCode.isDark(row + 1, col + 1) ) count++;
+                if (count === 0 || count === 4) {
+                    lostPoint += 3;
+                }
+            }
+        }
+        for (row = 0; row < moduleCount; row++) {
+            for (col = 0; col < moduleCount - 6; col++) {
+                if (qrCode.isDark(row, col) && 
+                        !qrCode.isDark(row, col + 1) && 
+                         qrCode.isDark(row, col + 2) && 
+                         qrCode.isDark(row, col + 3) && 
+                         qrCode.isDark(row, col + 4) && 
+                        !qrCode.isDark(row, col + 5) && 
+                         qrCode.isDark(row, col + 6) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount - 6; row++) {
+                if (qrCode.isDark(row, col) &&
+                        !qrCode.isDark(row + 1, col) &&
+                         qrCode.isDark(row + 2, col) &&
+                         qrCode.isDark(row + 3, col) &&
+                         qrCode.isDark(row + 4, col) &&
+                        !qrCode.isDark(row + 5, col) &&
+                         qrCode.isDark(row + 6, col) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+        var darkCount = 0;
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount; row++) {
+                if (qrCode.isDark(row, col) ) {
+                    darkCount++;
+                }
+            }
+        }
+        var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+        lostPoint += ratio * 10;
+        return lostPoint;       
+    }
+};
+module.exports = QRUtil;
+
+};
+M["QRRSBlock"]=function(module,exports,require){var QRErrorCorrectLevel = require('./QRErrorCorrectLevel');
+function QRRSBlock(totalCount, dataCount) {
+	this.totalCount = totalCount;
+	this.dataCount  = dataCount;
+}
+QRRSBlock.RS_BLOCK_TABLE = [
+	[1, 26, 19],
+	[1, 26, 16],
+	[1, 26, 13],
+	[1, 26, 9],
+	[1, 44, 34],
+	[1, 44, 28],
+	[1, 44, 22],
+	[1, 44, 16],
+	[1, 70, 55],
+	[1, 70, 44],
+	[2, 35, 17],
+	[2, 35, 13],
+	[1, 100, 80],
+	[2, 50, 32],
+	[2, 50, 24],
+	[4, 25, 9],
+	[1, 134, 108],
+	[2, 67, 43],
+	[2, 33, 15, 2, 34, 16],
+	[2, 33, 11, 2, 34, 12],
+	[2, 86, 68],
+	[4, 43, 27],
+	[4, 43, 19],
+	[4, 43, 15],
+	[2, 98, 78],
+	[4, 49, 31],
+	[2, 32, 14, 4, 33, 15],
+	[4, 39, 13, 1, 40, 14],
+	[2, 121, 97],
+	[2, 60, 38, 2, 61, 39],
+	[4, 40, 18, 2, 41, 19],
+	[4, 40, 14, 2, 41, 15],
+	[2, 146, 116],
+	[3, 58, 36, 2, 59, 37],
+	[4, 36, 16, 4, 37, 17],
+	[4, 36, 12, 4, 37, 13],
+	[2, 86, 68, 2, 87, 69],
+	[4, 69, 43, 1, 70, 44],
+	[6, 43, 19, 2, 44, 20],
+	[6, 43, 15, 2, 44, 16],
+	[4, 101, 81],
+	[1, 80, 50, 4, 81, 51],
+	[4, 50, 22, 4, 51, 23],
+	[3, 36, 12, 8, 37, 13],
+	[2, 116, 92, 2, 117, 93],
+	[6, 58, 36, 2, 59, 37],
+	[4, 46, 20, 6, 47, 21],
+	[7, 42, 14, 4, 43, 15],
+	[4, 133, 107],
+	[8, 59, 37, 1, 60, 38],
+	[8, 44, 20, 4, 45, 21],
+	[12, 33, 11, 4, 34, 12],
+	[3, 145, 115, 1, 146, 116],
+	[4, 64, 40, 5, 65, 41],
+	[11, 36, 16, 5, 37, 17],
+	[11, 36, 12, 5, 37, 13],
+	[5, 109, 87, 1, 110, 88],
+	[5, 65, 41, 5, 66, 42],
+	[5, 54, 24, 7, 55, 25],
+	[11, 36, 12],
+	[5, 122, 98, 1, 123, 99],
+	[7, 73, 45, 3, 74, 46],
+	[15, 43, 19, 2, 44, 20],
+	[3, 45, 15, 13, 46, 16],
+	[1, 135, 107, 5, 136, 108],
+	[10, 74, 46, 1, 75, 47],
+	[1, 50, 22, 15, 51, 23],
+	[2, 42, 14, 17, 43, 15],
+	[5, 150, 120, 1, 151, 121],
+	[9, 69, 43, 4, 70, 44],
+	[17, 50, 22, 1, 51, 23],
+	[2, 42, 14, 19, 43, 15],
+	[3, 141, 113, 4, 142, 114],
+	[3, 70, 44, 11, 71, 45],
+	[17, 47, 21, 4, 48, 22],
+	[9, 39, 13, 16, 40, 14],
+	[3, 135, 107, 5, 136, 108],
+	[3, 67, 41, 13, 68, 42],
+	[15, 54, 24, 5, 55, 25],
+	[15, 43, 15, 10, 44, 16],
+	[4, 144, 116, 4, 145, 117],
+	[17, 68, 42],
+	[17, 50, 22, 6, 51, 23],
+	[19, 46, 16, 6, 47, 17],
+	[2, 139, 111, 7, 140, 112],
+	[17, 74, 46],
+	[7, 54, 24, 16, 55, 25],
+	[34, 37, 13],
+	[4, 151, 121, 5, 152, 122],
+	[4, 75, 47, 14, 76, 48],
+	[11, 54, 24, 14, 55, 25],
+	[16, 45, 15, 14, 46, 16],
+	[6, 147, 117, 4, 148, 118],
+	[6, 73, 45, 14, 74, 46],
+	[11, 54, 24, 16, 55, 25],
+	[30, 46, 16, 2, 47, 17],
+	[8, 132, 106, 4, 133, 107],
+	[8, 75, 47, 13, 76, 48],
+	[7, 54, 24, 22, 55, 25],
+	[22, 45, 15, 13, 46, 16],
+	[10, 142, 114, 2, 143, 115],
+	[19, 74, 46, 4, 75, 47],
+	[28, 50, 22, 6, 51, 23],
+	[33, 46, 16, 4, 47, 17],
+	[8, 152, 122, 4, 153, 123],
+	[22, 73, 45, 3, 74, 46],
+	[8, 53, 23, 26, 54, 24],
+	[12, 45, 15, 28, 46, 16],
+	[3, 147, 117, 10, 148, 118],
+	[3, 73, 45, 23, 74, 46],
+	[4, 54, 24, 31, 55, 25],
+	[11, 45, 15, 31, 46, 16],
+	[7, 146, 116, 7, 147, 117],
+	[21, 73, 45, 7, 74, 46],
+	[1, 53, 23, 37, 54, 24],
+	[19, 45, 15, 26, 46, 16],
+	[5, 145, 115, 10, 146, 116],
+	[19, 75, 47, 10, 76, 48],
+	[15, 54, 24, 25, 55, 25],
+	[23, 45, 15, 25, 46, 16],
+	[13, 145, 115, 3, 146, 116],
+	[2, 74, 46, 29, 75, 47],
+	[42, 54, 24, 1, 55, 25],
+	[23, 45, 15, 28, 46, 16],
+	[17, 145, 115],
+	[10, 74, 46, 23, 75, 47],
+	[10, 54, 24, 35, 55, 25],
+	[19, 45, 15, 35, 46, 16],
+	[17, 145, 115, 1, 146, 116],
+	[14, 74, 46, 21, 75, 47],
+	[29, 54, 24, 19, 55, 25],
+	[11, 45, 15, 46, 46, 16],
+	[13, 145, 115, 6, 146, 116],
+	[14, 74, 46, 23, 75, 47],
+	[44, 54, 24, 7, 55, 25],
+	[59, 46, 16, 1, 47, 17],
+	[12, 151, 121, 7, 152, 122],
+	[12, 75, 47, 26, 76, 48],
+	[39, 54, 24, 14, 55, 25],
+	[22, 45, 15, 41, 46, 16],
+	[6, 151, 121, 14, 152, 122],
+	[6, 75, 47, 34, 76, 48],
+	[46, 54, 24, 10, 55, 25],
+	[2, 45, 15, 64, 46, 16],
+	[17, 152, 122, 4, 153, 123],
+	[29, 74, 46, 14, 75, 47],
+	[49, 54, 24, 10, 55, 25],
+	[24, 45, 15, 46, 46, 16],
+	[4, 152, 122, 18, 153, 123],
+	[13, 74, 46, 32, 75, 47],
+	[48, 54, 24, 14, 55, 25],
+	[42, 45, 15, 32, 46, 16],
+	[20, 147, 117, 4, 148, 118],
+	[40, 75, 47, 7, 76, 48],
+	[43, 54, 24, 22, 55, 25],
+	[10, 45, 15, 67, 46, 16],
+	[19, 148, 118, 6, 149, 119],
+	[18, 75, 47, 31, 76, 48],
+	[34, 54, 24, 34, 55, 25],
+	[20, 45, 15, 61, 46, 16]
+];
+QRRSBlock.getRSBlocks = function(typeNumber, errorCorrectLevel) {
+	var rsBlock = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectLevel);
+	if (rsBlock === undefined) {
+		throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectLevel:" + errorCorrectLevel);
+	}
+	var length = rsBlock.length / 3;
+	var list = [];
+	for (var i = 0; i < length; i++) {
+		var count = rsBlock[i * 3 + 0];
+		var totalCount = rsBlock[i * 3 + 1];
+		var dataCount  = rsBlock[i * 3 + 2];
+		for (var j = 0; j < count; j++) {
+			list.push(new QRRSBlock(totalCount, dataCount) );	
+		}
+	}
+	return list;
+};
+QRRSBlock.getRsBlockTable = function(typeNumber, errorCorrectLevel) {
+	switch(errorCorrectLevel) {
+	case QRErrorCorrectLevel.L :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+	case QRErrorCorrectLevel.M :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+	case QRErrorCorrectLevel.Q :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+	case QRErrorCorrectLevel.H :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+	default :
+		return undefined;
+	}
+};
+module.exports = QRRSBlock;
+
+};
+M["QRBitBuffer"]=function(module,exports,require){function QRBitBuffer() {
+	this.buffer = [];
+	this.length = 0;
+}
+QRBitBuffer.prototype = {
+	get : function(index) {
+		var bufIndex = Math.floor(index / 8);
+		return ( (this.buffer[bufIndex] >>> (7 - index % 8) ) & 1) == 1;
+	},
+	put : function(num, length) {
+		for (var i = 0; i < length; i++) {
+			this.putBit( ( (num >>> (length - i - 1) ) & 1) == 1);
+		}
+	},
+	getLengthInBits : function() {
+		return this.length;
+	},
+	putBit : function(bit) {
+		var bufIndex = Math.floor(this.length / 8);
+		if (this.buffer.length <= bufIndex) {
+			this.buffer.push(0);
+		}
+		if (bit) {
+			this.buffer[bufIndex] |= (0x80 >>> (this.length % 8) );
+		}
+		this.length++;
+	}
+};
+module.exports = QRBitBuffer;
+
+};
+M["QR8bitByte"]=function(module,exports,require){var QRMode = require('./QRMode');
+function QR8bitByte(data) {
+	this.mode = QRMode.MODE_8BIT_BYTE;
+	this.data = data;
+}
+QR8bitByte.prototype = {
+	getLength : function() {
+		return this.data.length;
+	},
+	write : function(buffer) {
+		for (var i = 0; i < this.data.length; i++) {
+			buffer.put(this.data.charCodeAt(i), 8);
+		}
+	}
+};
+module.exports = QR8bitByte;
+
+};
+M["index"]=function(module,exports,require){
+var QR8bitByte = require('./QR8bitByte');
+var QRUtil = require('./QRUtil');
+var QRPolynomial = require('./QRPolynomial');
+var QRRSBlock = require('./QRRSBlock');
+var QRBitBuffer = require('./QRBitBuffer');
+function QRCode(typeNumber, errorCorrectLevel) {
+	this.typeNumber = typeNumber;
+	this.errorCorrectLevel = errorCorrectLevel;
+	this.modules = null;
+	this.moduleCount = 0;
+	this.dataCache = null;
+	this.dataList = [];
+}
+QRCode.prototype = {
+	addData : function(data) {
+		var newData = new QR8bitByte(data);
+		this.dataList.push(newData);
+		this.dataCache = null;
+	},
+	isDark : function(row, col) {
+		if (row < 0 || this.moduleCount <= row || col < 0 || this.moduleCount <= col) {
+			throw new Error(row + "," + col);
+		}
+		return this.modules[row][col];
+	},
+	getModuleCount : function() {
+		return this.moduleCount;
+	},
+	make : function() {
+		if (this.typeNumber < 1 ){
+			var typeNumber = 1;
+			for (typeNumber = 1; typeNumber < 40; typeNumber++) {
+				var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
+				var buffer = new QRBitBuffer();
+				var totalDataCount = 0;
+				for (var i = 0; i < rsBlocks.length; i++) {
+					totalDataCount += rsBlocks[i].dataCount;
+				}
+				for (var x = 0; x < this.dataList.length; x++) {
+					var data = this.dataList[x];
+					buffer.put(data.mode, 4);
+					buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+					data.write(buffer);
+				}
+				if (buffer.getLengthInBits() <= totalDataCount * 8)
+					break;
+			}
+			this.typeNumber = typeNumber;
+		}
+		this.makeImpl(false, this.getBestMaskPattern() );
+	},
+	makeImpl : function(test, maskPattern) {
+		this.moduleCount = this.typeNumber * 4 + 17;
+		this.modules = new Array(this.moduleCount);
+		for (var row = 0; row < this.moduleCount; row++) {
+			this.modules[row] = new Array(this.moduleCount);
+			for (var col = 0; col < this.moduleCount; col++) {
+				this.modules[row][col] = null;
+			}
+		}
+		this.setupPositionProbePattern(0, 0);
+		this.setupPositionProbePattern(this.moduleCount - 7, 0);
+		this.setupPositionProbePattern(0, this.moduleCount - 7);
+		this.setupPositionAdjustPattern();
+		this.setupTimingPattern();
+		this.setupTypeInfo(test, maskPattern);
+		if (this.typeNumber >= 7) {
+			this.setupTypeNumber(test);
+		}
+		if (this.dataCache === null) {
+			this.dataCache = QRCode.createData(this.typeNumber, this.errorCorrectLevel, this.dataList);
+		}
+		this.mapData(this.dataCache, maskPattern);
+	},
+	setupPositionProbePattern : function(row, col)  {
+		for (var r = -1; r <= 7; r++) {
+			if (row + r <= -1 || this.moduleCount <= row + r) continue;
+			for (var c = -1; c <= 7; c++) {
+				if (col + c <= -1 || this.moduleCount <= col + c) continue;
+				if ( (0 <= r && r <= 6 && (c === 0 || c === 6) ) || 
+                     (0 <= c && c <= 6 && (r === 0 || r === 6) ) || 
+                     (2 <= r && r <= 4 && 2 <= c && c <= 4) ) {
+					this.modules[row + r][col + c] = true;
+				} else {
+					this.modules[row + r][col + c] = false;
+				}
+			}		
+		}		
+	},
+	getBestMaskPattern : function() {
+		var minLostPoint = 0;
+		var pattern = 0;
+		for (var i = 0; i < 8; i++) {
+			this.makeImpl(true, i);
+			var lostPoint = QRUtil.getLostPoint(this);
+			if (i === 0 || minLostPoint >  lostPoint) {
+				minLostPoint = lostPoint;
+				pattern = i;
+			}
+		}
+		return pattern;
+	},
+	createMovieClip : function(target_mc, instance_name, depth) {
+		var qr_mc = target_mc.createEmptyMovieClip(instance_name, depth);
+		var cs = 1;
+		this.make();
+		for (var row = 0; row < this.modules.length; row++) {
+			var y = row * cs;
+			for (var col = 0; col < this.modules[row].length; col++) {
+				var x = col * cs;
+				var dark = this.modules[row][col];
+				if (dark) {
+					qr_mc.beginFill(0, 100);
+					qr_mc.moveTo(x, y);
+					qr_mc.lineTo(x + cs, y);
+					qr_mc.lineTo(x + cs, y + cs);
+					qr_mc.lineTo(x, y + cs);
+					qr_mc.endFill();
+				}
+			}
+		}
+		return qr_mc;
+	},
+	setupTimingPattern : function() {
+		for (var r = 8; r < this.moduleCount - 8; r++) {
+			if (this.modules[r][6] !== null) {
+				continue;
+			}
+			this.modules[r][6] = (r % 2 === 0);
+		}
+		for (var c = 8; c < this.moduleCount - 8; c++) {
+			if (this.modules[6][c] !== null) {
+				continue;
+			}
+			this.modules[6][c] = (c % 2 === 0);
+		}
+	},
+	setupPositionAdjustPattern : function() {
+		var pos = QRUtil.getPatternPosition(this.typeNumber);
+		for (var i = 0; i < pos.length; i++) {
+			for (var j = 0; j < pos.length; j++) {
+				var row = pos[i];
+				var col = pos[j];
+				if (this.modules[row][col] !== null) {
+					continue;
+				}
+				for (var r = -2; r <= 2; r++) {
+					for (var c = -2; c <= 2; c++) {
+						if (Math.abs(r) === 2 || 
+                            Math.abs(c) === 2 ||
+                            (r === 0 && c === 0) ) {
+							this.modules[row + r][col + c] = true;
+						} else {
+							this.modules[row + r][col + c] = false;
+						}
+					}
+				}
+			}
+		}
+	},
+	setupTypeNumber : function(test) {
+		var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
+        var mod;
+		for (var i = 0; i < 18; i++) {
+			mod = (!test && ( (bits >> i) & 1) === 1);
+			this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod;
+		}
+		for (var x = 0; x < 18; x++) {
+			mod = (!test && ( (bits >> x) & 1) === 1);
+			this.modules[x % 3 + this.moduleCount - 8 - 3][Math.floor(x / 3)] = mod;
+		}
+	},
+	setupTypeInfo : function(test, maskPattern) {
+		var data = (this.errorCorrectLevel << 3) | maskPattern;
+		var bits = QRUtil.getBCHTypeInfo(data);
+        var mod;
+		for (var v = 0; v < 15; v++) {
+			mod = (!test && ( (bits >> v) & 1) === 1);
+			if (v < 6) {
+				this.modules[v][8] = mod;
+			} else if (v < 8) {
+				this.modules[v + 1][8] = mod;
+			} else {
+				this.modules[this.moduleCount - 15 + v][8] = mod;
+			}
+		}
+		for (var h = 0; h < 15; h++) {
+			mod = (!test && ( (bits >> h) & 1) === 1);
+			if (h < 8) {
+				this.modules[8][this.moduleCount - h - 1] = mod;
+			} else if (h < 9) {
+				this.modules[8][15 - h - 1 + 1] = mod;
+			} else {
+				this.modules[8][15 - h - 1] = mod;
+			}
+		}
+		this.modules[this.moduleCount - 8][8] = (!test);
+	},
+	mapData : function(data, maskPattern) {
+		var inc = -1;
+		var row = this.moduleCount - 1;
+		var bitIndex = 7;
+		var byteIndex = 0;
+		for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+			if (col === 6) col--;
+			while (true) {
+				for (var c = 0; c < 2; c++) {
+					if (this.modules[row][col - c] === null) {
+						var dark = false;
+						if (byteIndex < data.length) {
+							dark = ( ( (data[byteIndex] >>> bitIndex) & 1) === 1);
+						}
+						var mask = QRUtil.getMask(maskPattern, row, col - c);
+						if (mask) {
+							dark = !dark;
+						}
+						this.modules[row][col - c] = dark;
+						bitIndex--;
+						if (bitIndex === -1) {
+							byteIndex++;
+							bitIndex = 7;
+						}
+					}
+				}
+				row += inc;
+				if (row < 0 || this.moduleCount <= row) {
+					row -= inc;
+					inc = -inc;
+					break;
+				}
+			}
+		}
+	}
+};
+QRCode.PAD0 = 0xEC;
+QRCode.PAD1 = 0x11;
+QRCode.createData = function(typeNumber, errorCorrectLevel, dataList) {
+	var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
+	var buffer = new QRBitBuffer();
+	for (var i = 0; i < dataList.length; i++) {
+		var data = dataList[i];
+		buffer.put(data.mode, 4);
+		buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+		data.write(buffer);
+	}
+	var totalDataCount = 0;
+	for (var x = 0; x < rsBlocks.length; x++) {
+		totalDataCount += rsBlocks[x].dataCount;
+	}
+	if (buffer.getLengthInBits() > totalDataCount * 8) {
+		throw new Error("code length overflow. (" + 
+            buffer.getLengthInBits() + 
+            ">" +  
+            totalDataCount * 8 + 
+            ")");
+	}
+	if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+		buffer.put(0, 4);
+	}
+	while (buffer.getLengthInBits() % 8 !== 0) {
+		buffer.putBit(false);
+	}
+	while (true) {
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD0, 8);
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD1, 8);
+	}
+	return QRCode.createBytes(buffer, rsBlocks);
+};
+QRCode.createBytes = function(buffer, rsBlocks) {
+	var offset = 0;
+	var maxDcCount = 0;
+	var maxEcCount = 0;
+	var dcdata = new Array(rsBlocks.length);
+	var ecdata = new Array(rsBlocks.length);
+	for (var r = 0; r < rsBlocks.length; r++) {
+		var dcCount = rsBlocks[r].dataCount;
+		var ecCount = rsBlocks[r].totalCount - dcCount;
+		maxDcCount = Math.max(maxDcCount, dcCount);
+		maxEcCount = Math.max(maxEcCount, ecCount);
+		dcdata[r] = new Array(dcCount);
+		for (var i = 0; i < dcdata[r].length; i++) {
+			dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+		}
+		offset += dcCount;
+		var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+		var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+		var modPoly = rawPoly.mod(rsPoly);
+		ecdata[r] = new Array(rsPoly.getLength() - 1);
+		for (var x = 0; x < ecdata[r].length; x++) {
+            var modIndex = x + modPoly.getLength() - ecdata[r].length;
+			ecdata[r][x] = (modIndex >= 0)? modPoly.get(modIndex) : 0;
+		}
+	}
+	var totalCodeCount = 0;
+	for (var y = 0; y < rsBlocks.length; y++) {
+		totalCodeCount += rsBlocks[y].totalCount;
+	}
+	var data = new Array(totalCodeCount);
+	var index = 0;
+	for (var z = 0; z < maxDcCount; z++) {
+		for (var s = 0; s < rsBlocks.length; s++) {
+			if (z < dcdata[s].length) {
+				data[index++] = dcdata[s][z];
+			}
+		}
+	}
+	for (var xx = 0; xx < maxEcCount; xx++) {
+		for (var t = 0; t < rsBlocks.length; t++) {
+			if (xx < ecdata[t].length) {
+				data[index++] = ecdata[t][xx];
+			}
+		}
+	}
+	return data;
+};
+module.exports = QRCode;
+
+};
+window.QRLib={QRCode:R("index"),EC:R("QRErrorCorrectLevel")};})();
+</script>
 <script>
 /* ===== JavaScript: phần "điện nước" - xử lý khi bấm nút ===== */
 
 // Toàn bộ chữ hiển thị nằm ở đây, mỗi ngôn ngữ một bộ
 const TXT = {
 vi:{
-  title:"Thời tiết 10 ngày tới", copy:"Copyright by thaonh3810@gmail.com, Hà Nội Oct 2026",
+  title:"Thời tiết - Lịch", copy:"Copyright by thaonh3810@gmail.com, Hà Nội Oct 2026",
   here:"Vị trí của bạn", add:"Thêm", close:"Đóng", del:"Xóa thành phố này",
   findTitle:"Tìm thành phố", ph:"Gõ tên thành phố, ví dụ: Đà Nẵng",
   none:"Không tìm thấy. Thử gõ tên khác.", netErr:"Không tìm được. Hãy kiểm tra kết nối mạng.",
@@ -172,17 +1114,27 @@ vi:{
   loading:"Đang tải dữ liệu...", loadErr:"Không tải được dữ liệu. Hãy kiểm tra kết nối mạng rồi bấm lại tên địa điểm.",
   empty:"Chưa có thành phố nào. Bấm Thêm để chọn thành phố.", findAddr:"Đang xác định địa chỉ...",
   lunar:"Âm lịch", leap:"nhuận",
-  nUp:"Lịch sắp tới (7 ngày)", nOpen:"Mở lịch", nNone7:"Không có lịch nào trong 7 ngày tới.", nMore:"…còn {n} lịch nữa",
-  nAdd:"＋ Ghi chú", nAddT:"Thêm ghi chú", nEditT:"Sửa ghi chú", nEmpty:"Chưa có ghi chú cho ngày này.", nAllDay:"Cả ngày", nSolar:"Dương lịch",
+  upT:"Lịch của bạn", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", tomorrow:"Ngày mai", nOpen:"Mở lịch",
+  nNone7:"Không có lịch nào trong 7 ngày tới.", nNoneM:"Tháng này chưa có lịch nào.", nNoneT:"Hôm nay chưa có lịch nào.",
+  nAllBtn:"Tất cả ghi chú", nAllT:"Tất cả ghi chú", nAllEmpty:"Chưa có ghi chú nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có ghi chú nào.", nWholeM:"Cả tháng",
+  nDelAsk1:"Xóa ghi chú này?", nDelRep:"Ghi chú này có lặp lại: tất cả các ngày lặp lại cũng sẽ bị xóa.",
+  nAdd:"＋ Thêm", nAddT:"Thêm ghi chú", nEditT:"Sửa ghi chú", nEmpty:"Chưa có ghi chú cho ngày này.", nAllDay:"Cả ngày", nSolar:"Dương lịch",
   nEdit:"Sửa", nDel:"Xóa", nCancel:"Hủy", nSave:"Lưu", nBack:"Quay lại",
   nContent:"Nội dung", nPh:"Việc cần làm...", nDate:"Ngày (dương lịch)", nLunarOf:"Âm lịch tương ứng",
-  nMode:"Đặt lịch theo", nModeD:"Dương lịch", nModeA:"Âm lịch", nTimeOn:"Thêm giờ:phút",
+  nTimeOn:"Thêm giờ:phút",
   nRepeat:"Lặp lại", nR0:"Không lặp", nRw:"Hằng tuần", nRm:"Hằng tháng", nRy:"Hằng năm",
   nRange:"Thời gian áp dụng (tùy chọn)", nFrom:"Từ ngày", nTo:"Đến ngày", nRangeHint:"Để trống nghĩa là áp dụng mọi thời gian.",
   nSumW:"Lặp vào {x} hằng tuần", nSumMD:"Lặp vào ngày {d} hằng tháng (dương lịch)", nSumMA:"Lặp vào ngày {d} âm lịch hằng tháng",
   nSumYD:"Lặp vào ngày {d}/{m} dương lịch hằng năm", nSumYA:"Lặp vào ngày {d}/{m} âm lịch hằng năm",
   nDelAsk:"Xóa ghi chú này? Tất cả các ngày lặp lại cũng sẽ bị xóa.", nEditHint:"Sửa ghi chú sẽ thay đổi tất cả các ngày lặp lại.",
-  nErrC:"Hãy nhập nội dung.", nErrD:"Hãy chọn ngày.", nErrR:"Ngày kết thúc không được trước ngày bắt đầu.", lichNote:"Số lớn: dương lịch, số nhỏ: âm lịch", wd:["T2","T3","T4","T5","T6","T7","CN"],
+  nErrC:"Hãy nhập nội dung.", nErrD:"Hãy chọn ngày.", nErrR:"Ngày kết thúc không được trước ngày bắt đầu.", lichNote:"Số lớn: dương lịch, số nhỏ: âm lịch", wd:["T2","T3","T4","T5","T6","T7","CN"], wdF:["Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ nhật"],
+  nShare:"Chia sẻ", shT:"Chia sẻ lịch bằng mã QR", shHint:"Người nhận mở ứng dụng, bấm “Quét QR” rồi quét mã này (hoặc chọn ảnh QR đã lưu).", shSave:"Lưu ảnh", shSend:"Gửi", shLong:"Nội dung lịch quá dài để tạo mã QR. Hãy rút gọn nội dung rồi thử lại.",
+  qrBtn:"Quét QR", qrT:"Quét mã QR nhận lịch", qrPick:"Chọn ảnh QR", qrAim:"Đưa mã QR vào khung hình.", qrOpening:"Đang mở camera...", qrNoCam:"Không mở được camera. Hãy chọn ảnh QR có sẵn trong máy.", qrBad:"Mã QR không hợp lệ: đây không phải mã lịch của ứng dụng này.", qrNoRead:"Không đọc được mã QR trong ảnh. Hãy chọn ảnh rõ hơn.", qrLib:"Không tải được bộ đọc mã QR (cần có mạng ở lần đầu). Hãy kiểm tra kết nối rồi thử lại.", qrRecv:"Lịch nhận từ mã QR. Hãy kiểm tra, chỉnh sửa nếu cần rồi bấm Lưu.", qrReading:"Đang đọc ảnh...",
+  dup:"Trùng lịch: đã có lịch cùng ngày, giờ và nội dung này.",
+  menu:"Menu", bkT:"Sao lưu - Đồng bộ", bkOut:"Sao lưu lịch ra file", bkOutD:"Tải về một file chứa toàn bộ lịch hiện có ({n} ghi chú).", bkIn:"Đồng bộ từ file sao lưu", bkInD:"Chọn file đã sao lưu trước đó để thêm lịch vào máy này.", bkEmpty:"Chưa có lịch nào để sao lưu.", bkSaved:"Đã tạo file sao lưu: {f}", bkBad:"File không hợp lệ: đây không phải file sao lưu lịch của ứng dụng này.", bkSum:"File có {a} lịch: {b} lịch mới, {c} lịch trùng (sẽ bỏ qua).", bkBadN:"Có {d} mục lỗi trong file, đã bỏ qua.", bkMerge:"Gộp {b} lịch mới", bkRep:"Thay thế toàn bộ", bkRepAsk:"Xóa {n} ghi chú hiện có và thay bằng {a} lịch trong file?", bkYes:"Đồng ý thay thế", bkDoneM:"Đã đồng bộ: thêm {b} lịch mới.", bkDoneR:"Đã khôi phục {a} lịch từ file.", bkNone:"Không có lịch mới để thêm.",
+  abT:"Giới thiệu", abIntro:"Ứng dụng xem thời tiết, lịch âm dương và quản lý lịch cá nhân.",
+  abL:["🌤️ Thời tiết hiện tại, 10 ngày tới, biểu đồ theo giờ và chỉ số không khí (AQI) cho vị trí của bạn và các thành phố bạn thêm.","🗓️ Lịch dương kèm âm lịch (can chi), đồng hồ theo giờ của từng thành phố.","📝 Lịch cá nhân: ghi chú theo ngày và giờ, lặp hằng tuần/tháng/năm (theo dương hoặc âm lịch), xem theo 7 ngày, tháng này, hôm nay; báo trùng lịch khi lưu.","🎤 Tạo lịch bằng giọng nói: nói ngày, giờ, nội dung, ứng dụng tự điền vào form để bạn kiểm tra rồi lưu.","📤 Chia sẻ một lịch bằng mã QR và 📷 quét mã QR (hoặc chọn ảnh QR) để nhận lịch.","💾 Sao lưu lịch ra file và đồng bộ lại từ file sao lưu.","🔒 Lịch lưu ngay trên máy của bạn; dữ liệu thời tiết cần kết nối mạng."],
+  vcBtn:"🎤 Nói để tạo lịch", vcStop:"⏹ Dừng nghe", vcHint:"Nói ngày, giờ, nội dung.", vcListen:"Đang nghe... Ví dụ: “Ngày mai 8 giờ sáng họp với khách hàng”", vcNo:"Trình duyệt này chưa hỗ trợ nhận giọng nói (hãy dùng Chrome hoặc Safari bản mới).", vcErr:"Không nghe được giọng nói. Hãy cho phép micro và kiểm tra kết nối mạng.", vcHeard:"Đã nghe", vcNoDate:"Chưa nhận ra ngày/giờ, hãy kiểm tra lại các ô bên dưới.",
   updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
   hourly:"Theo giờ", next24:"24 giờ tới (từ {h}:00)", fullDay:"(0h – 23h)",
   tTemp:"Nhiệt độ", tRain:"Khả năng mưa", tWind:"Gió (km/h)",
@@ -193,7 +1145,7 @@ vi:{
   aq:["Tốt","Trung bình","Kém","Xấu","Rất xấu","Nguy hại"]
 },
 en:{
-  title:"10-day weather", copy:"Copyright by thaonh3810@gmail.com, Hanoi Oct 2026",
+  title:"Weather - Calendar", copy:"Copyright by thaonh3810@gmail.com, Hanoi Oct 2026",
   here:"Your location", add:"Add", close:"Close", del:"Remove this city",
   findTitle:"Find a city", ph:"Type a city name, e.g. Da Nang",
   none:"Not found. Try another name.", netErr:"Search failed. Please check your connection.",
@@ -201,17 +1153,27 @@ en:{
   loading:"Loading data...", loadErr:"Could not load data. Check your connection, then tap the place name again.",
   empty:"No city yet. Tap Add to choose one.", findAddr:"Finding address...",
   lunar:"Lunar", leap:"leap",
-  nUp:"Upcoming (7 days)", nOpen:"Open calendar", nNone7:"Nothing scheduled in the next 7 days.", nMore:"…{n} more",
-  nAdd:"＋ Note", nAddT:"Add a note", nEditT:"Edit note", nEmpty:"No notes for this day.", nAllDay:"All day", nSolar:"Solar",
+  upT:"Your schedule", r7:"7 days", rM:"This month", rT:"Today", tomorrow:"Tomorrow", nOpen:"Open calendar",
+  nNone7:"Nothing scheduled in the next 7 days.", nNoneM:"Nothing scheduled this month.", nNoneT:"Nothing scheduled today.",
+  nAllBtn:"All notes", nAllT:"All notes", nAllEmpty:"No notes yet.", nMonthT:"Month", nMonthEmpty:"No notes this month.", nWholeM:"Whole month",
+  nDelAsk1:"Delete this note?", nDelRep:"This note repeats: every repeat of it will be removed too.",
+  nAdd:"＋ Add", nAddT:"Add a note", nEditT:"Edit note", nEmpty:"No notes for this day.", nAllDay:"All day", nSolar:"Solar",
   nEdit:"Edit", nDel:"Delete", nCancel:"Cancel", nSave:"Save", nBack:"Back",
   nContent:"Content", nPh:"What to do...", nDate:"Date (solar)", nLunarOf:"Matching lunar date",
-  nMode:"Follow", nModeD:"Solar calendar", nModeA:"Lunar calendar", nTimeOn:"Add a time",
+  nTimeOn:"Add a time",
   nRepeat:"Repeat", nR0:"Does not repeat", nRw:"Weekly", nRm:"Monthly", nRy:"Yearly",
   nRange:"Active period (optional)", nFrom:"From", nTo:"To", nRangeHint:"Leave empty to keep it active at all times.",
   nSumW:"Repeats every {x}", nSumMD:"Repeats on day {d} of every month (solar)", nSumMA:"Repeats on lunar day {d} of every lunar month",
   nSumYD:"Repeats every year on {d}/{m} (solar)", nSumYA:"Repeats every year on lunar {d}/{m}",
   nDelAsk:"Delete this note? Every repeat of it will be removed too.", nEditHint:"Editing changes every repeat of this note.",
-  nErrC:"Please enter some content.", nErrD:"Please pick a date.", nErrR:"The end date must not be before the start date.", lichNote:"Large: solar date, small: lunar date", wd:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+  nErrC:"Please enter some content.", nErrD:"Please pick a date.", nErrR:"The end date must not be before the start date.", lichNote:"Large: solar date, small: lunar date", wd:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], wdF:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+  nShare:"Share", shT:"Share via QR code", shHint:"The receiver opens the app, taps “Scan QR” and scans this code (or picks the saved QR image).", shSave:"Save image", shSend:"Send", shLong:"This note is too long for a QR code. Please shorten it and try again.",
+  qrBtn:"Scan QR", qrT:"Scan a QR code to receive a note", qrPick:"Pick QR image", qrAim:"Point the camera at the QR code.", qrOpening:"Opening camera...", qrNoCam:"Could not open the camera. Pick a QR image from your device instead.", qrBad:"Invalid QR code: this is not a note code from this app.", qrNoRead:"No QR code found in the image. Try a clearer picture.", qrLib:"Could not load the QR reader (needs internet the first time). Check your connection and try again.", qrRecv:"Note received from a QR code. Check it, edit if needed, then tap Save.", qrReading:"Reading image...",
+  dup:"Duplicate: a note with the same date, time and content already exists.",
+  menu:"Menu", bkT:"Backup - Sync", bkOut:"Back up notes to a file", bkOutD:"Download a file with all your notes ({n} notes).", bkIn:"Sync from a backup file", bkInD:"Pick a previously saved backup file to add its notes to this device.", bkEmpty:"No notes to back up yet.", bkSaved:"Backup file created: {f}", bkBad:"Invalid file: this is not a notes backup file from this app.", bkSum:"The file has {a} notes: {b} new, {c} duplicates (will be skipped).", bkBadN:"{d} invalid entries in the file were skipped.", bkMerge:"Merge {b} new notes", bkRep:"Replace everything", bkRepAsk:"Delete your {n} current notes and replace them with the {a} notes in the file?", bkYes:"Yes, replace", bkDoneM:"Synced: {b} new notes added.", bkDoneR:"Restored {a} notes from the file.", bkNone:"No new notes to add.",
+  abT:"About", abIntro:"Weather, lunar calendar and personal schedule in one app.",
+  abL:["🌤️ Current weather, 10-day forecast, hourly charts and air quality (AQI) for your location and the cities you add.","🗓️ Solar calendar with lunar dates (can chi) and a clock for each city.","📝 Personal schedule: notes by date and time, repeating weekly/monthly/yearly (solar or lunar), 7-day, month and today views; duplicate notes are rejected.","🎤 Create a note by voice: say the date, time and content and the form is filled in for you to review and save.","📤 Share a note as a QR code and 📷 scan a QR code (or pick a QR image) to receive one.","💾 Back up notes to a file and sync them back from a backup file.","🔒 Notes are stored on your device; weather data needs an internet connection."],
+  vcBtn:"🎤 Speak to create", vcStop:"⏹ Stop listening", vcHint:"Say the date, time and content (in Vietnamese).", vcListen:"Listening... e.g. “Ngày mai 8 giờ sáng họp với khách hàng”", vcNo:"This browser does not support speech recognition (use a recent Chrome or Safari).", vcErr:"Could not hear anything. Allow the microphone and check your connection.", vcHeard:"Heard", vcNoDate:"No date/time recognised, please check the fields below.",
   updated:"updated at", feels:"feels like", hum:"Humidity", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
   hourly:"Hourly", next24:"next 24 hours (from {h}:00)", fullDay:"(0:00 – 23:00)",
   tTemp:"Temperature", tRain:"Chance of rain", tWind:"Wind (km/h)",
@@ -256,6 +1218,7 @@ function applyStatic(){
   document.title = t("title");
   document.querySelectorAll("[data-i]").forEach(el=>el.textContent = t(el.dataset.i));
   q.placeholder = t("ph");
+  document.getElementById("menuBtn").title = t("menu");
   document.getElementById("cVi").classList.toggle("on", lang==="vi");
   document.getElementById("cEn").classList.toggle("on", lang==="en");
   setMsg(msgKey); setTip(tipKey);
@@ -266,6 +1229,7 @@ function setLang(l){
   applyStatic(); veTabs();
   if(chon) tai(chon);
   if(!lichPop.hidden) veLich();
+  if(!xnPop.hidden && xoaId) hoiXoa(xoaId);
   veDongHo();
 }
 document.getElementById("cVi").onclick = ()=>setLang("vi");
@@ -371,8 +1335,8 @@ function veDongHo(){
   }
   const key = hom+lang;                     // âm lịch: chỉ tính lại khi đổi ngày hoặc ngôn ngữ
   if(key!==amKey){
-    amKey = key; const [y,m,d] = parseD(hom), a = amLich(d,m,y);
-    amBtn.textContent = "🌙 " + t("lunar") + " " + amShort(a);
+    amKey = key; const [y,m,d] = parseD(hom), a = amLich(d,m,y), w = (new Date(Date.UTC(y,m-1,d)).getUTCDay()+6)%7;
+    amBtn.innerHTML = "<span>" + t("wdF")[w] + " " + p2(d) + "/" + p2(m) + ",</span> <span>" + t("lunar") + " " + amShort(a) + "</span>";
     amBtn.title = nhanAm(d,m,y);
   }
   const mk = hom+p2(now.getHours())+p2(now.getMinutes())+lang;   // danh sách "sắp tới" làm mới mỗi phút
@@ -412,43 +1376,142 @@ function lapText(n){
   return t(A ? "nSumYA" : "nSumYD").replace("{d}", A ? n.am[0] : ad).replace("{m}", A ? n.am[1] : am);
 }
 
-// ----- Ô "Lịch sắp tới" ở đầu màn hình chính (7 ngày: hôm nay và 6 ngày sau) -----
+// ----- Nhãn ngày: Hôm nay / Ngày mai / T2, 23/10 -----
+function ngayNgan(ds, nam){
+  const [y,m,d] = parseD(ds), w = (new Date(Date.UTC(y,m-1,d)).getUTCDay()+6)%7;
+  return t("wd")[w]+", "+p2(d)+"/"+p2(m)+(nam && y!==parseD(homNay())[0] ? "/"+y : "");
+}
+function nhanNgay(ds, nam){
+  const hom = homNay();
+  if(ds===hom) return t("today");
+  if(ds===addDays(hom,1)) return t("tomorrow");
+  return ngayNgan(ds, nam);
+}
+
+// ----- Ô "Lịch của bạn" ở màn hình chính: chọn 7 ngày / tháng này / hôm nay -----
+let upRange = "7", upAuto = true;      // upAuto: lần vẽ kế tiếp sẽ cuộn tới lịch chưa qua
+try{ const v = localStorage.getItem("tpRange"); if(v==="7" || v==="month" || v==="today") upRange = v; }catch(e){}
 function veSapToi(){
-  const hom = homNay(), now = new Date(), hhmm = p2(now.getHours())+":"+p2(now.getMinutes()), ds = [];
-  for(let i=0;i<7;i++){
-    const day = addDays(hom,i);
-    ghiChuNgay(day).forEach(n=>{ if(i===0 && n.gio && n.gio<hhmm) return; ds.push({day, n}); });   // bỏ việc hôm nay đã qua giờ
-  }
-  let h = '<div class="up-h"><span>📝 '+t("nUp")+'</span><button class="btn" data-up="open">'+t("nOpen")+'</button></div>';
-  h += ds.length ? ds.slice(0,6).map(x=>'<div class="up-it" data-up="'+x.day+'|'+x.n.id+'"><span class="u">'+(x.day===hom ? t("today") : dmy(x.day).slice(0,5))+(x.n.gio ? " "+x.n.gio : "")+'</span><span>'+dong1(x.n)+'</span></div>').join("")
-             : '<div class="up-it" style="cursor:default">'+t("nNone7")+'</div>';
-  if(ds.length>6) h += '<div class="up-it" style="cursor:default">'+t("nMore").replace("{n}", ds.length-6)+'</div>';
-  document.getElementById("up").innerHTML = h;
+  const box = document.getElementById("up"), cu = box.querySelector(".up-list"), cuon = cu ? cu.scrollTop : 0;
+  const hom = homNay(), now = new Date(), hhmm = p2(now.getHours())+":"+p2(now.getMinutes()), [hy,hm] = parseD(hom);
+  const start = upRange==="month" ? dstr(hy,hm,1) : hom;
+  const soNgay = upRange==="month" ? dimon(hy,hm) : upRange==="today" ? 1 : 7;
+  const ds = [];
+  for(let i=0;i<soNgay;i++){ const day = addDays(start,i); ghiChuNgay(day).forEach(n=>ds.push({day, n})); }   // đã xếp theo ngày, rồi theo giờ
+  const seg = [["7","r7"],["month","rM"],["today","rT"]].map(([k,l])=>'<button data-r="'+k+'"'+(upRange===k ? ' class="on"' : '')+'>'+t(l)+'</button>').join("");
+  let h = '<div class="up-h"><span>📝 '+t("upT")+'</span><button class="btn p" data-act="add">＋ '+t("add")+'</button></div>'
+        + '<div class="seg">'+seg+'</div><div class="up-list">';
+  h += ds.length ? ds.map(x=>{
+      const qua = x.day<hom || (x.day===hom && x.n.gio && x.n.gio<hhmm);     // đã qua thì làm mờ
+      return '<div class="up-it'+(qua ? ' qua' : '')+'" data-up="'+x.day+'|'+x.n.id+'"><span class="u">'+nhanNgay(x.day)+'</span><span class="gi">'+(x.n.gio || "")+'</span>'
+        +'<span class="nd">'+dong1(x.n)+(x.n.lap!=="none" ? " 🔁" : "")+'</span>'
+        +'<button class="xd" data-del="'+x.n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
+    }).join("")
+    : '<div class="up-it" style="cursor:default">'+t(upRange==="today" ? "nNoneT" : upRange==="month" ? "nNoneM" : "nNone7")+'</div>';
+  h += '</div><div class="up-f"><button class="btn" data-act="open">📅 '+t("nOpen")+'</button><button class="btn" data-act="scan">📷 '+t("qrBtn")+'</button><button class="btn" data-act="all">📋 '+t("nAllBtn")+' ('+GC.length+')</button></div>';
+  box.innerHTML = h;
+  const li = box.querySelector(".up-list");
+  if(upAuto){                                    // đổi chế độ xem: cuộn tới lịch đầu tiên chưa qua
+    const f = li.querySelector(".up-it:not(.qua)");
+    li.scrollTop = (f && f!==li.firstElementChild) ? f.offsetTop : 0;
+    upAuto = false;
+  } else li.scrollTop = cuon;                    // làm mới mỗi phút: giữ nguyên chỗ đang cuộn
 }
 document.getElementById("up").onclick = e => {
+  const dl = e.target.closest("[data-del]"); if(dl){ hoiXoa(dl.dataset.del); return; }
+  const r = e.target.closest("[data-r]");
+  if(r){ upRange = r.dataset.r; upAuto = true; try{ localStorage.setItem("tpRange", upRange); }catch(_){} veSapToi(); return; }
+  const ac = e.target.closest("[data-act]");
+  if(ac){ const v = ac.dataset.act; if(v==="add") moThem(); else if(v==="open") moLich(); else if(v==="all") moTatCa(); else if(v==="scan") moQuet(); return; }
   const el = e.target.closest("[data-up]"); if(!el) return;
-  const v = el.dataset.up;
-  if(v==="open") moLich(); else { const [day,id] = v.split("|"); moLich(day, id); }
+  const [day,id] = el.dataset.up.split("|"); moLich(day, id);
+};
+
+// ----- Hộp xác nhận xóa nhanh (dùng cho cả danh sách ở màn hình chính và "Tất cả ghi chú") -----
+const xnPop = document.getElementById("xnPop");
+let xoaId = null;
+function hoiXoa(id){
+  const n = GC.find(x=>x.id===id); if(!n) return;
+  xoaId = id;
+  xnPop.innerHTML = '<div class="lich xn-box" role="alertdialog" aria-modal="true"><div class="xn-t">'+t("nDelAsk1")+'</div><div class="xn-n">“'+dong1(n)+'”</div>'
+    + (n.lap!=="none" ? '<div class="note">'+t("nDelRep")+'</div>' : '')
+    + '<div class="btns"><button class="btn d" data-x="ok">'+t("nDel")+'</button><button class="btn" data-x="no">'+t("nCancel")+'</button></div></div>';
+  xnPop.hidden = false;
+}
+function dongXn(){ xnPop.hidden = true; xoaId = null; xnPop.innerHTML = ""; }
+xnPop.onclick = e => {
+  if(e.target===xnPop){ dongXn(); return; }
+  const el = e.target.closest("[data-x]"); if(!el) return;
+  if(el.dataset.x==="ok"){ GC = GC.filter(x=>x.id!==xoaId); luuGC(); veSapToi(); if(!lichPop.hidden) veLich(); }
+  dongXn();
 };
 
 // ----- Lịch dương + âm (popup) kèm danh sách ghi chú -----
 let lichY = 0, lichM = 0, lichSel = "", lichView = "list", lichId = null, lichDel = false, lichErr = "", FM = null;
+// lichSel rỗng = chưa chọn ngày nào => hiện lịch của CẢ THÁNG; chọn một ngày thì chỉ hiện lịch của ngày đó
+// lichView: list (ngày/tháng) | detail | form | all (tất cả ghi chú)
+// lichBack: ghi chú được mở từ đâu để quay lại cho đúng: "" = danh sách ngày, "month" = danh sách cả tháng, "all" = tất cả ghi chú
+// lichDirect: form mở thẳng từ nút "Thêm ghi chú" ở màn hình chính => lưu/hủy xong thì đóng luôn
+let lichBack = "", lichDirect = false;
+let lichRecv = false, vcHeard = "", vcWarn = false, vcOn = false, rec = null;   // lichRecv: form mở từ mã QR; vc*: giọng nói
 function moLich(ds, id){
-  lichSel = ds || homNay(); const q2 = parseD(lichSel); lichY = q2[0]; lichM = q2[1];
-  lichView = id ? "detail" : "list"; lichId = id || null; lichDel = false; lichErr = ""; FM = null;
+  const q2 = parseD(ds || homNay());
+  lichSel = ds || ""; lichY = q2[0]; lichM = q2[1];
+  lichView = id ? "detail" : "list"; lichId = id || null; lichDel = false; lichErr = ""; FM = null; lichBack = ""; lichDirect = false; lichRecv = false; vcHeard = ""; vcWarn = false;
   veLich(); lichPop.hidden = false;
 }
-function dongLich(){ lichPop.hidden = true; }
-function doiThang(n){ lichM += n; if(lichM<1){ lichM = 12; lichY--; } if(lichM>12){ lichM = 1; lichY++; } veLich(); }
-function chonNgay(ds){ lichSel = ds; const q2 = parseD(ds); lichY = q2[0]; lichM = q2[1]; lichView = "list"; lichId = null; lichDel = false; FM = null; veLich(); }
+function moTatCa(){
+  lichView = "all"; lichSel = ""; lichId = null; lichDel = false; lichErr = ""; FM = null; lichBack = ""; lichDirect = false;
+  veLich(); lichPop.hidden = false;
+}
+function moThem(){ moLich(); lichDirect = true; batDauThem(homNay()); }
+function batDauThem(ds){
+  const q2 = parseD(ds); lichY = q2[0]; lichM = q2[1];
+  lichView = "form"; lichId = null; lichErr = ""; lichRecv = false; vcHeard = ""; vcWarn = false;
+  FM = {nd:"", ngay:ds, che:"d", coGio:false, gio:"08:00", lap:"none", bd:"", kt:""};
+  veLich();
+}
+function ngayMacDinh(){
+  if(lichSel) return lichSel;
+  const hom = homNay(), [hy,hm] = parseD(hom);
+  return (hy===lichY && hm===lichM) ? hom : dstr(lichY,lichM,1);
+}
+function dongLich(){
+  lichPop.hidden = true; lichRecv = false; vcHeard = ""; vcWarn = false;
+  if(rec && vcOn){ try{ rec.abort(); }catch(e){} } vcOn = false;
+}
+function doiThang(n){
+  lichM += n; if(lichM<1){ lichM = 12; lichY--; } if(lichM>12){ lichM = 1; lichY++; }
+  if(lichView==="list") lichSel = "";            // sang tháng khác: hiện lịch cả tháng đó
+  veLich();
+}
+function chonNgay(ds){ lichSel = ds; const q2 = parseD(ds); lichY = q2[0]; lichM = q2[1]; lichView = "list"; lichId = null; lichDel = false; FM = null; lichBack = ""; lichDirect = false; veLich(); }
+function veVe(){                                 // quay lại nơi đã mở ghi chú
+  lichId = null; lichDel = false; lichErr = ""; FM = null;
+  if(lichBack==="all"){ lichView = "all"; lichSel = ""; }
+  else { lichView = "list"; if(lichBack==="month") lichSel = ""; }
+  lichBack = "";
+  veLich();
+}
 
 const ghiHead = (btn) => '<div class="gcp-h"><b>'+thuDai(lichSel)+', '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</b>'+(btn||"")+'</div>';
-function panelList(){
+function panelList(){              // lịch của MỘT ngày đã chọn
   const ls = ghiChuNgay(lichSel);
-  return ghiHead('<button class="btn p" data-a="add">'+t("nAdd")+'</button>')
+  return ghiHead('<span class="bt2"><button class="btn" data-a="wholeMonth">'+t("nWholeM")+'</button><button class="btn p" data-a="add">'+t("nAdd")+'</button></span>')
     + (ls.length ? ls.map(n=>'<div class="gc-it" data-a="open" data-id="'+n.id+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+dong1(n)+(n.lap!=="none" ? " 🔁" : "")+'</b>'
         +'<small>'+t("nSolar")+' '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</small></div></div>').join("")
       : '<div class="note">'+t("nEmpty")+'</div>');
+}
+function panelMonth(){             // lịch của CẢ THÁNG đang xem, xếp theo ngày rồi giờ
+  const hom = homNay(), nd = dimon(lichY, lichM);
+  let h = '<div class="gcp-h"><b>'+t("nMonthT")+' '+p2(lichM)+'/'+lichY+'</b><button class="btn p" data-a="add">'+t("nAdd")+'</button></div>', co = false;
+  for(let d=1; d<=nd; d++){
+    const ds = dstr(lichY, lichM, d), ls = ghiChuNgay(ds); if(!ls.length) continue;
+    co = true;
+    h += '<div class="mh'+(ds===hom ? ' hn' : '')+'" data-d="'+ds+'">'+ngayNgan(ds)+' · '+t("lunar")+' '+amShort(amDS(ds))+(ds===hom ? ' · '+t("today") : '')+'</div>';
+    h += ls.map(n=>'<div class="gc-it" data-a="open" data-id="'+n.id+'" data-day="'+ds+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+dong1(n)+(n.lap!=="none" ? " 🔁" : "")+'</b></div></div>').join("");
+  }
+  return h + (co ? '' : '<div class="note">'+t("nMonthEmpty")+'</div>');
 }
 function panelDetail(n){
   const khoang = [n.bd ? t("nFrom")+" "+dmy(n.bd) : "", n.kt ? t("nTo")+" "+dmy(n.kt) : ""].filter(Boolean).join(" · ");
@@ -458,18 +1521,19 @@ function panelDetail(n){
     + (n.lap!=="none" ? '<div class="note">🔁 '+lapText(n)+'</div>' : '')
     + (khoang ? '<div class="note">📆 '+khoang+'</div>' : '')
     + (lichDel ? '<div class="err">'+t("nDelAsk")+'</div><div class="btns"><button class="btn d" data-a="delOk">'+t("nDel")+'</button><button class="btn" data-a="delNo">'+t("nCancel")+'</button></div>'
-               : '<div class="btns"><button class="btn p" data-a="edit">'+t("nEdit")+'</button><button class="btn d" data-a="del">'+t("nDel")+'</button></div>');
+               : '<div class="btns"><button class="btn p" data-a="edit">'+t("nEdit")+'</button><button class="btn" data-a="share">📤 '+t("nShare")+'</button><button class="btn d" data-a="del">'+t("nDel")+'</button></div>');
 }
 function panelForm(){
   const f = FM, a = f.ngay ? amDS(f.ngay) : null, tmp = {ngay:f.ngay, che:f.che, lap:f.lap, am:a};
   const opt = (v,k) => '<option value="'+v+'"'+(f.lap===v ? " selected" : "")+'>'+t(k)+'</option>';
   return '<div class="fm"><div class="gcp-h"><b>'+t(lichId ? "nEditT" : "nAddT")+'</b></div>'
     + (lichId ? '<div class="note">'+t("nEditHint")+'</div>' : '')
+    + (lichRecv ? '<div class="ok">'+t("qrRecv")+'</div>' : '')
+    + (!lichId ? '<div class="vc"><button class="btn" data-a="mic" id="micBtn">'+t(vcOn ? "vcStop" : "vcBtn")+'</button><small>'+t("vcHint")+'</small>'
+        + '<div class="note" id="vcSt">'+(vcHeard ? t("vcHeard")+': “'+esc(vcHeard)+'”'+(vcWarn ? '<br><span class="err">'+t("vcNoDate")+'</span>' : '') : '')+'</div></div>' : '')
     + '<label>'+t("nContent")+'</label><textarea data-f="nd" rows="3" placeholder="'+t("nPh")+'">'+esc(f.nd)+'</textarea>'
     + '<label>'+t("nDate")+'</label><input type="date" data-f="ngay" value="'+f.ngay+'">'
     + (a ? '<div class="note">'+t("nLunarOf")+': <b>'+amShort(a)+' '+canChi(a[2])+'</b></div>' : '')
-    + '<label>'+t("nMode")+'</label><div class="rd"><label><input type="radio" name="che" data-f="che" value="d"'+(f.che==="d" ? " checked" : "")+'> '+t("nModeD")+'</label>'
-    + '<label><input type="radio" name="che" data-f="che" value="a"'+(f.che==="a" ? " checked" : "")+'> '+t("nModeA")+'</label></div>'
     + '<label class="ck"><input type="checkbox" data-f="coGio"'+(f.coGio ? " checked" : "")+'> '+t("nTimeOn")+'</label>'
     + (f.coGio ? '<input type="time" data-f="gio" value="'+f.gio+'">' : '')
     + '<label>'+t("nRepeat")+'</label><select data-f="lap">'+opt("none","nR0")+(f.che==="d" ? opt("week","nRw") : "")+opt("month","nRm")+opt("year","nRy")+'</select>'
@@ -479,12 +1543,30 @@ function panelForm(){
     + (lichErr ? '<div class="err">'+lichErr+'</div>' : '')
     + '<div class="btns"><button class="btn p" data-a="save">'+t("nSave")+'</button><button class="btn" data-a="cancel">'+t("nCancel")+'</button></div></div>';
 }
+function veTatCa(){                // màn hình "Tất cả ghi chú" kèm nút xóa nhanh
+  const ls = GC.slice().sort((a,b)=>a.ngay.localeCompare(b.ngay) || (a.gio||"").localeCompare(b.gio||""));
+  const body = ls.length ? ls.map(n=>{
+      const lap = n.lap!=="none" ? ' · 🔁 '+lapText(n) : '';
+      return '<div class="gc-it" data-a="open" data-id="'+n.id+'"><div class="g dl">'+nhanNgay(n.ngay, true)+'<small>'+(n.gio || t("nAllDay"))+'</small></div>'
+        +'<div class="gc-m"><b>'+dong1(n)+'</b><small>'+t("lunar")+' '+amShort(amDS(n.ngay))+lap+'</small></div>'
+        +'<button class="xd" data-del="'+n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
+    }).join("") : '<div class="note">'+t("nAllEmpty")+'</div>';
+  return '<div class="lich" role="dialog" aria-modal="true"><div class="lich-h"><b>📋 '+t("nAllT")+' ('+ls.length+')</b><button data-a="close" aria-label="'+t("close")+'">✕</button></div>'
+    + '<div class="gcp" style="border-top:0">'+body+'</div>'
+    + '<div class="lich-f"><span></span><span class="bt"><button data-a="add">'+t("nAdd")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
+}
 function veLich(){
   const cu = lichPop.querySelector(".lich"), cuon = cu ? cu.scrollTop : 0;
+  if(lichView==="all"){
+    lichPop.innerHTML = veTatCa();
+    const m = lichPop.querySelector(".lich"); if(m) m.scrollTop = cuon;
+    return;
+  }
   const hom = homNay(), off = (new Date(Date.UTC(lichY, lichM-1, 1)).getUTCDay()+6)%7;   // tuần bắt đầu từ thứ Hai
   const [hy,hm,hd] = parseD(hom);
   let cells = "";
-  for(let i=0;i<42;i++){
+  const gon = lichView==="form" && lichDirect;     // form mở thẳng từ màn hình chính: không cần lưới lịch
+  for(let i=0;i<(gon ? 0 : 42);i++){
     const dt = new Date(Date.UTC(lichY, lichM-1, 1-off+i));
     const y = dt.getUTCFullYear(), m = dt.getUTCMonth()+1, d = dt.getUTCDate(), a = amLich(d,m,y), ds = dstr(y,m,d);
     const cls = (m!==lichM ? "kh " : "") + (i%7===5 ? "t7 " : "") + (i%7===6 ? "cn " : "") + (ds===hom ? "nay " : "") + (GC.some(n=>khop(n,ds)) ? "gc " : "") + (ds===lichSel ? "chon" : "");
@@ -492,12 +1574,12 @@ function veLich(){
   }
   let n = lichView==="detail" ? GC.find(x=>x.id===lichId) : null;
   if(lichView==="detail" && !n) lichView = "list";
-  const panel = lichView==="form" ? panelForm() : lichView==="detail" ? panelDetail(n) : panelList();
+  const panel = lichView==="form" ? panelForm() : lichView==="detail" ? panelDetail(n) : (lichSel ? panelList() : panelMonth());
   lichPop.innerHTML = '<div class="lich" role="dialog" aria-modal="true">'
-    + '<div class="lich-h"><button data-a="prev" aria-label="‹">‹</button><b>'+p2(lichM)+'/'+lichY+'</b><button data-a="next" aria-label="›">›</button></div>'
+    + (gon ? '' : '<div class="lich-h"><button data-a="prev" aria-label="‹">‹</button><b>'+p2(lichM)+'/'+lichY+'</b><button data-a="next" aria-label="›">›</button></div>'
     + '<div class="lich-w">'+t("wd").map((x,i)=>'<div class="'+(i===5?"t7":i===6?"cn":"")+'">'+x+'</div>').join("")+'</div>'
-    + '<div class="lich-g">'+cells+'</div>'
-    + '<div class="gcp">'+panel+'</div>'
+    + '<div class="lich-g">'+cells+'</div>')
+    + '<div class="gcp"'+(gon ? ' style="border-top:0"' : '')+'>'+panel+'</div>'
     + '<div class="lich-f"><span>'+t("lichNote")+'<br><b>'+t("today")+':</b> '+nhanAm(hd,hm,hy)+'</span><span class="bt"><button data-a="today">'+t("today")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
   const moi = lichPop.querySelector(".lich"); if(moi) moi.scrollTop = cuon;
 }
@@ -508,6 +1590,7 @@ function luuForm(){
   if(f.bd && f.kt && f.kt<f.bd){ lichErr = t("nErrR"); return false; }
   const n = {id: lichId || "n"+Date.now().toString(36)+Math.random().toString(36).slice(2,6), nd:f.nd.trim(), ngay:f.ngay, che:f.che,
              gio:(f.coGio && f.gio) ? f.gio : "", lap:(f.che==="a" && f.lap==="week") ? "none" : f.lap, bd:f.bd, kt:f.kt, am:amDS(f.ngay)};
+  if(trungGC(n, lichId)){ lichErr = t("dup"); return false; }      // trùng ngày + giờ + nội dung với lịch khác
   const i = GC.findIndex(x=>x.id===n.id);
   if(i>=0) GC[i] = n; else GC.push(n);        // sửa một ghi chú = sửa mọi ngày lặp lại của nó
   luuGC(); lichErr = "";
@@ -516,34 +1599,465 @@ function luuForm(){
 }
 lichPop.onclick = e => {
   if(e.target===lichPop){ dongLich(); return; }
+  const dl = e.target.closest("[data-del]"); if(dl){ hoiXoa(dl.dataset.del); return; }      // nút xóa nhanh -> hỏi lại trước khi xóa
   const dEl = e.target.closest("[data-d]");
   if(dEl){ chonNgay(dEl.dataset.d); return; }
   const el = e.target.closest("[data-a]"); if(!el) return;
   const a = el.dataset.a;
   if(a==="prev") doiThang(-1);
   else if(a==="next") doiThang(1);
-  else if(a==="today") moLich();
+  else if(a==="today") chonNgay(homNay());
   else if(a==="close") dongLich();
-  else if(a==="add"){ lichView = "form"; lichId = null; lichErr = ""; FM = {nd:"", ngay:lichSel, che:"d", coGio:false, gio:"08:00", lap:"none", bd:"", kt:""}; veLich(); }
-  else if(a==="open"){ lichId = el.dataset.id; lichView = "detail"; lichDel = false; veLich(); }
-  else if(a==="back"){ lichView = "list"; lichId = null; lichDel = false; veLich(); }
+  else if(a==="wholeMonth"){ lichSel = ""; lichView = "list"; veLich(); }
+  else if(a==="add"){ if(lichView==="all"){ lichBack = "all"; batDauThem(homNay()); } else batDauThem(ngayMacDinh()); }
+  else if(a==="open"){
+    if(lichView==="all"){                         // mở từ "Tất cả ghi chú"
+      const n = GC.find(x=>x.id===el.dataset.id); if(!n) return;
+      lichBack = "all"; lichSel = n.ngay; const q2 = parseD(n.ngay); lichY = q2[0]; lichM = q2[1];
+    } else if(!lichSel){                          // mở từ danh sách cả tháng
+      lichBack = "month"; lichSel = el.dataset.day;
+    }
+    lichId = el.dataset.id; lichView = "detail"; lichDel = false; veLich();
+  }
+  else if(a==="back") veVe();
+  else if(a==="share") moChiaSe(GC.find(x=>x.id===lichId));
+  else if(a==="mic") batGiongNoi();
   else if(a==="edit"){ const n = GC.find(x=>x.id===lichId); if(!n) return;
     FM = {nd:n.nd, ngay:n.ngay, che:n.che, coGio:!!n.gio, gio:n.gio || "08:00", lap:n.lap, bd:n.bd || "", kt:n.kt || ""}; lichView = "form"; lichErr = ""; veLich(); }
   else if(a==="del"){ lichDel = true; veLich(); }
   else if(a==="delNo"){ lichDel = false; veLich(); }
-  else if(a==="delOk"){ GC = GC.filter(x=>x.id!==lichId); luuGC(); lichView = "list"; lichId = null; lichDel = false; veLich(); veSapToi(); }
-  else if(a==="cancel"){ lichView = lichId ? "detail" : "list"; lichErr = ""; veLich(); }
-  else if(a==="save"){ if(luuForm()){ lichView = "list"; lichId = null; FM = null; veSapToi(); } veLich(); }
+  else if(a==="delOk"){ GC = GC.filter(x=>x.id!==lichId); luuGC(); veSapToi(); veVe(); }
+  else if(a==="cancel"){
+    if(lichDirect){ dongLich(); return; }
+    if(lichId){ lichView = "detail"; lichErr = ""; veLich(); } else veVe();
+  }
+  else if(a==="save"){
+    const tu = lichBack, truc = lichDirect, thang = (lichSel==="");
+    if(luuForm()){
+      FM = null; lichId = null; veSapToi();
+      if(truc){ dongLich(); return; }
+      if(tu==="all"){ lichView = "all"; lichSel = ""; }
+      else { lichView = "list"; if(thang || tu==="month") lichSel = ""; }   // đang xem cả tháng thì vẫn ở lại xem cả tháng
+      lichBack = "";
+    }
+    veLich();
+  }
 };
 lichPop.oninput = e => { const f = e.target.dataset.f; if(FM && (f==="nd" || f==="gio")) FM[f] = e.target.value; };
 lichPop.onchange = e => {
   const el = e.target, f = el.dataset.f; if(!f || !FM) return;
   FM[f] = el.type==="checkbox" ? el.checked : el.value;
-  if(f==="che" && el.value==="a" && FM.lap==="week") FM.lap = "none";   // lặp hằng tuần chỉ có ở dương lịch
   if(f!=="nd" && f!=="gio") veLich();
 };
 amBtn.onclick = () => moLich();
-document.addEventListener("keydown", e => { if(e.key==="Escape") dongLich(); });
+document.addEventListener("keydown", e => { if(e.key==="Escape"){ if(!appPop.hidden) dongApp(); else if(!xnPop.hidden) dongXn(); else dongLich(); } });
+
+// ================= BỔ SUNG: chống trùng lịch, mã QR, sao lưu, menu, giọng nói =================
+const chuanND = s => s.trim().replace(/\s+/g," ").toLowerCase();
+const khoaGC = n => n.ngay+"|"+(n.gio||"")+"|"+chuanND(n.nd);                       // trùng = cùng ngày + cùng giờ + cùng nội dung
+const trungGC = (n, boId) => GC.some(x=>x.id!==boId && khoaGC(x)===khoaGC(n));
+const idMoi = () => "n"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
+// Kiểm tra dữ liệu một lịch đọc từ QR hoặc file sao lưu; hợp lệ trả về đối tượng sạch, sai trả về null
+function kiemLich(o){
+  if(!o || typeof o!=="object") return null;
+  const S = v => v==null ? "" : (typeof v==="string" ? v : null);
+  const nd = S(o.nd), ngay = S(o.ngay), gio = S(o.gio), bd = S(o.bd), kt = S(o.kt);
+  if(nd===null || ngay===null || gio===null || bd===null || kt===null) return null;
+  const hopLe = s => { if(!/^\d{4}-\d{2}-\d{2}$/.test(s)) return false; const [y,m,d] = parseD(s); return m>=1 && m<=12 && d>=1 && d<=dimon(y,m); };
+  if(!nd.trim() || nd.length>1000 || !hopLe(ngay)) return null;
+  if(o.che!=="d" && o.che!=="a") return null;
+  if(!["none","week","month","year"].includes(o.lap)) return null;
+  if(o.che==="a" && o.lap==="week") return null;
+  if(gio && !/^([01]\d|2[0-3]):[0-5]\d$/.test(gio)) return null;
+  if((bd && !hopLe(bd)) || (kt && !hopLe(kt)) || (bd && kt && kt<bd)) return null;
+  return {nd:nd.trim(), ngay, che:o.che, gio, lap:o.lap, bd, kt};
+}
+const QR_P = "TPLICH1|";                                                            // dấu hiệu nhận biết mã lịch của app này
+const goiQR = n => QR_P + JSON.stringify({nd:n.nd, ngay:n.ngay, che:n.che, gio:n.gio||"", lap:n.lap, bd:n.bd||"", kt:n.kt||""});
+function docQR(s){
+  if(typeof s!=="string" || s.indexOf(QR_P)!==0) return null;
+  try{ return kiemLich(JSON.parse(s.slice(QR_P.length))); }catch(e){ return null; }
+}
+
+// ----- Cửa sổ phụ dùng chung (menu, chia sẻ, quét QR, sao lưu, giới thiệu) -----
+const appPop = document.getElementById("appPop");
+let appStop = null;                                                                 // việc cần dọn khi đóng (vd: tắt camera)
+function moApp(html, stop){
+  dongApp(true); appStop = stop || null;
+  appPop.innerHTML = '<div class="ap" role="dialog" aria-modal="true">'+html+'</div>'; appPop.hidden = false;
+}
+function dongApp(giu){
+  if(appStop){ try{ appStop(); }catch(e){} appStop = null; }
+  if(!giu){ appPop.hidden = true; appPop.innerHTML = ""; }
+}
+appPop.onclick = e => {
+  if(e.target===appPop){ dongApp(); return; }
+  const el = e.target.closest("[data-p]"); if(!el) return;
+  const a = el.dataset.p;
+  if(a==="close") dongApp();
+  else if(a==="menu") moMenu();
+  else if(a==="bk") moBk();
+  else if(a==="about") moGioiThieu();
+  else if(a==="bkout") bkOut();
+  else if(a==="bkin") document.getElementById("bkFile").click();
+  else if(a==="bkmerge") bkGop();
+  else if(a==="bkrep") bkHoiThay();
+  else if(a==="bkrepok") bkThay();
+  else if(a==="shsave") shLuu();
+  else if(a==="shsend") shGui();
+  else if(a==="qrpick") document.getElementById("qrFile").click();
+};
+appPop.onchange = e => {
+  const f = e.target.files && e.target.files[0]; if(!f) return;
+  const id = e.target.id; e.target.value = "";
+  if(id==="bkFile") bkDoc(f); else if(id==="qrFile") qrAnh(f);
+};
+const btnDong = '<div class="btns"><button class="btn" data-p="close">'+"{c}"+'</button></div>';
+const apSt = (msg, cls) => { const el = document.getElementById("apSt"); if(el){ el.className = cls || "note"; el.textContent = msg; } };
+function taiFile(blob, ten){
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = ten;
+  document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+}
+
+// ----- Menu + Giới thiệu -----
+function moMenu(){
+  moApp('<h3>☰ '+t("menu")+'</h3><button class="mi" data-p="bk">💾 '+t("bkT")+'</button><button class="mi" data-p="about">ℹ️ '+t("abT")+'</button>'
+    + btnDong.replace("{c}", t("close")));
+}
+function moGioiThieu(){
+  moApp('<h3>ℹ️ '+t("abT")+'</h3><p>'+t("abIntro")+'</p><ul>'+t("abL").map(x=>'<li>'+x+'</li>').join("")+'</ul><p class="note">'+t("copy")+'</p>'
+    + '<div class="btns"><button class="btn" data-p="menu">'+t("nBack")+'</button><button class="btn" data-p="close">'+t("close")+'</button></div>');
+}
+document.getElementById("menuBtn").onclick = moMenu;
+
+// ----- Chia sẻ lịch bằng mã QR -----
+let shCv = null, shTen = "";
+function qrCanvas(bytes, l1, l2){
+  const q = new QRLib.QRCode(-1, QRLib.EC.M); q.addData(bytes); q.make();
+  const n = q.getModuleCount(), cell = Math.max(4, Math.ceil(420/(n+8))), W = (n+8)*cell, H = W + (l1 ? 78 : 0);
+  const c = document.createElement("canvas"); c.width = W; c.height = H;
+  const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0,0,W,H); g.fillStyle = "#000";
+  for(let r=0;r<n;r++) for(let k=0;k<n;k++) if(q.isDark(r,k)) g.fillRect((k+4)*cell, (r+4)*cell, cell, cell);
+  if(l1){
+    const cat = (s, w) => { while(s.length>1 && g.measureText(s).width>w) s = s.slice(0,-1); return s; };
+    g.textAlign = "center"; g.fillStyle = "#12303f";
+    g.font = "bold 22px system-ui,Arial,sans-serif"; g.fillText(cat(l1, W-24), W/2, W+30);
+    g.font = "18px system-ui,Arial,sans-serif"; g.fillText(cat(l2, W-24), W/2, W+58);
+  }
+  return c;
+}
+function moChiaSe(n){
+  if(!n) return;
+  const txt = goiQR(n), bytes = unescape(encodeURIComponent(txt));
+  if(bytes.length>800){
+    moApp('<h3>📤 '+t("shT")+'</h3><div class="err">'+t("shLong")+'</div>'+btnDong.replace("{c}", t("close"))); return;
+  }
+  shCv = qrCanvas(bytes, (n.gio ? n.gio+" · " : "")+dmy(n.ngay), n.nd.split("\n")[0]);
+  shTen = "lich_qr_"+n.ngay+(n.gio ? "_"+n.gio.replace(":","") : "")+".png";
+  let gui = false;
+  try{ gui = !!(navigator.canShare && navigator.canShare({files:[new File(["x"], "a.png", {type:"image/png"})]})); }catch(e){}
+  moApp('<h3>📤 '+t("shT")+'</h3><div id="shBox"></div><p class="note">'+t("shHint")+'</p>'
+    + '<div class="btns"><button class="btn p" data-p="shsave">💾 '+t("shSave")+'</button>'+(gui ? '<button class="btn" data-p="shsend">📨 '+t("shSend")+'</button>' : '')
+    + '<button class="btn" data-p="close">'+t("close")+'</button></div>');
+  shCv.className = "qr-c"; document.getElementById("shBox").appendChild(shCv);
+}
+const shLuu = () => { if(shCv) shCv.toBlob(b=>{ if(b) taiFile(b, shTen); }, "image/png"); };
+function shGui(){
+  if(!shCv) return;
+  shCv.toBlob(b=>{ if(b) navigator.share({files:[new File([b], shTen, {type:"image/png"})]}).catch(()=>{}); }, "image/png");
+}
+
+// ----- Quét mã QR (camera hoặc ảnh có sẵn) -----
+let qrStream = null, qrTimer = 0, qrRun = false, bdet, qrWork = null, jsqrP = null;
+function qrStop(){
+  qrRun = false; clearTimeout(qrTimer);
+  if(qrStream){ qrStream.getTracks().forEach(x=>x.stop()); qrStream = null; }
+}
+// Trình duyệt nào có sẵn BarcodeDetector (Chrome/Android) thì dùng; không thì nạp thư viện jsQR (ưu tiên file jsQR.min.js đặt cạnh index.html)
+function napJsQR(){
+  if(window.jsQR) return Promise.resolve(true);
+  if(jsqrP) return jsqrP;
+  const nguon = ["jsQR.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js", "https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"];
+  jsqrP = (async()=>{
+    for(const src of nguon){
+      const ok = await new Promise(r=>{ const el = document.createElement("script"); el.src = src; el.onload = ()=>r(!!window.jsQR); el.onerror = ()=>r(false); document.head.appendChild(el); });
+      if(ok) return true;
+    }
+    jsqrP = null; return false;
+  })();
+  return jsqrP;
+}
+async function giaiMa(src, live){
+  if(bdet===undefined){ try{ bdet = ("BarcodeDetector" in window) ? new BarcodeDetector({formats:["qr_code"]}) : null; }catch(e){ bdet = null; } }
+  if(bdet){ try{ const r = await bdet.detect(src); if(r.length && r[0].rawValue) return r[0].rawValue; }catch(e){} }
+  if(!window.jsQR){ if(live && bdet) return null; if(!(await napJsQR())) throw new Error("lib"); }
+  let cv, w, h;
+  if(src instanceof HTMLCanvasElement){ cv = src; w = src.width; h = src.height; }
+  else {
+    const k = Math.min(1, 640/src.videoWidth); w = Math.round(src.videoWidth*k); h = Math.round(src.videoHeight*k);
+    cv = qrWork || (qrWork = document.createElement("canvas")); cv.width = w; cv.height = h;
+    cv.getContext("2d", {willReadFrequently:true}).drawImage(src, 0, 0, w, h);
+  }
+  const d = cv.getContext("2d", {willReadFrequently:true}).getImageData(0, 0, w, h);
+  const r = window.jsQR(d.data, w, h, {inversionAttempts: live ? "dontInvert" : "attemptBoth"});
+  return r ? r.data : null;
+}
+function moQuet(){
+  moApp('<h3>📷 '+t("qrT")+'</h3><div class="vid"><video id="qrVid" playsinline muted></video></div><div id="apSt" class="note">'+t("qrOpening")+'</div>'
+    + '<input type="file" id="qrFile" accept="image/*" hidden>'
+    + '<div class="btns"><button class="btn p" data-p="qrpick">🖼 '+t("qrPick")+'</button><button class="btn" data-p="close">'+t("close")+'</button></div>', qrStop);
+  qrBatCam();
+}
+async function qrBatCam(){
+  const v = document.getElementById("qrVid");
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ apSt(t("qrNoCam"), "err"); return; }
+  try{
+    const s = await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}}, audio:false});
+    if(appPop.hidden || document.getElementById("qrVid")!==v){ s.getTracks().forEach(x=>x.stop()); return; }   // đã đóng cửa sổ trong lúc chờ cấp quyền
+    qrStream = s; v.srcObject = s; await v.play();
+    apSt(t("qrAim")); qrRun = true; qrVong();
+    if(!("BarcodeDetector" in window)) napJsQR();
+  }catch(e){ apSt(t("qrNoCam"), "err"); }
+}
+async function qrVong(){
+  if(!qrRun) return;
+  const v = document.getElementById("qrVid");
+  if(v && v.readyState>=2 && v.videoWidth){
+    let s = null;
+    try{ s = await giaiMa(v, true); }
+    catch(e){ if(e && e.message==="lib"){ apSt(t("qrLib"), "err"); qrStop(); return; } }
+    if(!qrRun) return;
+    if(s && qrXuLy(s)) return;                      // hợp lệ: mở form; không hợp lệ: đã báo lỗi, tiếp tục quét
+  }
+  qrTimer = setTimeout(qrVong, 160);
+}
+function taiAnh(file){
+  return new Promise((res, rej)=>{
+    const u = URL.createObjectURL(file), im = new Image();
+    im.onload = ()=>{
+      const k = Math.min(1, 1600/Math.max(im.naturalWidth, im.naturalHeight)), c = document.createElement("canvas");
+      c.width = Math.max(1, Math.round(im.naturalWidth*k)); c.height = Math.max(1, Math.round(im.naturalHeight*k));
+      const g = c.getContext("2d", {willReadFrequently:true}); g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height); g.drawImage(im, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(u); res(c);
+    };
+    im.onerror = ()=>{ URL.revokeObjectURL(u); rej(new Error("img")); };
+    im.src = u;
+  });
+}
+async function qrAnh(file){
+  apSt(t("qrReading"));
+  try{
+    const s = await giaiMa(await taiAnh(file), false);
+    if(!s){ apSt(t("qrNoRead"), "err"); return; }
+    qrXuLy(s);
+  }catch(e){ apSt(t(e && e.message==="lib" ? "qrLib" : "qrNoRead"), "err"); }
+}
+function qrXuLy(text){                              // true = mã hợp lệ và đã mở form; false = báo lỗi
+  const o = docQR(text);
+  if(!o){ apSt(t("qrBad"), "err"); return false; }
+  dongApp(); moLich(); lichDirect = true; lichView = "form"; lichId = null; lichErr = ""; lichRecv = true;
+  FM = {nd:o.nd, ngay:o.ngay, che:o.che, coGio:!!o.gio, gio:o.gio || "08:00", lap:o.lap, bd:o.bd, kt:o.kt};
+  const q2 = parseD(o.ngay); lichY = q2[0]; lichM = q2[1];
+  veLich(); return true;
+}
+
+// ----- Sao lưu - Đồng bộ -----
+const tenBk = () => { const d = new Date(); return "app_thoitiet_lich_bk_"+p2(d.getDate())+p2(d.getMonth()+1)+d.getFullYear()+"_"+p2(d.getHours())+p2(d.getMinutes())+".json"; };
+let bkCho = null;
+function moBk(msg, cls){
+  const sm = x => '<small style="display:block;font-weight:400;color:#5f7380;margin-top:2px">'+x+'</small>';
+  moApp('<h3>💾 '+t("bkT")+'</h3>'
+    + '<button class="mi" data-p="bkout">⬇️ '+t("bkOut")+sm(t("bkOutD").replace("{n}", GC.length))+'</button>'
+    + '<button class="mi" data-p="bkin">⬆️ '+t("bkIn")+sm(t("bkInD"))+'</button>'
+    + '<input type="file" id="bkFile" accept=".json,application/json" hidden>'
+    + '<div id="apSt" class="'+(cls || "note")+'">'+(msg || "")+'</div>'
+    + '<div class="btns"><button class="btn" data-p="menu">'+t("nBack")+'</button><button class="btn" data-p="close">'+t("close")+'</button></div>');
+}
+function bkOut(){
+  if(!GC.length){ moBk(t("bkEmpty"), "err"); return; }
+  const o = {app:"thoitiet-lich", ver:1, taoLuc:new Date().toISOString(),
+    lich:GC.map(n=>({id:n.id, nd:n.nd, ngay:n.ngay, che:n.che, gio:n.gio||"", lap:n.lap, bd:n.bd||"", kt:n.kt||""}))};
+  const f = tenBk();
+  taiFile(new Blob([JSON.stringify(o, null, 1)], {type:"application/json"}), f);
+  moBk(t("bkSaved").replace("{f}", esc(f)), "ok");
+}
+async function bkDoc(file){
+  let o = null;
+  try{ o = JSON.parse(await file.text()); }catch(e){}
+  if(!o || o.app!=="thoitiet-lich" || !Array.isArray(o.lich)){ moBk(t("bkBad"), "err"); return; }
+  let loi = 0; const kF = new Set(), uniq = [];
+  o.lich.forEach(r=>{
+    const c = kiemLich(r); if(!c){ loi++; return; }
+    const k = khoaGC(c); if(kF.has(k)) return;
+    kF.add(k); c.id = (r && typeof r.id==="string" && r.id.length<40) ? r.id : ""; uniq.push(c);
+  });
+  if(!uniq.length){ moBk(t("bkBad"), "err"); return; }
+  const kGC = new Set(GC.map(khoaGC)), moi = uniq.filter(c=>!kGC.has(khoaGC(c)));
+  bkCho = {uniq, moi};
+  moApp('<h3>💾 '+t("bkT")+'</h3><p>'+t("bkSum").replace("{a}", uniq.length).replace("{b}", moi.length).replace("{c}", uniq.length-moi.length)+'</p>'
+    + (loi ? '<p class="err">'+t("bkBadN").replace("{d}", loi)+'</p>' : '') + (moi.length ? '' : '<p class="note">'+t("bkNone")+'</p>')
+    + '<div class="btns">'+(moi.length ? '<button class="btn p" data-p="bkmerge">'+t("bkMerge").replace("{b}", moi.length)+'</button>' : '')
+    + '<button class="btn d" data-p="bkrep">'+t("bkRep")+'</button><button class="btn" data-p="bk">'+t("nCancel")+'</button></div>');
+}
+function bkGhi(ds, thay){
+  const ids = new Set(thay ? [] : GC.map(x=>x.id)), ra = [];
+  ds.forEach(c=>{ const id = (c.id && !ids.has(c.id)) ? c.id : idMoi(); ids.add(id); ra.push({id, nd:c.nd, ngay:c.ngay, che:c.che, gio:c.gio, lap:c.lap, bd:c.bd, kt:c.kt, am:amDS(c.ngay)}); });
+  GC = thay ? ra : GC.concat(ra);
+  luuGC(); veSapToi(); if(!lichPop.hidden) veLich();
+}
+function bkGop(){ if(!bkCho) return; const b = bkCho.moi.length; bkGhi(bkCho.moi, false); bkCho = null; moBk(t("bkDoneM").replace("{b}", b), "ok"); }
+function bkHoiThay(){
+  if(!bkCho) return;
+  moApp('<h3>💾 '+t("bkRep")+'</h3><p class="err">'+t("bkRepAsk").replace("{n}", GC.length).replace("{a}", bkCho.uniq.length)+'</p>'
+    + '<div class="btns"><button class="btn d" data-p="bkrepok">'+t("bkYes")+'</button><button class="btn" data-p="bk">'+t("nCancel")+'</button></div>');
+}
+function bkThay(){ if(!bkCho) return; const a = bkCho.uniq.length; bkGhi(bkCho.uniq, true); bkCho = null; moBk(t("bkDoneR").replace("{a}", a), "ok"); }
+
+// ----- Tạo lịch bằng giọng nói (chỉ khi thêm mới) -----
+// ----- Tạo lịch bằng giọng nói: tách ngày, giờ, lặp lại, nội dung từ một câu nói tiếng Việt -----
+const NW = "(?:không|một|mốt|hai|ba|bốn|tư|năm|lăm|sáu|bảy|tám|chín|mười|mươi|lẻ|linh)";
+const NG = NW+"(?:\\s+"+NW+")*";
+const SOV = {"không":0,"một":1,"mốt":1,"hai":2,"ba":3,"bốn":4,"tư":4,"năm":5,"lăm":5,"sáu":6,"bảy":7,"tám":8,"chín":9};
+function chuSo(g){                      // "hai mươi lăm" -> "25", "mười một" -> "11", "lẻ năm" -> "5"
+  const w = g.toLowerCase().split(/\s+/).filter(x=>x!=="lẻ" && x!=="linh"), r = [];
+  for(let i=0;i<w.length;){
+    const x = w[i], n1 = SOV[w[i+1]]; let v = null, len = 1;
+    if(x==="mười"){ v = 10; if(n1>0){ v += n1; len = 2; } }
+    else if(SOV[x]!==undefined){ v = SOV[x]; if(w[i+1]==="mươi"){ v *= 10; len = 2; const n2 = SOV[w[i+2]]; if(n2>0){ v += n2; len = 3; } } }
+    if(v===null){ i++; continue; }
+    r.push(v); i += len;
+  }
+  return r.join(" ");
+}
+// Đổi chữ thành số, nhưng CHỈ trong ngữ cảnh ngày/giờ (để không đổi nhầm "ba" = bố, "năm" = year trong nội dung)
+function soHoaCau(s){
+  s = s.replace(new RegExp("(^|\\s)("+NG+")(\\s+(?:giờ|phút)(?=\\s|$))","gi"), (m,a,g,b)=>a+chuSo(g)+b);
+  s = s.replace(new RegExp("((?:^|\\s)(?:ngày|mùng|mồng|tháng|giờ|phút)\\s+)("+NG+")(?=\\s|$)","gi"), (m,a,g)=>a+chuSo(g));
+  return s;
+}
+const THU_IDX = {"hai":0,"ba":1,"tư":2,"năm":3,"sáu":4,"bảy":5,"2":0,"3":1,"4":2,"5":3,"6":4,"7":5};   // 0 = thứ Hai ... 6 = Chủ nhật
+function gio24(h, p){
+  if(p==="chiều") return h<12 ? h+12 : h;
+  if(p==="tối") return h<12 ? h+12 : h;
+  if(p==="trưa") return h<=4 ? h+12 : h;
+  if(p==="đêm") return h===12 ? 0 : h<6 ? h : h<12 ? h+12 : h;
+  return h;                              // sáng hoặc không nói buổi
+}
+// raw: câu đã nghe được; hom: hôm nay "YYYY-MM-DD". Trả về {nd, ngay, gio, lap} (trường nào không nhận ra thì để rỗng)
+function giongNoi(raw, hom){
+  let s = " " + String(raw).normalize("NFC").replace(/[,;!?]/g," ").replace(/\.(?=\s|$)/g," ").replace(/\s+/g," ").trim() + " ";
+  const kq = {nd:"", ngay:"", gio:"", lap:""}, re = p => new RegExp(p, "i");
+  const cat = (m, giu) => { s = s.slice(0, m.index) + (giu || " ") + s.slice(m.index + m[0].length); };
+  const [hy,,hd] = parseD(hom), PER = "(sáng|trưa|chiều|tối|đêm)";
+  let m;
+  s = soHoaCau(s);
+
+  // 1) Lặp lại: hằng tuần / hằng tháng / hằng năm / mỗi thứ hai
+  s = s.replace(/\s(?:và\s+)?lặp lại(?=\s)/i, " ");
+  if((m = re("\\s(?:hằng|hàng|mỗi)\\s+tuần(?=\\s)").exec(s))){ kq.lap = "week"; cat(m); }
+  else if((m = re("\\s(?:hằng|hàng|mỗi)\\s+tháng(?=\\s)").exec(s))){ kq.lap = "month"; cat(m); }
+  else if((m = re("\\s(?:hằng|hàng|mỗi)\\s+năm(?=\\s)").exec(s))){ kq.lap = "year"; cat(m); }
+  else if((m = re("\\s(?:hằng|hàng|mỗi)\\s+(?=thứ|chủ nhật)").exec(s))){ kq.lap = "week"; cat(m); }
+
+  // 2) Giờ: "8 giờ", "8h30", "8:30", "8 giờ 30 phút", "3 giờ rưỡi" + buổi (sáng/trưa/chiều/tối/đêm)
+  m = re("\\s(\\d{1,2})\\s*(?:giờ|h|:)(?=\\s|\\d)\\s*(?:(\\d{1,2})(?!\\d|\\s*(?:tháng|\\/|-))(?:\\s*phút)?(?=\\s)|(rưỡi)(?=\\s))?").exec(s);
+  if(m){
+    let h = +m[1], mi = m[3] ? 30 : (m[2] ? +m[2] : 0);
+    if(h<=23 && mi<=59){
+      let p = "", len = m[0].length;
+      const pm = re("^\\s*"+PER+"(?=\\s)").exec(s.slice(m.index+len));
+      if(pm){ p = pm[1].toLowerCase(); len += pm[0].length; }
+      s = s.slice(0, m.index) + " " + s.slice(m.index+len);
+      if(!p){ const pm2 = re("\\s"+PER+"(?=\\s)").exec(s); if(pm2){ p = pm2[1].toLowerCase(); cat(pm2); } }
+      h = gio24(h, p);
+      kq.gio = p2(h)+":"+p2(mi);
+    }
+  }
+
+  // 3) Ngày
+  m = re("\\s(?:ngày\\s+|mùng\\s+|mồng\\s+)?(\\d{1,2})\\s*(?:\\/|-|tháng)\\s*(\\d{1,2})(?:\\s*(?:\\/|-|năm)\\s*(\\d{4}|\\d{2}))?(?=\\s)").exec(s);
+  if(m){                                                   // "25/10", "25 tháng 10", "ngày 25 tháng 10 năm 2026"
+    const d = +m[1], mo = +m[2]; let y = m[3] ? (m[3].length===2 ? 2000+ +m[3] : +m[3]) : hy;
+    if(mo>=1 && mo<=12 && d>=1 && d<=dimon(y,mo)){
+      kq.ngay = dstr(y,mo,d);
+      if(!m[3] && kq.ngay<hom && d<=dimon(y+1,mo)) kq.ngay = dstr(y+1,mo,d);   // ngày đã qua: hiểu là năm sau
+      cat(m);
+    }
+  }
+  if(!kq.ngay){                                            // hôm nay / ngày mai / ngày kia
+    const R = [
+      [re("\\s(?:ngày hôm nay|hôm nay|bữa nay)(?=\\s)"), 0, 0], [re("^\\s*(?:hôm\\s+)?nay(?=\\s)"), 0, 0], [re("\\s(?:vào|lúc)\\s+nay(?=\\s)"), 0, 0],
+      [re("\\s"+PER+"\\s+nay(?=\\s)"), 0, 1],
+      [re("\\sngày mai(?=\\s)"), 1, 0], [re("^\\s*mai(?=\\s)"), 1, 0], [re("\\s(?:vào|lúc)\\s+mai(?=\\s)"), 1, 0],
+      [re("\\s"+PER+"\\s+mai(?=\\s)"), 1, 1],
+      [re("\\s(?:ngày kia|ngày mốt)(?=\\s)"), 2, 0]
+    ];
+    for(const [rx, off, giu] of R){
+      const x = rx.exec(s);
+      if(x){ kq.ngay = addDays(hom, off); cat(x, giu ? " "+x[1]+" " : " "); break; }
+    }
+  }
+  if(!kq.ngay){                                            // thứ hai / chủ nhật (+ tuần sau)
+    m = re("\\s(?:vào\\s+)?(?:thứ\\s+(hai|ba|tư|năm|sáu|bảy|[2-7])|(chủ nhật))(?=\\s)").exec(s);
+    if(m){
+      const wd = m[2] ? 6 : THU_IDX[m[1].toLowerCase()];
+      cat(m);
+      const ts = re("\\s(?:tuần sau|tuần tới)(?=\\s)").exec(s);
+      if(ts) cat(ts); else { const tn = re("\\s(?:tuần này|tuần nay)(?=\\s)").exec(s); if(tn) cat(tn); }
+      const [ty,tm,td] = parseD(hom), ti = (new Date(Date.UTC(ty,tm-1,td)).getUTCDay()+6)%7;
+      let off = (wd - ti + 7) % 7;
+      if(ts) off = (7 - ti) + wd; else if(off===0) off = 7;
+      kq.ngay = addDays(hom, off);
+    }
+  }
+  if(!kq.ngay){                                            // "ngày 25" (không nói tháng)
+    m = re("\\s(?:vào\\s+)?(?:ngày|mùng|mồng)\\s+(\\d{1,2})(?=\\s)(?:\\s+(tháng sau|tháng tới|tháng này))?").exec(s);
+    if(m){
+      const d = +m[1], [ty,tm,td] = parseD(hom);
+      let y = ty, mo = tm;
+      if((m[2] && /sau|tới/i.test(m[2])) || (!m[2] && d<td)){ mo++; if(mo>12){ mo = 1; y++; } }
+      if(d>=1 && d<=dimon(y,mo)){ kq.ngay = dstr(y,mo,d); cat(m); }
+    }
+  }
+
+  // 4) Nội dung: phần còn lại, bỏ các từ nối thừa
+  let nd = s.replace(/\s+/g," ").trim();
+  const dau = /^(?:(?:hãy\s+)?(?:tạo|thêm|đặt|lên)\s+(?:cho\s+(?:tôi|mình)\s+)?(?:một\s+)?(?:lịch|ghi chú|lời nhắc|nhắc nhở|cuộc hẹn)(?:\s+hẹn)?|vào lúc|vào|lúc|nội dung|là)(?:\s+|$)/i;
+  const cuoi = /(?:^|\s)(?:vào lúc|vào ngày|vào|lúc|nhé|nha|giúp tôi)$/i;
+  for(let i=0;i<6;i++){ const a = nd.replace(dau,"").replace(cuoi,"").trim(); if(a===nd) break; nd = a; }
+  nd = nd.replace(/^[\s.:\-–]+|[\s.:\-–]+$/g,"");
+  kq.nd = nd ? nd.charAt(0).toLocaleUpperCase("vi") + nd.slice(1) : "";
+  return kq;
+}
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const vcSt = (msg, cls) => { const el = document.getElementById("vcSt"); if(el){ el.className = cls || "note"; el.innerHTML = msg; } };
+const vcNut = () => { const b = document.getElementById("micBtn"); if(b) b.textContent = t(vcOn ? "vcStop" : "vcBtn"); };
+function apDungGiongNoi(text){                      // điền kết quả phân tích vào form
+  if(lichPop.hidden || !FM || lichView!=="form" || lichId) return;
+  const r = giongNoi(text, homNay());
+  FM.nd = r.nd || text.trim();
+  if(r.ngay){ FM.ngay = r.ngay; const q2 = parseD(r.ngay); lichY = q2[0]; lichM = q2[1]; }
+  if(r.gio){ FM.coGio = true; FM.gio = r.gio; }
+  if(r.lap) FM.lap = r.lap;
+  vcHeard = text.trim(); vcWarn = !r.ngay && !r.gio; lichErr = "";
+  veLich();
+}
+function batGiongNoi(){
+  if(!SR){ vcSt(esc(t("vcNo")), "err"); return; }
+  if(vcOn && rec){ try{ rec.stop(); }catch(e){} return; }              // bấm lần nữa = dừng nghe
+  let text = "", xong = false;
+  rec = new SR(); rec.lang = "vi-VN"; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+  rec.onresult = e => { text = Array.from(e.results).map(r=>r[0].transcript).join(" "); vcSt("🎤 “"+esc(text)+"”"); };
+  rec.onerror = () => { if(xong) return; xong = true; vcOn = false; vcNut(); vcSt(esc(t("vcErr")), "err"); };
+  rec.onend = () => {
+    if(xong) return; xong = true; vcOn = false; vcNut();
+    if(!text.trim()){ vcSt(esc(t("vcErr")), "err"); return; }
+    apDungGiongNoi(text);
+  };
+  try{ rec.start(); vcOn = true; vcNut(); vcSt(esc(t("vcListen"))); }
+  catch(e){ vcOn = false; vcSt(esc(t("vcErr")), "err"); }
+}
 
 function moTa(c){
   const i = c===0 ? 0 : c<=2 ? 1 : c===3 ? 2 : c<=48 ? 3 : c<=57 ? 4 : c<=67 ? 5 : c<=82 ? 6 : 7;

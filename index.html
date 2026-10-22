@@ -6,6 +6,10 @@
 <title>Thời tiết - Lịch</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2f86c9">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Thời tiết - Lịch">
+<meta property="og:description" content="Xem thời tiết, lịch âm và quản lý lịch cá nhân. Bấm vào liên kết để mở ứng dụng và lưu lịch được chia sẻ.">
+<meta property="og:image" content="icon-512.png">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
@@ -15,14 +19,14 @@
 body{margin:0;color:var(--chu);font-family:system-ui,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.3}
 .bg{position:fixed;inset:0;z-index:-1}
 .bg svg{width:100%;height:100%;display:block}
-main{max-width:720px;margin:0 auto;padding:8px 8px 16px}
+main{max-width:720px;margin:0 auto;padding:8px 8px 16px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
 h1{margin:2px 4px 6px;font-size:18px;line-height:1.25;color:#fff;text-shadow:0 1px 5px #0007}
 #amlich{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-shadow:inherit;text-align:left;cursor:pointer}
 #amlich span{display:inline-block}
 #amlich:focus-visible{outline:2px solid var(--nang);outline-offset:2px;border-radius:4px}
 .topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .phai{max-width:46%;text-align:right}
-.ban{font-size:10px;line-height:1.25;color:#fff;text-shadow:0 1px 3px #0008;margin-top:3px}
+.ban{font-size:11px;line-height:1.35;color:#fff;text-shadow:0 1px 3px #0008;text-align:center;padding:14px 8px 6px;margin-top:auto}
 .co{display:flex;gap:6px;justify-content:flex-end;margin-top:4px}
 .co button{padding:0;border:2px solid transparent;border-radius:5px;background:none;line-height:0;cursor:pointer;opacity:.65}
 .co button.on{border-color:#fff;opacity:1}
@@ -35,8 +39,8 @@ h1{margin:2px 4px 6px;font-size:18px;line-height:1.25;color:#fff;text-shadow:0 1
 .tabs .them{background:transparent;border:1px dashed #fff;color:#fff;text-shadow:0 1px 3px #0007}
 .box{background:var(--kinh);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:12px;padding:8px 10px;margin-bottom:6px;box-shadow:0 2px 8px #0002}
 .box h2{margin:0 0 4px;font-size:13px;font-weight:600;opacity:.75}
-#msg,#tip{color:#fff;text-shadow:0 1px 3px #0008;padding:2px 4px;font-size:13px}
-#msg:empty,#tip:empty{display:none}
+.js-msg,.js-tip{color:#fff;text-shadow:0 1px 3px #0008;padding:2px 4px;font-size:13px}
+.js-msg:empty,.js-tip:empty{display:none}
 .now{display:flex;align-items:center;gap:10px}
 .now .icon{font-size:38px;line-height:1}
 .now .temp{font-size:32px;font-weight:700;line-height:1}
@@ -62,8 +66,8 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 .kieu button{background:none;border:0;border-bottom:2px solid transparent;font:inherit;font-size:13px;padding:2px 0;cursor:pointer;color:var(--chu);white-space:nowrap}
 .kieu button.on{border-color:#f2b705;font-weight:700}
 [hidden]{display:none!important}
-#diachi{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:3px 10px;color:#fff;text-shadow:0 1px 3px #0008;font-size:13px;padding:0 4px 6px}
-#dc{flex:1 1 auto;min-width:0}
+.diachi{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:3px 10px;color:#fff;text-shadow:0 1px 3px #0008;font-size:13px;padding:0 4px 6px}
+.js-dc{flex:1 1 auto;min-width:0}
 .gio{font-size:13px;margin:0 0 6px}
 .lich-bg{position:fixed;inset:0;background:rgba(10,30,45,.55);display:flex;align-items:center;justify-content:center;padding:10px;z-index:50}
 .lich{width:100%;max-width:420px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px #0006}
@@ -81,6 +85,7 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 .lich-f{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;font-size:12px;color:#5f7380}
 .lich-f button{border:0;border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;background:#dcebf4;color:#12303f;white-space:nowrap}
 .lich-f .bt{display:flex;gap:6px;flex:none}
+.lich-f button.dg{background:#fde8ea;color:#c62f3a}
 .lich{max-height:calc(100vh - 20px);overflow-y:auto}
 .lich-g div{height:46px;cursor:pointer}
 .lich-g .gc{background:#ffe3a1}
@@ -114,7 +119,6 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 .up-it .gi{flex:none;min-width:38px;font-weight:600}
 .up-it .nd{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .up-it.qua{opacity:.5}
-.up-f{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .xd{flex:none;border:0;border-radius:8px;background:#fde8ea;color:#c62f3a;width:32px;height:32px;font-size:15px;line-height:1;cursor:pointer;align-self:center}
 .up-it .xd{width:26px;height:26px;font-size:13px}
 .mh{font-size:12px;font-weight:700;color:#5f7380;margin:9px 0 4px;cursor:pointer}
@@ -143,6 +147,21 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
 #apSt,#vcSt{margin-top:6px;font-size:13px}
 .vc{background:#eef6fb;border-radius:10px;padding:8px;margin:6px 0}
 .vc small{color:#5f7380;font-size:11px;margin-left:4px}
+
+/* ===== Bổ sung v2: nút biểu tượng, màn hình thời tiết, chia sẻ Zalo/Messenger ===== */
+.up-h>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.up-act{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex:none}
+.ib{width:34px;height:30px;padding:0;border:0;border-radius:999px;background:#cfe3ef;color:#0b2f45;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font:inherit}
+.ib svg{width:18px;height:18px;display:block}
+.ib:focus-visible{outline:2px solid var(--nang);outline-offset:1px}
+.h3i svg{width:20px;height:20px;vertical-align:-3px}
+.btn.zl{background:#0068ff;color:#fff}
+.btn.ms{background:linear-gradient(135deg,#0099ff,#a033ff);color:#fff}
+#nowMain{cursor:pointer}
+.wx{position:fixed;inset:0;z-index:65;overflow-y:auto;overscroll-behavior:contain;background:linear-gradient(180deg,#2f86c9 0%,#8fcbf0 62%,#e3f4ff 100%)}
+.wx-in{max-width:720px;margin:0 auto;padding:8px 8px 24px}
+.wx-h{display:flex;align-items:center;gap:10px;margin:2px 4px 8px;color:#fff;text-shadow:0 1px 5px #0007;font-size:18px}
+.wx-h .ib{width:38px;height:34px;font-size:26px;line-height:1;background:rgba(255,255,255,.3);color:#fff;text-shadow:none}
 </style>
 </head>
 <body>
@@ -168,32 +187,43 @@ svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block
   <div class="topbar">
     <h1><button id="amlich" type="button"></button></h1>
     <div class="phai">
-      <div class="ban" data-i="copy"></div>
-      <!-- Hai lá cờ để đổi ngôn ngữ (vẽ bằng SVG nên hiện đúng trên mọi máy) -->
+      <!-- Ngôn ngữ (cờ vẽ bằng SVG) rồi đến Menu, nằm ở góc trên bên phải -->
       <div class="co">
-        <button id="menuBtn" class="mn" type="button" aria-label="Menu">☰</button>
         <button id="cVi" title="Tiếng Việt" aria-label="Tiếng Việt">
           <svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#da251d"/><polygon fill="#ffff00" points="15,4.5 16.35,8.64 20.71,8.65 17.19,11.21 18.53,15.35 15,12.8 11.47,15.35 12.81,11.21 9.29,8.65 13.65,8.64"/></svg>
         </button>
         <button id="cEn" title="English" aria-label="English">
           <svg viewBox="0 0 60 30"><clipPath id="uks"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="ukt"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#uks)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukt)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
         </button>
+        <button id="menuBtn" class="mn" type="button" aria-label="Menu">☰</button>
       </div>
     </div>
   </div>
   <div class="box" id="up"></div>
-  <div class="tabs" id="tabs"></div>
-  <div id="diachi"><span id="dc"></span></div>
-  <div class="box tim" id="tim" hidden>
+  <div class="tabs js-tabs"></div>
+  <div class="diachi"><span class="js-dc"></span></div>
+  <div class="js-tip"></div>
+  <div class="js-msg"></div>
+  <div id="nowMain"></div>
+  <div class="ban" data-i="copy"></div>
+</main>
+<!-- Màn hình "Xem thời tiết": mở từ Menu -->
+<div class="wx" id="wxPop" hidden>
+  <div class="wx-in" role="dialog" aria-modal="true">
+    <div class="wx-h"><button class="ib" id="wxBack" type="button">‹</button><b>🌤️ <span data-i="wxT"></span></b></div>
+    <div class="tabs js-tabs"></div>
+    <div class="diachi"><span class="js-dc"></span></div>
+    <div class="box tim" id="tim" hidden>
     <button class="dong" id="dongBtn" data-i="close"></button>
     <h2 data-i="findTitle"></h2>
     <input id="q" type="search" autocomplete="off">
     <ul id="gy"></ul>
   </div>
-  <div id="tip"></div>
-  <div id="msg"></div>
-  <div id="out"></div>
-</main>
+    <div class="js-tip"></div>
+    <div class="js-msg"></div>
+    <div id="out"></div>
+  </div>
+</div>
 <div class="lich-bg" id="lichPop" hidden></div>
 <div class="lich-bg" id="xnPop" hidden></div>
 <div class="lich-bg" id="appPop" hidden></div>
@@ -1111,12 +1141,12 @@ vi:{
   findTitle:"Tìm thành phố", ph:"Gõ tên thành phố, ví dụ: Đà Nẵng",
   none:"Không tìm thấy. Thử gõ tên khác.", netErr:"Không tìm được. Hãy kiểm tra kết nối mạng.",
   locating:"Đang lấy vị trí của bạn...", noLoc:"Chưa lấy được vị trí. Hãy cho phép trình duyệt truy cập vị trí rồi tải lại trang.",
-  loading:"Đang tải dữ liệu...", loadErr:"Không tải được dữ liệu. Hãy kiểm tra kết nối mạng rồi bấm lại tên địa điểm.",
-  empty:"Chưa có thành phố nào. Bấm Thêm để chọn thành phố.", findAddr:"Đang xác định địa chỉ...",
+  loading:"Đang tải dữ liệu...", loadErr:"Không tải được dữ liệu. Hãy kiểm tra kết nối mạng, rồi vào Menu › Xem thời tiết và bấm lại tên địa điểm.",
+  empty:"Chưa có thành phố nào. Vào Menu › Xem thời tiết, bấm Thêm để chọn thành phố.", findAddr:"Đang xác định địa chỉ...",
   lunar:"Âm lịch", leap:"nhuận",
   upT:"Lịch của bạn", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", tomorrow:"Ngày mai", nOpen:"Mở lịch",
   nNone7:"Không có lịch nào trong 7 ngày tới.", nNoneM:"Tháng này chưa có lịch nào.", nNoneT:"Hôm nay chưa có lịch nào.",
-  nAllBtn:"Tất cả ghi chú", nAllT:"Tất cả ghi chú", nAllEmpty:"Chưa có ghi chú nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có ghi chú nào.", nWholeM:"Cả tháng",
+  nAllBtn:"Tất cả ghi chú", nAllT:"Tất cả ghi chú", dAll:"Xóa tất cả", dAllAsk:"Xóa tất cả ghi chú?", dAllN:"Sẽ xóa {n} ghi chú. Không thể hoàn tác.", dAllWarn:"Nên sao lưu trước khi xóa tất cả.", dAllBk:"Sao lưu ngay", dAllDone:"Đã sao lưu: {f}", nAllEmpty:"Chưa có ghi chú nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có ghi chú nào.", nWholeM:"Cả tháng",
   nDelAsk1:"Xóa ghi chú này?", nDelRep:"Ghi chú này có lặp lại: tất cả các ngày lặp lại cũng sẽ bị xóa.",
   nAdd:"＋ Thêm", nAddT:"Thêm ghi chú", nEditT:"Sửa ghi chú", nEmpty:"Chưa có ghi chú cho ngày này.", nAllDay:"Cả ngày", nSolar:"Dương lịch",
   nEdit:"Sửa", nDel:"Xóa", nCancel:"Hủy", nSave:"Lưu", nBack:"Quay lại",
@@ -1128,12 +1158,12 @@ vi:{
   nSumYD:"Lặp vào ngày {d}/{m} dương lịch hằng năm", nSumYA:"Lặp vào ngày {d}/{m} âm lịch hằng năm",
   nDelAsk:"Xóa ghi chú này? Tất cả các ngày lặp lại cũng sẽ bị xóa.", nEditHint:"Sửa ghi chú sẽ thay đổi tất cả các ngày lặp lại.",
   nErrC:"Hãy nhập nội dung.", nErrD:"Hãy chọn ngày.", nErrR:"Ngày kết thúc không được trước ngày bắt đầu.", lichNote:"Số lớn: dương lịch, số nhỏ: âm lịch", wd:["T2","T3","T4","T5","T6","T7","CN"], wdF:["Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ nhật"],
-  nShare:"Chia sẻ", shT:"Chia sẻ lịch bằng mã QR", shHint:"Người nhận mở ứng dụng, bấm “Quét QR” rồi quét mã này (hoặc chọn ảnh QR đã lưu).", shSave:"Lưu ảnh", shSend:"Gửi", shLong:"Nội dung lịch quá dài để tạo mã QR. Hãy rút gọn nội dung rồi thử lại.",
+  nShare:"Chia sẻ", shT:"Chia sẻ lịch", shHint:"Người nhận bấm vào liên kết để mở ứng dụng và lưu lịch. Cũng có thể quét mã QR trong ảnh bằng nút QR của ứng dụng.", shZalo:"Zalo", shMess:"Messenger", shCopy:"Sao chép liên kết", shGo:"Bấm Zalo hoặc Messenger rồi chọn ứng dụng trong bảng chia sẻ: ảnh, tiêu đề và liên kết được gửi cùng nhau.", shCopied:"Đã sao chép tiêu đề và liên kết. Hãy dán vào Zalo hoặc Messenger để gửi.", shCopyErr:"Không sao chép được. Hãy lưu ảnh và gửi thủ công.", shNoLink:"Ứng dụng đang mở từ file nên chưa tạo được liên kết. Hãy đưa ứng dụng lên web (https) để chia sẻ bằng liên kết.", lkRecv:"Lịch nhận từ liên kết chia sẻ. Hãy kiểm tra, chỉnh sửa nếu cần rồi bấm Lưu.", lkBad:"Liên kết lịch không hợp lệ hoặc đã bị cắt bớt. Hãy nhờ người gửi chia sẻ lại.", shSave:"Lưu ảnh", shSend:"Gửi", shLong:"Nội dung lịch quá dài để tạo mã QR. Hãy rút gọn nội dung rồi thử lại.",
   qrBtn:"Quét QR", qrT:"Quét mã QR nhận lịch", qrPick:"Chọn ảnh QR", qrAim:"Đưa mã QR vào khung hình.", qrOpening:"Đang mở camera...", qrNoCam:"Không mở được camera. Hãy chọn ảnh QR có sẵn trong máy.", qrBad:"Mã QR không hợp lệ: đây không phải mã lịch của ứng dụng này.", qrNoRead:"Không đọc được mã QR trong ảnh. Hãy chọn ảnh rõ hơn.", qrLib:"Không tải được bộ đọc mã QR (cần có mạng ở lần đầu). Hãy kiểm tra kết nối rồi thử lại.", qrRecv:"Lịch nhận từ mã QR. Hãy kiểm tra, chỉnh sửa nếu cần rồi bấm Lưu.", qrReading:"Đang đọc ảnh...",
   dup:"Trùng lịch: đã có lịch cùng ngày, giờ và nội dung này.",
-  menu:"Menu", bkT:"Sao lưu - Đồng bộ", bkOut:"Sao lưu lịch ra file", bkOutD:"Tải về một file chứa toàn bộ lịch hiện có ({n} ghi chú).", bkIn:"Đồng bộ từ file sao lưu", bkInD:"Chọn file đã sao lưu trước đó để thêm lịch vào máy này.", bkEmpty:"Chưa có lịch nào để sao lưu.", bkSaved:"Đã tạo file sao lưu: {f}", bkBad:"File không hợp lệ: đây không phải file sao lưu lịch của ứng dụng này.", bkSum:"File có {a} lịch: {b} lịch mới, {c} lịch trùng (sẽ bỏ qua).", bkBadN:"Có {d} mục lỗi trong file, đã bỏ qua.", bkMerge:"Gộp {b} lịch mới", bkRep:"Thay thế toàn bộ", bkRepAsk:"Xóa {n} ghi chú hiện có và thay bằng {a} lịch trong file?", bkYes:"Đồng ý thay thế", bkDoneM:"Đã đồng bộ: thêm {b} lịch mới.", bkDoneR:"Đã khôi phục {a} lịch từ file.", bkNone:"Không có lịch mới để thêm.",
+  menu:"Menu", wxT:"Xem thời tiết", bkT:"Sao lưu - Đồng bộ", bkOut:"Sao lưu lịch ra file", bkOutD:"Tải về một file chứa toàn bộ lịch hiện có ({n} ghi chú).", bkIn:"Đồng bộ từ file sao lưu", bkInD:"Chọn file đã sao lưu trước đó để thêm lịch vào máy này.", bkEmpty:"Chưa có lịch nào để sao lưu.", bkSaved:"Đã tạo file sao lưu: {f}", bkBad:"File không hợp lệ: đây không phải file sao lưu lịch của ứng dụng này.", bkSum:"File có {a} lịch: {b} lịch mới, {c} lịch trùng (sẽ bỏ qua).", bkBadN:"Có {d} mục lỗi trong file, đã bỏ qua.", bkMerge:"Gộp {b} lịch mới", bkRep:"Thay thế toàn bộ", bkRepAsk:"Xóa {n} ghi chú hiện có và thay bằng {a} lịch trong file?", bkYes:"Đồng ý thay thế", bkDoneM:"Đã đồng bộ: thêm {b} lịch mới.", bkDoneR:"Đã khôi phục {a} lịch từ file.", bkNone:"Không có lịch mới để thêm.",
   abT:"Giới thiệu", abIntro:"Ứng dụng xem thời tiết, lịch âm dương và quản lý lịch cá nhân.",
-  abL:["🌤️ Thời tiết hiện tại, 10 ngày tới, biểu đồ theo giờ và chỉ số không khí (AQI) cho vị trí của bạn và các thành phố bạn thêm.","🗓️ Lịch dương kèm âm lịch (can chi), đồng hồ theo giờ của từng thành phố.","📝 Lịch cá nhân: ghi chú theo ngày và giờ, lặp hằng tuần/tháng/năm (theo dương hoặc âm lịch), xem theo 7 ngày, tháng này, hôm nay; báo trùng lịch khi lưu.","🎤 Tạo lịch bằng giọng nói: nói ngày, giờ, nội dung, ứng dụng tự điền vào form để bạn kiểm tra rồi lưu.","📤 Chia sẻ một lịch bằng mã QR và 📷 quét mã QR (hoặc chọn ảnh QR) để nhận lịch.","💾 Sao lưu lịch ra file và đồng bộ lại từ file sao lưu.","🔒 Lịch lưu ngay trên máy của bạn; dữ liệu thời tiết cần kết nối mạng."],
+  abL:["🌤️ Thời tiết hiện tại ngay ở màn hình chính; vào Menu › Xem thời tiết để xem 10 ngày tới, biểu đồ theo giờ và chỉ số không khí (AQI) cho vị trí của bạn và các thành phố bạn thêm.","🗓️ Lịch dương kèm âm lịch (can chi), đồng hồ theo giờ của từng thành phố.","📝 Lịch cá nhân: ghi chú theo ngày và giờ, lặp hằng tuần/tháng/năm (theo dương hoặc âm lịch), xem theo 7 ngày, tháng này, hôm nay; báo trùng lịch khi lưu.","🎤 Tạo lịch bằng giọng nói: nói ngày, giờ, nội dung, ứng dụng tự điền vào form để bạn kiểm tra rồi lưu.","📤 Chia sẻ một lịch qua Zalo hoặc Messenger (ảnh + tiêu đề + liên kết bấm là mở ứng dụng để lưu) hoặc bằng mã QR; quét mã QR (hoặc chọn ảnh QR) để nhận lịch.","💾 Sao lưu lịch ra file và đồng bộ lại từ file sao lưu.","🔒 Lịch lưu ngay trên máy của bạn; dữ liệu thời tiết cần kết nối mạng."],
   vcBtn:"🎤 Nói để tạo lịch", vcStop:"⏹ Dừng nghe", vcHint:"Nói ngày, giờ, nội dung.", vcListen:"Đang nghe... Ví dụ: “Ngày mai 8 giờ sáng họp với khách hàng”", vcNo:"Trình duyệt này chưa hỗ trợ nhận giọng nói (hãy dùng Chrome hoặc Safari bản mới).", vcErr:"Không nghe được giọng nói. Hãy cho phép micro và kiểm tra kết nối mạng.", vcHeard:"Đã nghe", vcNoDate:"Chưa nhận ra ngày/giờ, hãy kiểm tra lại các ô bên dưới.",
   updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
   hourly:"Theo giờ", next24:"24 giờ tới (từ {h}:00)", fullDay:"(0h – 23h)",
@@ -1150,12 +1180,12 @@ en:{
   findTitle:"Find a city", ph:"Type a city name, e.g. Da Nang",
   none:"Not found. Try another name.", netErr:"Search failed. Please check your connection.",
   locating:"Getting your location...", noLoc:"Could not get your location. Allow location access in your browser, then reload the page.",
-  loading:"Loading data...", loadErr:"Could not load data. Check your connection, then tap the place name again.",
-  empty:"No city yet. Tap Add to choose one.", findAddr:"Finding address...",
+  loading:"Loading data...", loadErr:"Could not load data. Check your connection, then open Menu › View weather and tap the place name again.",
+  empty:"No city yet. Open Menu › View weather and tap Add to choose one.", findAddr:"Finding address...",
   lunar:"Lunar", leap:"leap",
   upT:"Your schedule", r7:"7 days", rM:"This month", rT:"Today", tomorrow:"Tomorrow", nOpen:"Open calendar",
   nNone7:"Nothing scheduled in the next 7 days.", nNoneM:"Nothing scheduled this month.", nNoneT:"Nothing scheduled today.",
-  nAllBtn:"All notes", nAllT:"All notes", nAllEmpty:"No notes yet.", nMonthT:"Month", nMonthEmpty:"No notes this month.", nWholeM:"Whole month",
+  nAllBtn:"All notes", nAllT:"All notes", dAll:"Delete all", dAllAsk:"Delete all notes?", dAllN:"This will delete {n} notes. It cannot be undone.", dAllWarn:"Back up your notes before deleting everything.", dAllBk:"Back up now", dAllDone:"Backed up: {f}", nAllEmpty:"No notes yet.", nMonthT:"Month", nMonthEmpty:"No notes this month.", nWholeM:"Whole month",
   nDelAsk1:"Delete this note?", nDelRep:"This note repeats: every repeat of it will be removed too.",
   nAdd:"＋ Add", nAddT:"Add a note", nEditT:"Edit note", nEmpty:"No notes for this day.", nAllDay:"All day", nSolar:"Solar",
   nEdit:"Edit", nDel:"Delete", nCancel:"Cancel", nSave:"Save", nBack:"Back",
@@ -1167,12 +1197,12 @@ en:{
   nSumYD:"Repeats every year on {d}/{m} (solar)", nSumYA:"Repeats every year on lunar {d}/{m}",
   nDelAsk:"Delete this note? Every repeat of it will be removed too.", nEditHint:"Editing changes every repeat of this note.",
   nErrC:"Please enter some content.", nErrD:"Please pick a date.", nErrR:"The end date must not be before the start date.", lichNote:"Large: solar date, small: lunar date", wd:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], wdF:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
-  nShare:"Share", shT:"Share via QR code", shHint:"The receiver opens the app, taps “Scan QR” and scans this code (or picks the saved QR image).", shSave:"Save image", shSend:"Send", shLong:"This note is too long for a QR code. Please shorten it and try again.",
+  nShare:"Share", shT:"Share note", shHint:"The receiver taps the link to open the app and save the note. They can also scan the QR code in the image with the app’s QR button.", shZalo:"Zalo", shMess:"Messenger", shCopy:"Copy link", shGo:"Tap Zalo or Messenger, then pick the app in the share sheet: the image, title and link are sent together.", shCopied:"Title and link copied. Paste them into Zalo or Messenger to send.", shCopyErr:"Could not copy. Save the image and send it manually.", shNoLink:"The app is opened from a file, so no link can be made. Host the app on the web (https) to share by link.", lkRecv:"Note received from a shared link. Check it, edit if needed, then tap Save.", lkBad:"This note link is invalid or was cut short. Ask the sender to share it again.", shSave:"Save image", shSend:"Send", shLong:"This note is too long for a QR code. Please shorten it and try again.",
   qrBtn:"Scan QR", qrT:"Scan a QR code to receive a note", qrPick:"Pick QR image", qrAim:"Point the camera at the QR code.", qrOpening:"Opening camera...", qrNoCam:"Could not open the camera. Pick a QR image from your device instead.", qrBad:"Invalid QR code: this is not a note code from this app.", qrNoRead:"No QR code found in the image. Try a clearer picture.", qrLib:"Could not load the QR reader (needs internet the first time). Check your connection and try again.", qrRecv:"Note received from a QR code. Check it, edit if needed, then tap Save.", qrReading:"Reading image...",
   dup:"Duplicate: a note with the same date, time and content already exists.",
-  menu:"Menu", bkT:"Backup - Sync", bkOut:"Back up notes to a file", bkOutD:"Download a file with all your notes ({n} notes).", bkIn:"Sync from a backup file", bkInD:"Pick a previously saved backup file to add its notes to this device.", bkEmpty:"No notes to back up yet.", bkSaved:"Backup file created: {f}", bkBad:"Invalid file: this is not a notes backup file from this app.", bkSum:"The file has {a} notes: {b} new, {c} duplicates (will be skipped).", bkBadN:"{d} invalid entries in the file were skipped.", bkMerge:"Merge {b} new notes", bkRep:"Replace everything", bkRepAsk:"Delete your {n} current notes and replace them with the {a} notes in the file?", bkYes:"Yes, replace", bkDoneM:"Synced: {b} new notes added.", bkDoneR:"Restored {a} notes from the file.", bkNone:"No new notes to add.",
+  menu:"Menu", wxT:"View weather", bkT:"Backup - Sync", bkOut:"Back up notes to a file", bkOutD:"Download a file with all your notes ({n} notes).", bkIn:"Sync from a backup file", bkInD:"Pick a previously saved backup file to add its notes to this device.", bkEmpty:"No notes to back up yet.", bkSaved:"Backup file created: {f}", bkBad:"Invalid file: this is not a notes backup file from this app.", bkSum:"The file has {a} notes: {b} new, {c} duplicates (will be skipped).", bkBadN:"{d} invalid entries in the file were skipped.", bkMerge:"Merge {b} new notes", bkRep:"Replace everything", bkRepAsk:"Delete your {n} current notes and replace them with the {a} notes in the file?", bkYes:"Yes, replace", bkDoneM:"Synced: {b} new notes added.", bkDoneR:"Restored {a} notes from the file.", bkNone:"No new notes to add.",
   abT:"About", abIntro:"Weather, lunar calendar and personal schedule in one app.",
-  abL:["🌤️ Current weather, 10-day forecast, hourly charts and air quality (AQI) for your location and the cities you add.","🗓️ Solar calendar with lunar dates (can chi) and a clock for each city.","📝 Personal schedule: notes by date and time, repeating weekly/monthly/yearly (solar or lunar), 7-day, month and today views; duplicate notes are rejected.","🎤 Create a note by voice: say the date, time and content and the form is filled in for you to review and save.","📤 Share a note as a QR code and 📷 scan a QR code (or pick a QR image) to receive one.","💾 Back up notes to a file and sync them back from a backup file.","🔒 Notes are stored on your device; weather data needs an internet connection."],
+  abL:["🌤️ Current weather on the main screen; open Menu › View weather for the 10-day forecast, hourly charts and air quality (AQI) for your location and the cities you add.","🗓️ Solar calendar with lunar dates (can chi) and a clock for each city.","📝 Personal schedule: notes by date and time, repeating weekly/monthly/yearly (solar or lunar), 7-day, month and today views; duplicate notes are rejected.","🎤 Create a note by voice: say the date, time and content and the form is filled in for you to review and save.","📤 Share a note via Zalo or Messenger (image + title + a link that opens the app to save it) or as a QR code; scan a QR code (or pick a QR image) to receive one.","💾 Back up notes to a file and sync them back from a backup file.","🔒 Notes are stored on your device; weather data needs an internet connection."],
   vcBtn:"🎤 Speak to create", vcStop:"⏹ Stop listening", vcHint:"Say the date, time and content (in Vietnamese).", vcListen:"Listening... e.g. “Ngày mai 8 giờ sáng họp với khách hàng”", vcNo:"This browser does not support speech recognition (use a recent Chrome or Safari).", vcErr:"Could not hear anything. Allow the microphone and check your connection.", vcHeard:"Heard", vcNoDate:"No date/time recognised, please check the fields below.",
   updated:"updated at", feels:"feels like", hum:"Humidity", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
   hourly:"Hourly", next24:"next 24 hours (from {h}:00)", fullDay:"(0:00 – 23:00)",
@@ -1183,6 +1213,11 @@ en:{
   wx:["Clear","Mostly sunny","Cloudy","Fog","Drizzle","Rain","Showers","Thunderstorm"],
   aq:["Good","Moderate","Poor","Unhealthy","Very unhealthy","Hazardous"]
 }};
+const SV = p => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';
+const IC_CAL = SV('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>');
+const IC_LIST = SV('<path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01"/>');
+const IC_QR = SV('<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M5.5 5.5h2v2h-2zM16.5 5.5h2v2h-2zM5.5 16.5h2v2h-2z" fill="currentColor"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20v1"/>');
+const ibtn = (a, ic, tt) => '<button type="button" class="ib" data-act="'+a+'" title="'+esc(tt)+'" aria-label="'+esc(tt)+'">'+ic+'</button>';
 const ICONS = ["☀️","🌤️","☁️","🌫️","🌦️","🌧️","🌦️","⛈️"];
 const MAU_AQI = ["#2e8b57","#b58900","#d2691e","#c62f3a","#7d3c98","#5b1a2a"];
 
@@ -1193,12 +1228,12 @@ const t = k => TXT[lang][k];
 const ngay = (dt, kieuChu) => dt.toLocaleDateString(lang==="vi" ? "vi-VN" : "en-US", {weekday:kieuChu});
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-const msg = document.getElementById("msg"), tip = document.getElementById("tip");
-const out = document.getElementById("out"), tabs = document.getElementById("tabs");
+const msgEls = document.querySelectorAll(".js-msg"), tipEls = document.querySelectorAll(".js-tip"), nowMain = document.getElementById("nowMain");
+const out = document.getElementById("out"), tabsEls = document.querySelectorAll(".js-tabs");
 const tim = document.getElementById("tim"), q = document.getElementById("q"), gy = document.getElementById("gy");
 let msgKey = "", tipKey = "";
-function setMsg(k){ msgKey = k; msg.textContent = k ? t(k) : ""; }
-function setTip(k){ tipKey = k; tip.textContent = k ? t(k) : ""; }
+function setMsg(k){ msgKey = k; msgEls.forEach(e=>e.textContent = k ? t(k) : ""); }
+function setTip(k){ tipKey = k; tipEls.forEach(e=>e.textContent = k ? t(k) : ""); }
 
 // Trạng thái của app
 let daLuu = [];       // thành phố do bạn thêm (lưu trong trình duyệt)
@@ -1219,6 +1254,7 @@ function applyStatic(){
   document.querySelectorAll("[data-i]").forEach(el=>el.textContent = t(el.dataset.i));
   q.placeholder = t("ph");
   document.getElementById("menuBtn").title = t("menu");
+  document.getElementById("wxBack").title = t("nBack");
   document.getElementById("cVi").classList.toggle("on", lang==="vi");
   document.getElementById("cEn").classList.toggle("on", lang==="en");
   setMsg(msgKey); setTip(tipKey);
@@ -1230,11 +1266,19 @@ function setLang(l){
   if(chon) tai(chon);
   if(!lichPop.hidden) veLich();
   if(!xnPop.hidden && xoaId) hoiXoa(xoaId);
+  if(!xnPop.hidden && xoaAll) hoiXoaHet();
   veDongHo();
 }
 document.getElementById("cVi").onclick = ()=>setLang("vi");
 document.getElementById("cEn").onclick = ()=>setLang("en");
 document.getElementById("dongBtn").onclick = ()=>{ tim.hidden = true; };
+
+// Màn hình "Xem thời tiết" (mở từ Menu hoặc bấm vào ô thời tiết ở màn hình chính)
+const wxPop = document.getElementById("wxPop");
+function moThoiTiet(){ wxPop.hidden = false; wxPop.scrollTop = 0; document.body.style.overflow = "hidden"; }
+function dongTT(){ wxPop.hidden = true; document.body.style.overflow = ""; }
+document.getElementById("wxBack").onclick = dongTT;
+nowMain.onclick = moThoiTiet;
 
 // ===== Đổi dương lịch sang âm lịch Việt Nam (múi giờ UTC+7) =====
 // Thuật toán thiên văn của Hồ Ngọc Đức: tính ngày trăng mới và vị trí Mặt Trời.
@@ -1330,13 +1374,13 @@ function veDongHo(){
     const ng = now.toLocaleDateString(loc, {timeZone:tz, weekday:"long", day:"2-digit", month:"2-digit", year:"numeric"});
     const o = Math.abs(DL.utc_offset_seconds)/3600, nua = o%1 ? ":"+p2(Math.round(o%1*60)) : "";
     const gmt = "GMT"+(DL.utc_offset_seconds<0 ? "-" : "+")+Math.floor(o)+nua;
-    const el = document.getElementById("dongho");
-    if(el) el.innerHTML = "🕒 <b>"+gio+"</b> · "+ng+" · "+gmt;
+    const hh = "🕒 <b>"+gio+"</b> · "+ng+" · "+gmt;
+    document.querySelectorAll(".dongho").forEach(el=>{ el.innerHTML = hh; });
   }
   const key = hom+lang;                     // âm lịch: chỉ tính lại khi đổi ngày hoặc ngôn ngữ
   if(key!==amKey){
     amKey = key; const [y,m,d] = parseD(hom), a = amLich(d,m,y), w = (new Date(Date.UTC(y,m-1,d)).getUTCDay()+6)%7;
-    amBtn.innerHTML = "<span>" + t("wdF")[w] + " " + p2(d) + "/" + p2(m) + ",</span> <span>" + t("lunar") + " " + amShort(a) + "</span>";
+    amBtn.innerHTML = "<span>" + t("wdF")[w] + " " + p2(d) + "/" + p2(m) + "</span> <span>" + t("lunar") + " " + amShort(a) + "</span>";
     amBtn.title = nhanAm(d,m,y);
   }
   const mk = hom+p2(now.getHours())+p2(now.getMinutes())+lang;   // danh sách "sắp tới" làm mới mỗi phút
@@ -1399,7 +1443,9 @@ function veSapToi(){
   const ds = [];
   for(let i=0;i<soNgay;i++){ const day = addDays(start,i); ghiChuNgay(day).forEach(n=>ds.push({day, n})); }   // đã xếp theo ngày, rồi theo giờ
   const seg = [["7","r7"],["month","rM"],["today","rT"]].map(([k,l])=>'<button data-r="'+k+'"'+(upRange===k ? ' class="on"' : '')+'>'+t(l)+'</button>').join("");
-  let h = '<div class="up-h"><span>📝 '+t("upT")+'</span><button class="btn p" data-act="add">＋ '+t("add")+'</button></div>'
+  let h = '<div class="up-h"><span>📝 '+t("upT")+'</span><span class="up-act">'
+        + ibtn("open", IC_CAL, t("nOpen")) + ibtn("scan", IC_QR, t("qrBtn")) + ibtn("all", IC_LIST, t("nAllBtn")+" ("+GC.length+")")
+        + '<button class="btn p" data-act="add">＋ '+t("add")+'</button></span></div>'
         + '<div class="seg">'+seg+'</div><div class="up-list">';
   h += ds.length ? ds.map(x=>{
       const qua = x.day<hom || (x.day===hom && x.n.gio && x.n.gio<hhmm);     // đã qua thì làm mờ
@@ -1408,7 +1454,7 @@ function veSapToi(){
         +'<button class="xd" data-del="'+x.n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
     }).join("")
     : '<div class="up-it" style="cursor:default">'+t(upRange==="today" ? "nNoneT" : upRange==="month" ? "nNoneM" : "nNone7")+'</div>';
-  h += '</div><div class="up-f"><button class="btn" data-act="open">📅 '+t("nOpen")+'</button><button class="btn" data-act="scan">📷 '+t("qrBtn")+'</button><button class="btn" data-act="all">📋 '+t("nAllBtn")+' ('+GC.length+')</button></div>';
+  h += '</div>';
   box.innerHTML = h;
   const li = box.querySelector(".up-list");
   if(upAuto){                                    // đổi chế độ xem: cuộn tới lịch đầu tiên chưa qua
@@ -1438,11 +1484,25 @@ function hoiXoa(id){
     + '<div class="btns"><button class="btn d" data-x="ok">'+t("nDel")+'</button><button class="btn" data-x="no">'+t("nCancel")+'</button></div></div>';
   xnPop.hidden = false;
 }
-function dongXn(){ xnPop.hidden = true; xoaId = null; xnPop.innerHTML = ""; }
+let xoaAll = false, xoaBk = "";
+function hoiXoaHet(){
+  if(!GC.length) return;
+  xoaAll = true;
+  xnPop.innerHTML = '<div class="lich xn-box" role="alertdialog" aria-modal="true"><div class="xn-t">'+t("dAllAsk")+'</div>'
+    + '<div class="xn-n">'+t("dAllN").replace("{n}", GC.length)+'</div>'
+    + '<div class="err" style="margin:0 0 6px">⚠️ '+t("dAllWarn")+'</div>'
+    + '<button class="btn p" data-x="bk">💾 '+t("dAllBk")+'</button>'
+    + (xoaBk ? '<div class="ok">✓ '+t("dAllDone").replace("{f}", esc(xoaBk))+'</div>' : '')
+    + '<div class="btns"><button class="btn d" data-x="allok">'+t("dAll")+'</button><button class="btn" data-x="no">'+t("nCancel")+'</button></div></div>';
+  xnPop.hidden = false;
+}
+function dongXn(){ xnPop.hidden = true; xoaId = null; xoaAll = false; xoaBk = ""; xnPop.innerHTML = ""; }
 xnPop.onclick = e => {
   if(e.target===xnPop){ dongXn(); return; }
   const el = e.target.closest("[data-x]"); if(!el) return;
+  if(el.dataset.x==="bk"){ xoaBk = bkTao(); hoiXoaHet(); return; }       // sao lưu rồi vẫn ở lại hộp xác nhận
   if(el.dataset.x==="ok"){ GC = GC.filter(x=>x.id!==xoaId); luuGC(); veSapToi(); if(!lichPop.hidden) veLich(); }
+  if(el.dataset.x==="allok"){ GC = []; luuGC(); veSapToi(); if(!lichPop.hidden) veLich(); }
   dongXn();
 };
 
@@ -1528,7 +1588,7 @@ function panelForm(){
   const opt = (v,k) => '<option value="'+v+'"'+(f.lap===v ? " selected" : "")+'>'+t(k)+'</option>';
   return '<div class="fm"><div class="gcp-h"><b>'+t(lichId ? "nEditT" : "nAddT")+'</b></div>'
     + (lichId ? '<div class="note">'+t("nEditHint")+'</div>' : '')
-    + (lichRecv ? '<div class="ok">'+t("qrRecv")+'</div>' : '')
+    + (lichRecv ? '<div class="ok">'+t(typeof lichRecv==="string" ? lichRecv : "qrRecv")+'</div>' : '')
     + (!lichId ? '<div class="vc"><button class="btn" data-a="mic" id="micBtn">'+t(vcOn ? "vcStop" : "vcBtn")+'</button><small>'+t("vcHint")+'</small>'
         + '<div class="note" id="vcSt">'+(vcHeard ? t("vcHeard")+': “'+esc(vcHeard)+'”'+(vcWarn ? '<br><span class="err">'+t("vcNoDate")+'</span>' : '') : '')+'</div></div>' : '')
     + '<label>'+t("nContent")+'</label><textarea data-f="nd" rows="3" placeholder="'+t("nPh")+'">'+esc(f.nd)+'</textarea>'
@@ -1553,7 +1613,7 @@ function veTatCa(){                // màn hình "Tất cả ghi chú" kèm nút
     }).join("") : '<div class="note">'+t("nAllEmpty")+'</div>';
   return '<div class="lich" role="dialog" aria-modal="true"><div class="lich-h"><b>📋 '+t("nAllT")+' ('+ls.length+')</b><button data-a="close" aria-label="'+t("close")+'">✕</button></div>'
     + '<div class="gcp" style="border-top:0">'+body+'</div>'
-    + '<div class="lich-f"><span></span><span class="bt"><button data-a="add">'+t("nAdd")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
+    + '<div class="lich-f"><span>'+(ls.length ? '<button class="dg" data-a="delAll">🗑 '+t("dAll")+'</button>' : '')+'</span><span class="bt"><button data-a="add">'+t("nAdd")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
 }
 function veLich(){
   const cu = lichPop.querySelector(".lich"), cuon = cu ? cu.scrollTop : 0;
@@ -1608,6 +1668,7 @@ lichPop.onclick = e => {
   else if(a==="next") doiThang(1);
   else if(a==="today") chonNgay(homNay());
   else if(a==="close") dongLich();
+  else if(a==="delAll") hoiXoaHet();
   else if(a==="wholeMonth"){ lichSel = ""; lichView = "list"; veLich(); }
   else if(a==="add"){ if(lichView==="all"){ lichBack = "all"; batDauThem(homNay()); } else batDauThem(ngayMacDinh()); }
   else if(a==="open"){
@@ -1650,7 +1711,7 @@ lichPop.onchange = e => {
   if(f!=="nd" && f!=="gio") veLich();
 };
 amBtn.onclick = () => moLich();
-document.addEventListener("keydown", e => { if(e.key==="Escape"){ if(!appPop.hidden) dongApp(); else if(!xnPop.hidden) dongXn(); else dongLich(); } });
+document.addEventListener("keydown", e => { if(e.key==="Escape"){ if(!appPop.hidden) dongApp(); else if(!xnPop.hidden) dongXn(); else if(!lichPop.hidden) dongLich(); else if(!wxPop.hidden) dongTT(); } });
 
 // ================= BỔ SUNG: chống trùng lịch, mã QR, sao lưu, menu, giọng nói =================
 const chuanND = s => s.trim().replace(/\s+/g," ").toLowerCase();
@@ -1697,6 +1758,7 @@ appPop.onclick = e => {
   const a = el.dataset.p;
   if(a==="close") dongApp();
   else if(a==="menu") moMenu();
+  else if(a==="wx"){ dongApp(); moThoiTiet(); }
   else if(a==="bk") moBk();
   else if(a==="about") moGioiThieu();
   else if(a==="bkout") bkOut();
@@ -1705,7 +1767,9 @@ appPop.onclick = e => {
   else if(a==="bkrep") bkHoiThay();
   else if(a==="bkrepok") bkThay();
   else if(a==="shsave") shLuu();
-  else if(a==="shsend") shGui();
+  else if(a==="shzalo") shGui("zalo");
+  else if(a==="shmess") shGui("mess");
+  else if(a==="shcopy") shChep();
   else if(a==="qrpick") document.getElementById("qrFile").click();
 };
 appPop.onchange = e => {
@@ -1722,7 +1786,7 @@ function taiFile(blob, ten){
 
 // ----- Menu + Giới thiệu -----
 function moMenu(){
-  moApp('<h3>☰ '+t("menu")+'</h3><button class="mi" data-p="bk">💾 '+t("bkT")+'</button><button class="mi" data-p="about">ℹ️ '+t("abT")+'</button>'
+  moApp('<h3>☰ '+t("menu")+'</h3><button class="mi" data-p="wx">🌤️ '+t("wxT")+'</button><button class="mi" data-p="bk">💾 '+t("bkT")+'</button><button class="mi" data-p="about">ℹ️ '+t("abT")+'</button>'
     + btnDong.replace("{c}", t("close")));
 }
 function moGioiThieu(){
@@ -1747,25 +1811,55 @@ function qrCanvas(bytes, l1, l2){
   }
   return c;
 }
+// Liên kết chia sẻ: địa chỉ ứng dụng + #lich=<dữ liệu mã hóa>. Người nhận bấm vào là mở ứng dụng và hiện form lưu lịch.
+let shN = null, shFile = null, shLink = "";
+const b64e = x => { let r = ""; new TextEncoder().encode(x).forEach(c=>{ r += String.fromCharCode(c); }); return btoa(r).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); };
+const b64d = x => { x = x.replace(/-/g,"+").replace(/_/g,"/"); while(x.length%4) x += "="; const r = atob(x), b = new Uint8Array(r.length); for(let i=0;i<r.length;i++) b[i] = r.charCodeAt(i); return new TextDecoder().decode(b); };
+function linkLich(n){
+  if(location.protocol==="file:") return "";
+  const o = {n:n.nd, d:n.ngay, c:n.che, l:n.lap}; if(n.gio) o.g = n.gio; if(n.bd) o.b = n.bd; if(n.kt) o.k = n.kt;
+  return location.origin + location.pathname + "#lich=" + b64e(JSON.stringify(o));
+}
+function docLink(x){
+  try{ const o = JSON.parse(b64d(x)); return kiemLich({nd:o.n, ngay:o.d, che:o.c, lap:o.l, gio:o.g, bd:o.b, kt:o.k}); }catch(e){ return null; }
+}
+const tieuDe = n => "📅 "+(n.gio ? n.gio+" · " : "")+dmy(n.ngay)+" · "+n.nd.split("\n")[0].slice(0,80);
+const noiDungGui = () => tieuDe(shN) + (shLink ? "\n"+shLink : "");
+async function saoChep(x){
+  try{ await navigator.clipboard.writeText(x); return true; }catch(e){}
+  const ta = document.createElement("textarea"); ta.value = x; ta.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(ta); ta.select();
+  let ok = false; try{ ok = document.execCommand("copy"); }catch(e){} ta.remove(); return ok;
+}
 function moChiaSe(n){
   if(!n) return;
   const txt = goiQR(n), bytes = unescape(encodeURIComponent(txt));
   if(bytes.length>800){
     moApp('<h3>📤 '+t("shT")+'</h3><div class="err">'+t("shLong")+'</div>'+btnDong.replace("{c}", t("close"))); return;
   }
+  shN = n; shLink = linkLich(n); shFile = null;
   shCv = qrCanvas(bytes, (n.gio ? n.gio+" · " : "")+dmy(n.ngay), n.nd.split("\n")[0]);
   shTen = "lich_qr_"+n.ngay+(n.gio ? "_"+n.gio.replace(":","") : "")+".png";
-  let gui = false;
-  try{ gui = !!(navigator.canShare && navigator.canShare({files:[new File(["x"], "a.png", {type:"image/png"})]})); }catch(e){}
-  moApp('<h3>📤 '+t("shT")+'</h3><div id="shBox"></div><p class="note">'+t("shHint")+'</p>'
-    + '<div class="btns"><button class="btn p" data-p="shsave">💾 '+t("shSave")+'</button>'+(gui ? '<button class="btn" data-p="shsend">📨 '+t("shSend")+'</button>' : '')
-    + '<button class="btn" data-p="close">'+t("close")+'</button></div>');
-  shCv.className = "qr-c"; document.getElementById("shBox").appendChild(shCv);
+  shCv.toBlob(b=>{ if(b) shFile = new File([b], shTen, {type:"image/png"}); }, "image/png");   // tạo sẵn để bấm Gửi là chia sẻ ngay
+  moApp('<h3>📤 '+t("shT")+'</h3><div id="shBox"></div><p class="gc-big" style="font-size:14px;margin:4px 0">'+esc(tieuDe(n))+'</p>'
+    + '<div class="btns"><button class="btn zl" data-p="shzalo">💬 '+t("shZalo")+'</button><button class="btn ms" data-p="shmess">✉️ '+t("shMess")+'</button></div>'
+    + '<p class="note">'+t("shGo")+'</p>'+(shLink ? '' : '<p class="err">'+t("shNoLink")+'</p>')
+    + '<div class="btns"><button class="btn" data-p="shcopy">🔗 '+t("shCopy")+'</button><button class="btn" data-p="shsave">💾 '+t("shSave")+'</button><button class="btn" data-p="close">'+t("close")+'</button></div>'
+    + '<div id="apSt" class="note"></div><p class="note">'+t("shHint")+'</p>');
+  shCv.className = "qr-c"; shCv.style.maxWidth = "230px"; document.getElementById("shBox").appendChild(shCv);
 }
 const shLuu = () => { if(shCv) shCv.toBlob(b=>{ if(b) taiFile(b, shTen); }, "image/png"); };
-function shGui(){
-  if(!shCv) return;
-  shCv.toBlob(b=>{ if(b) navigator.share({files:[new File([b], shTen, {type:"image/png"})]}).catch(()=>{}); }, "image/png");
+async function shChep(){ if(shN) apSt(t(await saoChep(noiDungGui()) ? "shCopied" : "shCopyErr"), "ok"); }
+async function shGui(kenh){
+  if(!shN) return;
+  if(navigator.share){                                  // bảng chia sẻ của máy: chọn Zalo / Messenger, gửi kèm ảnh + tiêu đề + liên kết
+    const data = {title:tieuDe(shN), text:noiDungGui()};
+    try{ if(shFile && navigator.canShare && navigator.canShare({files:[shFile]})) data.files = [shFile]; }catch(e){}
+    try{ await navigator.share(data); return; }catch(e){ if(e && e.name==="AbortError") return; }
+  }
+  if(kenh==="mess" && shLink && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){   // máy không có bảng chia sẻ: mở thẳng Messenger với liên kết
+    location.href = "fb-messenger://share/?link="+encodeURIComponent(shLink); return;
+  }
+  shChep();                                              // máy tính: sao chép sẵn nội dung để dán vào Zalo / Messenger
 }
 
 // ----- Quét mã QR (camera hoặc ảnh có sẵn) -----
@@ -1804,7 +1898,7 @@ async function giaiMa(src, live){
   return r ? r.data : null;
 }
 function moQuet(){
-  moApp('<h3>📷 '+t("qrT")+'</h3><div class="vid"><video id="qrVid" playsinline muted></video></div><div id="apSt" class="note">'+t("qrOpening")+'</div>'
+  moApp('<h3><span class="h3i">'+IC_QR+'</span> '+t("qrT")+'</h3><div class="vid"><video id="qrVid" playsinline muted></video></div><div id="apSt" class="note">'+t("qrOpening")+'</div>'
     + '<input type="file" id="qrFile" accept="image/*" hidden>'
     + '<div class="btns"><button class="btn p" data-p="qrpick">🖼 '+t("qrPick")+'</button><button class="btn" data-p="close">'+t("close")+'</button></div>', qrStop);
   qrBatCam();
@@ -1853,13 +1947,24 @@ async function qrAnh(file){
     qrXuLy(s);
   }catch(e){ apSt(t(e && e.message==="lib" ? "qrLib" : "qrNoRead"), "err"); }
 }
+function moNhan(o, key){                           // mở form lưu lịch nhận được (key: lời nhắc hiển thị trên form)
+  dongTT(); dongApp(); moLich(); lichDirect = true; lichView = "form"; lichId = null; lichErr = ""; lichRecv = key;
+  FM = {nd:o.nd, ngay:o.ngay, che:o.che, coGio:!!o.gio, gio:o.gio || "08:00", lap:o.lap, bd:o.bd, kt:o.kt};
+  const q2 = parseD(o.ngay); lichY = q2[0]; lichM = q2[1];
+  veLich();
+}
 function qrXuLy(text){                              // true = mã hợp lệ và đã mở form; false = báo lỗi
   const o = docQR(text);
   if(!o){ apSt(t("qrBad"), "err"); return false; }
-  dongApp(); moLich(); lichDirect = true; lichView = "form"; lichId = null; lichErr = ""; lichRecv = true;
-  FM = {nd:o.nd, ngay:o.ngay, che:o.che, coGio:!!o.gio, gio:o.gio || "08:00", lap:o.lap, bd:o.bd, kt:o.kt};
-  const q2 = parseD(o.ngay); lichY = q2[0]; lichM = q2[1];
-  veLich(); return true;
+  moNhan(o, "qrRecv"); return true;
+}
+// Người nhận bấm vào liên kết chia sẻ (…#lich=…): mở ứng dụng và hiện form để lưu lịch
+function nhanLink(){
+  if(location.hash.indexOf("#lich=")!==0) return;
+  const o = docLink(location.hash.slice(6));
+  try{ history.replaceState(null, "", location.pathname+location.search); }catch(e){}
+  if(o) moNhan(o, "lkRecv");
+  else moApp('<h3>📥 '+t("shT")+'</h3><div class="err">'+t("lkBad")+'</div>'+btnDong.replace("{c}", t("close")));
 }
 
 // ----- Sao lưu - Đồng bộ -----
@@ -1874,13 +1979,16 @@ function moBk(msg, cls){
     + '<div id="apSt" class="'+(cls || "note")+'">'+(msg || "")+'</div>'
     + '<div class="btns"><button class="btn" data-p="menu">'+t("nBack")+'</button><button class="btn" data-p="close">'+t("close")+'</button></div>');
 }
-function bkOut(){
-  if(!GC.length){ moBk(t("bkEmpty"), "err"); return; }
+function bkTao(){                                  // tạo và tải file sao lưu, trả về tên file
   const o = {app:"thoitiet-lich", ver:1, taoLuc:new Date().toISOString(),
     lich:GC.map(n=>({id:n.id, nd:n.nd, ngay:n.ngay, che:n.che, gio:n.gio||"", lap:n.lap, bd:n.bd||"", kt:n.kt||""}))};
   const f = tenBk();
   taiFile(new Blob([JSON.stringify(o, null, 1)], {type:"application/json"}), f);
-  moBk(t("bkSaved").replace("{f}", esc(f)), "ok");
+  return f;
+}
+function bkOut(){
+  if(!GC.length){ moBk(t("bkEmpty"), "err"); return; }
+  moBk(t("bkSaved").replace("{f}", esc(bkTao())), "ok");
 }
 async function bkDoc(file){
   let o = null;
@@ -2143,7 +2251,7 @@ function capNhatGio(){
 // Hiện địa chỉ đầy đủ của nơi đang chọn.
 // Vị trí điện thoại: tra tên nơi từ tọa độ (BigDataCloud, miễn phí). Thành phố đã thêm: dùng địa chỉ lưu lúc thêm.
 async function veDiaChi(){
-  const el = document.getElementById("dc");
+  const el = { set textContent(x){ document.querySelectorAll(".js-dc").forEach(e=>{ e.textContent = x; }); } };
   if(!chon){ el.textContent = ""; return; }
   const p = chon, L = lang;
   if(p!==viTri){ el.textContent = "📍 " + (p.diaChi || p.name); return; }
@@ -2167,7 +2275,7 @@ function luu(){ try{ localStorage.setItem("tpDaLuu", JSON.stringify(daLuu)); }ca
 function moDauTien(){
   const ds = tatCa();
   if(ds.length){ tai(ds[0]); return; }
-  chon = null; DL = null; out.innerHTML = ""; veTabs(); veDiaChi();
+  chon = null; DL = null; out.innerHTML = ""; nowMain.innerHTML = ""; veTabs(); veDiaChi();
   setMsg("empty");
   tim.hidden = false;
 }
@@ -2176,25 +2284,31 @@ function xoa(p){
   luu();
   if(chon===p) moDauTien(); else veTabs();
 }
-function veTabs(){
-  tabs.innerHTML = "";
-  tatCa().forEach(p=>{
-    const b = document.createElement("button");
-    b.textContent = (p===viTri ? "📍 " : "") + ten(p);
-    if(p===chon) b.className = "on";
-    b.onclick = ()=>tai(p);
-    if(daLuu.includes(p)){
-      const x = document.createElement("span");
-      x.textContent = "✕"; x.title = t("del");
-      x.onclick = e=>{ e.stopPropagation(); xoa(p); };
-      b.appendChild(x);
-    }
-    tabs.appendChild(b);
+function veTabs(){                  // vẽ cùng một danh sách thành phố ở màn hình chính và màn hình thời tiết
+  tabsEls.forEach(box=>{
+    const tuMan = box.closest(".wx") !== null;
+    box.innerHTML = "";
+    tatCa().forEach(p=>{
+      const b = document.createElement("button");
+      b.textContent = (p===viTri ? "📍 " : "") + ten(p);
+      if(p===chon) b.className = "on";
+      b.onclick = ()=>tai(p);
+      if(daLuu.includes(p)){
+        const x = document.createElement("span");
+        x.textContent = "✕"; x.title = t("del");
+        x.onclick = e=>{ e.stopPropagation(); xoa(p); };
+        b.appendChild(x);
+      }
+      box.appendChild(b);
+    });
+    const nutThem = document.createElement("button");
+    nutThem.className = "them"; nutThem.textContent = t("add");
+    nutThem.onclick = ()=>{
+      if(!tuMan){ moThoiTiet(); tim.hidden = false; q.focus(); return; }   // từ màn hình chính: mở màn hình thời tiết kèm ô tìm thành phố
+      tim.hidden = !tim.hidden; if(!tim.hidden) q.focus();
+    };
+    box.appendChild(nutThem);
   });
-  const nutThem = document.createElement("button");
-  nutThem.className = "them"; nutThem.textContent = t("add");
-  nutThem.onclick = ()=>{ tim.hidden = !tim.hidden; if(!tim.hidden) q.focus(); };
-  tabs.appendChild(nutThem);
 }
 
 // Gõ tên thành phố -> hiện gợi ý (chờ 0,3 giây sau khi ngừng gõ)
@@ -2260,7 +2374,7 @@ async function layDuLieu(p){
 }
 
 async function tai(p){
-  chon = p; DL = null; veDongHo(); veTabs(); veDiaChi(); setMsg("loading"); out.innerHTML = "";
+  chon = p; DL = null; veDongHo(); veTabs(); veDiaChi(); setMsg("loading"); out.innerHTML = ""; nowMain.innerHTML = "";
   try{
     const {w, aqi, aqiNow} = await layDuLieu(p);
     if(chon!==p) return;   // bạn đã chuyển sang nơi khác trong lúc chờ
@@ -2271,8 +2385,8 @@ async function tai(p){
     const [mucNow, mauNow] = mucAqi(aqiNow);
 
     // Ô 1: thông số hiện tại
-    let html = '<div class="box"><h2>'+esc(ten(p))+' · '+t("updated")+' '+c.time.slice(11,16)+'</h2>'
-      +'<div class="gio" id="dongho"></div>'
+    const boxNow = '<div class="box"><h2>'+esc(ten(p))+' · '+t("updated")+' '+c.time.slice(11,16)+'</h2>'
+      +'<div class="gio dongho"></div>'
       +'<div class="now"><div class="icon">'+icon+'</div><div><div class="temp">'+Math.round(c.temperature_2m)+'°C</div>'
       +'<div>'+chu+' · '+t("feels")+' '+Math.round(c.apparent_temperature)+'°</div></div></div>'
       +'<div class="chips">'
@@ -2282,6 +2396,8 @@ async function tai(p){
       +'<div class="chip">'+t("precip")+'<b>'+c.precipitation+' mm</b></div>'
       +'<div class="chip" style="grid-column:span 2">'+t("air")+'<b style="color:'+mauNow+'">'+(aqiNow!=null ? aqiNow+' – ' : '')+mucNow+'</b></div>'
       +'</div></div>';
+
+    let html = boxNow; nowMain.innerHTML = boxNow;     // màn hình chính chỉ hiện ô này; màn hình thời tiết hiện đầy đủ
 
     // Ô 2: đồ thị theo giờ
     html += '<div class="box"><h2 id="gioTieuDe"></h2>'
@@ -2320,6 +2436,8 @@ async function tai(p){
 
 applyStatic();
 layViTri();
+nhanLink();
+window.addEventListener("hashchange", nhanLink);
 veDongHo();
 setInterval(veDongHo, 1000);
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});

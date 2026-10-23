@@ -19,6 +19,15 @@
 body{margin:0;color:var(--chu);font-family:system-ui,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.3}
 .bg{position:fixed;inset:0;z-index:-1}
 .bg svg{width:100%;height:100%;display:block}
+/* Hình nền theo thời tiết nơi đang chọn: ngày nắng / ngày mưa / đêm (html[data-nen], html[data-mua]) */
+.bg .nen-nang,.bg .nen-mua,.bg .nen-dem,.bg .lop-mua{opacity:0;transition:opacity .6s}
+html:not([data-nen]) .bg .nen-nang,html[data-nen="nang"] .bg .nen-nang,html[data-nen="mua"] .bg .nen-mua,html[data-nen="dem"] .bg .nen-dem,html[data-mua="1"] .bg .lop-mua{opacity:1}
+.bg .roi{animation:roi .7s linear infinite;animation-play-state:paused}
+html[data-mua="1"] .bg .roi{animation-play-state:running}
+@keyframes roi{to{transform:translateY(60px)}}
+@media (prefers-reduced-motion:reduce){.bg .roi{animation:none}}
+html[data-nen="mua"] .wx{background:linear-gradient(180deg,#4f6475 0%,#8195a3 62%,#c3ced6 100%)}
+html[data-nen="dem"] .wx{background:linear-gradient(180deg,#070f26 0%,#1b2f5e 62%,#3f5688 100%)}
 main{max-width:720px;margin:0 auto;padding:8px 8px 16px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
 h1{margin:2px 4px 6px;font-size:18px;line-height:1.25;color:#fff;text-shadow:0 1px 5px #0007}
 #amlich{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-shadow:inherit;text-align:left;cursor:pointer}
@@ -34,6 +43,10 @@ h1{margin:2px 4px 6px;font-size:18px;line-height:1.25;color:#fff;text-shadow:0 1
 .tabs{display:flex;gap:5px;margin:0 0 6px;overflow-x:auto;padding-bottom:2px}
 .tabs button{padding:4px 10px;border:0;border-radius:999px;background:rgba(255,255,255,.6);color:var(--chu);font:inherit;font-size:13px;font-weight:600;white-space:nowrap;cursor:pointer}
 .tabs button.on{background:var(--chu);color:#fff}
+/* Kéo thả đổi thứ tự thành phố */
+.tabs button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.tabs button[data-sv]{cursor:grab;transition:transform .15s}
+.tabs button.keo{transition:none;position:relative;z-index:3;box-shadow:0 3px 10px #0005;cursor:grabbing}
 .tabs button:focus-visible,.co button:focus-visible{outline:2px solid var(--nang);outline-offset:1px}
 .tabs button span{margin-left:5px;opacity:.7}
 .tabs .them{background:transparent;border:1px dashed #fff;color:#fff;text-shadow:0 1px 3px #0007}
@@ -191,14 +204,55 @@ main>.diachi{padding-bottom:8px}
 .loai{display:flex;gap:6px;margin:2px 0 8px}
 .loai button{flex:1;padding:8px;border:1px solid #b8c7d0;border-radius:10px;background:#fff;color:#12303f;font:inherit;font-size:14px;cursor:pointer}
 .loai button.on{background:#0f5f8c;color:#fff;border-color:#0f5f8c;font-weight:700}
+/* Lọc từ ngày đến ngày (màn Tất cả lịch & nhật ký) */
+.rg{display:flex;gap:6px;align-items:flex-end;margin:0 0 8px}
+.rg label{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:12px;color:#5f7380}
+.rg input{width:100%;min-width:0;box-sizing:border-box;padding:6px 8px;border:1px solid #b8c7d0;border-radius:10px;font:inherit;font-size:14px;color:#12303f;background:#fff}
+.rg button{flex:none;border:0;border-radius:999px;padding:8px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;background:#dcebf4;color:#12303f;white-space:nowrap}
+
+/* ===== v1.0.1.20: popup chi tiết/form có nút cố định, danh sách nhóm theo ngày, cài đặt ===== */
+#ctPop{z-index:55}
+.ct{width:100%;max-width:420px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px #0006;display:flex;flex-direction:column;max-height:100%}
+.ct-h{flex:none;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 8px 8px 14px;background:#0f5f8c;color:#fff}
+.ct-h.nk{background:#2e9d6b}
+.ct-h b{font-size:16px;min-width:0}
+.ct-h button{flex:none;background:rgba(255,255,255,.22);border:0;color:#fff;font-size:18px;line-height:1;width:34px;height:34px;border-radius:50%;cursor:pointer}
+.ct-b{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:10px 14px 12px;font-size:13px}
+.ct-e{flex:none;padding:6px 14px;background:#fde8ea;color:#c62f3a;font-size:13px}
+.ct-f{flex:none;display:flex;flex-wrap:wrap;gap:8px;padding:10px 14px;border-top:1px solid #e3ebf0;background:#fff}
+.ct-f .btn{padding:9px 16px;font-size:14px}
+.ct-f .btn.w{flex:1}
+.ct .gc-big{margin-top:0}
+.up-mh{position:sticky;top:0;z-index:1;margin:0;padding:4px 0 3px;background:rgba(236,244,249,.97);cursor:default}
+.up-list .up-mh:not(:first-child){margin-top:4px}
+.ap2{display:flex;flex-direction:column;padding:0;overflow:hidden}
+.ap2-h{flex:none;margin:0!important;padding:14px 16px 6px}
+.ap2-b{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 16px 6px}
+.ap2-f{flex:none;padding:8px 16px 14px;border-top:1px solid #e3ebf0}
+.ap .ck{display:flex;align-items:center;gap:8px;font-size:14px;margin:8px 0}
+.ap .ck input{width:20px;height:20px;flex:none;margin:0}
 </style>
 </head>
 <body>
 <div class="bg">
   <svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice">
-    <defs><linearGradient id="troi" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#2f86c9"/><stop offset=".6" stop-color="#8fcbf0"/><stop offset="1" stop-color="#e3f4ff"/>
-    </linearGradient></defs>
+    <defs>
+      <linearGradient id="troi" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2f86c9"/><stop offset=".6" stop-color="#8fcbf0"/><stop offset="1" stop-color="#e3f4ff"/>
+      </linearGradient>
+      <linearGradient id="troiMua" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4f6475"/><stop offset=".6" stop-color="#8195a3"/><stop offset="1" stop-color="#c3ced6"/>
+      </linearGradient>
+      <linearGradient id="troiDem" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#070f26"/><stop offset=".6" stop-color="#1b2f5e"/><stop offset="1" stop-color="#3f5688"/>
+      </linearGradient>
+      <mask id="trangM"><rect width="400" height="800" fill="#fff"/><circle cx="336" cy="80" r="30" fill="#000"/></mask>
+      <pattern id="hat" width="40" height="60" patternUnits="userSpaceOnUse">
+        <line x1="9" y1="6" x2="5" y2="22" stroke="#dbe9f4" stroke-width="1.4" stroke-linecap="round" opacity=".55"/>
+        <line x1="29" y1="36" x2="25" y2="52" stroke="#dbe9f4" stroke-width="1.4" stroke-linecap="round" opacity=".55"/>
+      </pattern>
+    </defs>
+    <g class="nen-nang">
     <rect width="400" height="800" fill="url(#troi)"/>
     <circle cx="320" cy="90" r="70" fill="#ffe08a" opacity=".35"/>
     <circle cx="320" cy="90" r="38" fill="#ffd54a"/>
@@ -209,6 +263,30 @@ main>.diachi{padding-bottom:8px}
     </g>
     <path d="M0 700 Q100 630 200 690 T400 660 V800 H0Z" fill="#5aa878" opacity=".9"/>
     <path d="M0 750 Q120 700 230 745 T400 725 V800 H0Z" fill="#3f8a5d"/>
+    </g>
+    <g class="nen-mua">
+      <rect width="400" height="800" fill="url(#troiMua)"/>
+      <g fill="#566878" opacity=".9">
+        <ellipse cx="90" cy="110" rx="85" ry="30"/><ellipse cx="160" cy="95" rx="60" ry="28"/><ellipse cx="320" cy="150" rx="90" ry="30"/><ellipse cx="280" cy="130" rx="55" ry="26"/>
+      </g>
+      <g fill="#788a98" opacity=".85">
+        <ellipse cx="60" cy="260" rx="70" ry="22"/><ellipse cx="100" cy="248" rx="40" ry="20"/><ellipse cx="300" cy="330" rx="75" ry="22"/><ellipse cx="60" cy="470" rx="60" ry="18"/>
+      </g>
+      <path d="M0 700 Q100 630 200 690 T400 660 V800 H0Z" fill="#4f7a64" opacity=".9"/>
+      <path d="M0 750 Q120 700 230 745 T400 725 V800 H0Z" fill="#3b6450"/>
+    </g>
+    <g class="nen-dem">
+      <rect width="400" height="800" fill="url(#troiDem)"/>
+      <g fill="#fff" opacity=".85"><circle cx="40" cy="60" r="1.6"/><circle cx="90" cy="150" r="1.2"/><circle cx="150" cy="40" r="1.8"/><circle cx="210" cy="110" r="1.2"/><circle cx="260" cy="60" r="1.5"/><circle cx="370" cy="170" r="1.3"/><circle cx="60" cy="250" r="1.4"/><circle cx="180" cy="210" r="1.1"/><circle cx="300" cy="240" r="1.6"/><circle cx="120" cy="320" r="1.2"/><circle cx="350" cy="330" r="1.1"/><circle cx="240" cy="380" r="1.4"/><circle cx="30" cy="420" r="1.2"/><circle cx="330" cy="450" r="1.3"/><circle cx="80" cy="500" r="1.1"/><circle cx="200" cy="470" r="1.5"/><circle cx="280" cy="540" r="1.1"/><circle cx="380" cy="80" r="1.2"/><circle cx="20" cy="160" r="1.5"/><circle cx="140" cy="260" r="1.0"/></g>
+      <circle cx="320" cy="90" r="62" fill="#f6efd0" opacity=".12"/>
+      <circle cx="320" cy="90" r="34" fill="#f6efd0" mask="url(#trangM)"/>
+      <g fill="#8fa0c8" opacity=".22">
+        <ellipse cx="90" cy="150" rx="55" ry="18"/><ellipse cx="125" cy="138" rx="36" ry="18"/><ellipse cx="270" cy="270" rx="60" ry="18"/><ellipse cx="60" cy="430" rx="50" ry="15"/>
+      </g>
+      <path d="M0 700 Q100 630 200 690 T400 660 V800 H0Z" fill="#274a55" opacity=".95"/>
+      <path d="M0 750 Q120 700 230 745 T400 725 V800 H0Z" fill="#17323d"/>
+    </g>
+    <g class="lop-mua"><g class="roi"><rect x="0" y="-800" width="400" height="1600" fill="url(#hat)"/></g></g>
   </svg>
 </div>
 
@@ -255,6 +333,7 @@ main>.diachi{padding-bottom:8px}
   </div>
 </div>
 <div class="lich-bg" id="lichPop" hidden></div>
+<div class="lich-bg" id="ctPop" hidden></div>
 <div class="lich-bg" id="xnPop" hidden></div>
 <div class="lich-bg" id="appPop" hidden></div>
 
@@ -1176,7 +1255,7 @@ vi:{
   lunar:"Âm lịch", leap:"nhuận",
   upT:"Lịch & nhật ký", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", tomorrow:"Ngày mai", nOpen:"Mở lịch",
   nNone7:"Không có lịch nào trong 7 ngày tới.", nNoneM:"Tháng này chưa có lịch nào.", nNoneT:"Hôm nay chưa có lịch nào.",
-  nAllBtn:"Tất cả lịch & nhật ký", nAllT:"Tất cả lịch & nhật ký", dAll:"Xóa tất cả", dAllAsk:"Xóa tất cả lịch?", dAllN:"Sẽ xóa {n} lịch (nhật ký được giữ nguyên). Không thể hoàn tác.", dAllWarn:"Nên sao lưu trước khi xóa tất cả.", dAllBk:"Sao lưu ngay", dAllDone:"Đã sao lưu: {f}", nAllEmpty:"Chưa có lịch hay nhật ký nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có lịch hoặc nhật ký nào.", nWholeM:"Cả tháng",
+  fFrom:"Từ ngày", fTo:"Đến ngày", fAllTime:"Bỏ lọc", fOn:"📅 Lọc theo ngày", fEmpty:"Không có lịch hoặc nhật ký nào trong khoảng ngày này.", nAllBtn:"Tất cả lịch & nhật ký", nAllT:"Tất cả lịch & nhật ký", dAll:"Xóa tất cả", dAllAsk:"Xóa tất cả lịch?", dAllN:"Sẽ xóa {n} lịch (nhật ký được giữ nguyên). Không thể hoàn tác.", dAllWarn:"Nên sao lưu trước khi xóa tất cả.", dAllBk:"Sao lưu ngay", dAllDone:"Đã sao lưu: {f}", nAllEmpty:"Chưa có lịch hay nhật ký nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có lịch hoặc nhật ký nào.", nWholeM:"Cả tháng",
   nDelAsk1:"Xóa ghi chú này?", nDelRep:"Ghi chú này có lặp lại: tất cả các ngày lặp lại cũng sẽ bị xóa.",
   nAdd:"＋ Thêm", nAddT:"Thêm ghi chú", nEditT:"Sửa ghi chú", tLich:"Lịch", tNk:"Nhật ký", locAll:"Tất cả", locLich:"🗓️ Lịch", locNk:"📓 Nhật ký", lichTag:"Lịch", nkTag:"Nhật ký", nkAddT:"Thêm nhật ký", nkEditT:"Sửa nhật ký", nkSave:"Lưu nhật ký", nkTo:"Chuyển thành nhật ký", nkHint:"Nhật ký ghi lại việc đã xảy ra, mặc định lấy ngày giờ hiện tại (bạn có thể sửa). Ngày không quá hôm nay, không lặp lại, chỉ lưu cho một ngày.", nkErrFut:"Nhật ký chỉ ghi việc đã xảy ra, không chọn thời điểm ở tương lai.", nkConv:"Chuyển từ lịch: hãy kiểm tra ngày giờ thực tế đã diễn ra rồi bấm Lưu nhật ký. Lịch gốc sẽ không hiện nữa và không thể chuyển ngược lại.", nkConvRep:"Lịch này lặp lại: chỉ lần ngày {d} được chuyển, các lần lặp khác vẫn giữ.", nEmpty:"Chưa có lịch hoặc nhật ký cho ngày này.", nAllDay:"Cả ngày", nSolar:"Dương lịch",
   nEdit:"Sửa", nDel:"Xóa", nCancel:"Hủy", nSave:"Lưu", nBack:"Quay lại",
@@ -1193,9 +1272,12 @@ vi:{
   dup:"Trùng lịch: đã có lịch cùng ngày, giờ và nội dung này.",
   menu:"Menu", wxT:"Xem thời tiết", bkT:"Sao lưu - Đồng bộ", bkOut:"Sao lưu lịch ra file", bkOutD:"Tải về một file chứa toàn bộ lịch hiện có ({n} ghi chú).", bkIn:"Đồng bộ từ file sao lưu", bkInD:"Chọn file đã sao lưu trước đó để thêm lịch vào máy này.", bkEmpty:"Chưa có lịch nào để sao lưu.", bkSaved:"Đã tạo file sao lưu: {f}", bkBad:"File không hợp lệ: đây không phải file sao lưu lịch của ứng dụng này.", bkSum:"File có {a} lịch: {b} lịch mới, {c} lịch trùng (sẽ bỏ qua).", bkBadN:"Có {d} mục lỗi trong file, đã bỏ qua.", bkMerge:"Gộp {b} lịch mới", bkRep:"Thay thế toàn bộ", bkRepAsk:"Xóa {n} ghi chú hiện có và thay bằng {a} lịch trong file?", bkYes:"Đồng ý thay thế", bkDoneM:"Đã đồng bộ: thêm {b} lịch mới.", bkDoneR:"Đã khôi phục {a} lịch từ file.", bkNone:"Không có lịch mới để thêm.",
   abT:"Giới thiệu", abIntro:"Ứng dụng xem thời tiết, lịch âm dương và quản lý lịch cá nhân; có thể cài lên màn hình chính điện thoại.",
-  abL:["🏠 Màn hình chính: lịch của bạn (7 ngày / tháng này / hôm nay), thời tiết hiện tại và đồ thị thời tiết theo giờ của thành phố đang chọn. Thanh chọn thành phố đồng bộ với màn hình Xem thời tiết.","🌤️ Menu › Xem thời tiết: thời tiết hiện tại, đồ thị theo giờ, dự báo 10 ngày, đồ thị tổng hợp và chỉ số không khí (AQI); bấm Thêm để thêm thành phố.","🗓️ Lịch dương kèm âm lịch (can chi); bấm vào dòng ngày ở đầu trang để mở lịch tháng.","📝 Lịch cá nhân: ghi chú theo ngày và giờ, lặp hằng tuần/tháng/năm (theo dương hoặc âm lịch), báo trùng lịch. Ba nút biểu tượng: Mở lịch, Quét QR, Tất cả lịch & nhật ký (chọn lọc Lịch thì có nút Xóa tất cả lịch, nên sao lưu trước khi xóa).","📓 Nhật ký: ghi lại việc đã xảy ra (ngày không quá hôm nay, không lặp lại, có thể kèm giờ), hiển thị chung với lịch, phân biệt bằng biểu tượng 🗓️ / 📓 và có bộ lọc Tất cả / Lịch / Nhật ký. Mở một lịch rồi bấm “Chuyển thành nhật ký” khi đã thực hiện xong (không chuyển ngược lại; lịch gốc không hiện nữa).","🎤 Tạo lịch bằng giọng nói (dùng thử 3 tháng từ lần đầu mở ứng dụng, sau đó nhập mã kích hoạt để gia hạn thêm 3 tháng): nói ngày, giờ, nội dung, ứng dụng tự điền vào form để bạn kiểm tra rồi lưu.","📤 Chia sẻ lịch qua Zalo, Messenger (ảnh + tiêu đề + liên kết) hoặc mã QR. Nếu liên kết mở trong cửa sổ tạm của Zalo/Messenger: bấm “Mở trong ứng dụng”, hoặc ⋮ › Mở bằng trình duyệt, hoặc sao chép liên kết rồi dùng “Dán lịch đã sao chép” ở nút QR.","💾 Sao lưu lịch ra file và đồng bộ lại từ file sao lưu.","↩️ Vuốt Back: đóng cửa sổ đang mở; từ màn hình Xem thời tiết quay về màn hình chính; chỉ ở màn hình chính mới thoát ứng dụng.","🔒 Lịch lưu ngay trên máy của bạn; dữ liệu thời tiết cần kết nối mạng."],
+  abL:["🏠 Màn hình chính: lịch của bạn (7 ngày / tháng này / hôm nay, nhóm theo ngày), thời tiết hiện tại và đồ thị thời tiết theo giờ của thành phố đang chọn. Thanh chọn thành phố đồng bộ với màn hình Xem thời tiết.","🌤️ Menu › Xem thời tiết: thời tiết hiện tại, đồ thị theo giờ, dự báo 10 ngày, đồ thị tổng hợp và chỉ số không khí (AQI); bấm Thêm để thêm thành phố; giữ rồi kéo tên thành phố đã thêm để đổi thứ tự. Hình nền tự đổi theo nơi đang chọn: ngày nắng, ngày mưa hoặc ban đêm; có giờ mặt trời mọc/lặn.","🗓️ Lịch dương kèm âm lịch (can chi); bấm vào dòng ngày ở đầu trang để mở lịch tháng.","📝 Lịch cá nhân: ghi chú theo ngày và giờ, lặp hằng tuần/tháng/năm (theo dương hoặc âm lịch), báo trùng lịch. Ba nút biểu tượng: Mở lịch, Quét QR, Tất cả lịch & nhật ký (có lọc từ ngày đến ngày, mặc định theo khoảng thời gian đang chọn ở màn hình chính; bấm Bỏ lọc để xem toàn bộ, lúc đó chọn lọc Lịch thì có nút Xóa tất cả lịch, nên sao lưu trước khi xóa).","📓 Nhật ký: ghi lại việc đã xảy ra (ngày không quá hôm nay, không lặp lại, có thể kèm giờ), hiển thị chung với lịch, phân biệt bằng biểu tượng 🗓️ / 📓 và có bộ lọc Tất cả / Lịch / Nhật ký. Mở một lịch rồi bấm “Chuyển thành nhật ký” khi đã thực hiện xong (không chuyển ngược lại; lịch gốc không hiện nữa).","🎤 Tạo lịch hoặc nhật ký bằng giọng nói (dùng thử 3 tháng từ lần đầu mở ứng dụng, sau đó nhập mã kích hoạt để gia hạn thêm 3 tháng): nói ngày, giờ, nội dung, ứng dụng tự điền vào form để bạn kiểm tra rồi lưu.","📤 Chia sẻ lịch qua Zalo, Messenger (ảnh + tiêu đề + liên kết) hoặc mã QR. Nếu liên kết mở trong cửa sổ tạm của Zalo/Messenger: bấm “Mở trong ứng dụng”, hoặc ⋮ › Mở bằng trình duyệt, hoặc sao chép liên kết rồi dùng “Dán lịch đã sao chép” ở nút QR.","💾 Sao lưu lịch ra file và đồng bộ lại từ file sao lưu. Menu › Cài đặt: bật “Tự động sao lưu khi tắt ứng dụng” để mỗi lần thoát, dữ liệu được lưu đè vào một bản sao lưu duy nhất trong ứng dụng (có thể khôi phục hoặc tải về máy).","↩️ Vuốt Back: đóng cửa sổ đang mở; từ màn hình Xem thời tiết quay về màn hình chính; chỉ ở màn hình chính mới thoát ứng dụng.","🔒 Lịch lưu ngay trên máy của bạn; dữ liệu thời tiết cần kết nối mạng."],
   vcBtn:"🎤 Nói để tạo lịch", vcStop:"⏹ Dừng nghe", vcHint:"Nói ngày, giờ, nội dung.", vcListen:"Đang nghe... Ví dụ: “Ngày mai 8 giờ sáng họp với khách hàng”", vcNo:"Trình duyệt này chưa hỗ trợ nhận giọng nói (hãy dùng Chrome hoặc Safari bản mới).", vcErr:"Không nghe được giọng nói. Hãy cho phép micro và kiểm tra kết nối mạng.", vcHeard:"Đã nghe", vcNoDate:"Chưa nhận ra ngày/giờ, hãy kiểm tra lại các ô bên dưới.", vcLimit:"Chức năng đã hết thời gian sử dụng. Vui lòng nhập mã kích hoạt để gia hạn, hoặc liên hệ để được hỗ trợ.", vcCodePh:"Nhập mã kích hoạt", vcCodeBtn:"Kích hoạt", vcCodeBad:"Mã kích hoạt không đúng. Vui lòng kiểm tra lại.", vcCodeOk:"Kích hoạt thành công. Chức năng dùng được đến hết ngày {d}.",
-  updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
+  nTime:"Giờ", vcBtnNk:"🎤 Nói để ghi nhật ký", vcListenNk:"Đang nghe... Ví dụ: “Hôm qua 8 giờ tối đi chợ Phú Gia”", vcHintNk:"Nói ngày, giờ, nội dung (có thể nói: hôm qua, hôm kia, thứ hai tuần trước...).",
+  setT:"Cài đặt", setAuto:"Tự động sao lưu khi tắt ứng dụng", setAutoD:"Mỗi lần thoát hoặc rời khỏi ứng dụng, lịch và nhật ký được lưu đè vào MỘT bản sao lưu duy nhất ngay trong ứng dụng (không tạo thêm file, không tốn thêm dung lượng). Chưa có ghi chú nào thì không sao lưu.", setLast:"Bản sao lưu gần nhất: {d} ({n} ghi chú)", setNone:"Chưa có bản sao lưu tự động.", setRest:"Khôi phục từ bản sao lưu tự động", setDl:"Tải bản sao lưu tự động về máy",
+  logT:"Lịch sử cập nhật", abHide:"Không hiển thị lại khi mở ứng dụng",
+  updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", sunrise:"Mặt trời mọc", sunset:"Mặt trời lặn", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
   hourly:"Theo giờ", next24:"24 giờ tới (từ {h}:00)", fullDay:"(0h – 23h)",
   tTemp:"Nhiệt độ", tRain:"Khả năng mưa", tWind:"Gió (km/h)",
   days:"10 ngày tới (bấm vào một ngày để xem theo giờ)", today:"Hôm nay", nowShort:"Nay",
@@ -1215,7 +1297,7 @@ en:{
   lunar:"Lunar", leap:"leap",
   upT:"Schedule & journal", r7:"7 days", rM:"This month", rT:"Today", tomorrow:"Tomorrow", nOpen:"Open calendar",
   nNone7:"Nothing scheduled in the next 7 days.", nNoneM:"Nothing scheduled this month.", nNoneT:"Nothing scheduled today.",
-  nAllBtn:"All schedule & journal", nAllT:"All schedule & journal", dAll:"Delete all", dAllAsk:"Delete all schedule items?", dAllN:"This will delete {n} schedule items (journal entries are kept). It cannot be undone.", dAllWarn:"Back up your notes before deleting everything.", dAllBk:"Back up now", dAllDone:"Backed up: {f}", nAllEmpty:"No schedule or journal yet.", nMonthT:"Month", nMonthEmpty:"No schedule or journal this month.", nWholeM:"Whole month",
+  fFrom:"From date", fTo:"To date", fAllTime:"Clear filter", fOn:"📅 Filter by date", fEmpty:"No schedule or journal in this date range.", nAllBtn:"All schedule & journal", nAllT:"All schedule & journal", dAll:"Delete all", dAllAsk:"Delete all schedule items?", dAllN:"This will delete {n} schedule items (journal entries are kept). It cannot be undone.", dAllWarn:"Back up your notes before deleting everything.", dAllBk:"Back up now", dAllDone:"Backed up: {f}", nAllEmpty:"No schedule or journal yet.", nMonthT:"Month", nMonthEmpty:"No schedule or journal this month.", nWholeM:"Whole month",
   nDelAsk1:"Delete this note?", nDelRep:"This note repeats: every repeat of it will be removed too.",
   nAdd:"＋ Add", nAddT:"Add a note", nEditT:"Edit note", tLich:"Schedule", tNk:"Journal", locAll:"All", locLich:"🗓️ Schedule", locNk:"📓 Journal", lichTag:"Schedule", nkTag:"Journal", nkAddT:"Add journal entry", nkEditT:"Edit journal entry", nkSave:"Save journal entry", nkTo:"Move to journal", nkHint:"A journal entry records something that already happened. It defaults to the current date and time (you can edit them). The date cannot be later than today; it does not repeat and covers a single day.", nkErrFut:"A journal entry records what already happened; do not pick a time in the future.", nkConv:"Moved from a schedule item: check the date and time it really happened, then tap Save journal entry. The original item will no longer be shown and cannot be moved back.", nkConvRep:"This item repeats: only the occurrence on {d} is moved; other repeats stay.", nEmpty:"No schedule or journal for this day.", nAllDay:"All day", nSolar:"Solar",
   nEdit:"Edit", nDel:"Delete", nCancel:"Cancel", nSave:"Save", nBack:"Back",
@@ -1232,9 +1314,12 @@ en:{
   dup:"Duplicate: a note with the same date, time and content already exists.",
   menu:"Menu", wxT:"View weather", bkT:"Backup - Sync", bkOut:"Back up notes to a file", bkOutD:"Download a file with all your notes ({n} notes).", bkIn:"Sync from a backup file", bkInD:"Pick a previously saved backup file to add its notes to this device.", bkEmpty:"No notes to back up yet.", bkSaved:"Backup file created: {f}", bkBad:"Invalid file: this is not a notes backup file from this app.", bkSum:"The file has {a} notes: {b} new, {c} duplicates (will be skipped).", bkBadN:"{d} invalid entries in the file were skipped.", bkMerge:"Merge {b} new notes", bkRep:"Replace everything", bkRepAsk:"Delete your {n} current notes and replace them with the {a} notes in the file?", bkYes:"Yes, replace", bkDoneM:"Synced: {b} new notes added.", bkDoneR:"Restored {a} notes from the file.", bkNone:"No new notes to add.",
   abT:"About", abIntro:"Weather, lunar calendar and personal schedule in one app; can be installed on your home screen.",
-  abL:["🏠 Main screen: your schedule (7 days / this month / today), current weather and the hourly chart for the selected city. The city bar stays in sync with the View weather screen.","🌤️ Menu › View weather: current weather, hourly chart, 10-day forecast, summary chart and air quality (AQI); tap Add to add a city.","🗓️ Solar calendar with lunar dates (can chi); tap the date line at the top to open the month calendar.","📝 Personal schedule: notes by date and time, repeating weekly/monthly/yearly (solar or lunar), duplicate notes are rejected. Three icon buttons: Open calendar, Scan QR, All schedule & journal (the Schedule filter shows a Delete all button; back up first).","📓 Journal: record things that already happened (date no later than today, no repeat, time optional). It is shown together with the schedule, told apart by the 🗓️ / 📓 icons, with an All / Schedule / Journal filter. Open a schedule item and tap “Move to journal” once it is done (cannot be moved back; the original is no longer shown).","🎤 Create a note by voice (3-month trial from the first launch, then enter an activation code to extend it by another 3 months): say the date, time and content and the form is filled in for you to review and save.","📤 Share a note via Zalo, Messenger (image + title + link) or a QR code. If the link opens in a temporary Zalo/Messenger window: tap “Open in app”, or ⋮ › Open in browser, or copy the link and use “Paste copied note” under the QR button.","💾 Back up notes to a file and sync them back from a backup file.","↩️ Swipe Back: closes the open window; from the View weather screen it returns to the main screen; only on the main screen does it leave the app.","🔒 Notes are stored on your device; weather data needs an internet connection."],
+  abL:["🏠 Main screen: your schedule (7 days / this month / today, grouped by day), current weather and the hourly chart for the selected city. The city bar stays in sync with the View weather screen.","🌤️ Menu › View weather: current weather, hourly chart, 10-day forecast, summary chart and air quality (AQI); tap Add to add a city; press and drag a saved city to reorder. The background changes with the selected place: sunny day, rainy day or night; sunrise/sunset times are shown.","🗓️ Solar calendar with lunar dates (can chi); tap the date line at the top to open the month calendar.","📝 Personal schedule: notes by date and time, repeating weekly/monthly/yearly (solar or lunar), duplicate notes are rejected. Three icon buttons: Open calendar, Scan QR, All schedule & journal (with a from-date to to-date filter, defaulting to the range chosen on the home screen; tap Clear filter to see everything, where the Schedule filter then shows a Delete all button; back up first).","📓 Journal: record things that already happened (date no later than today, no repeat, time optional). It is shown together with the schedule, told apart by the 🗓️ / 📓 icons, with an All / Schedule / Journal filter. Open a schedule item and tap “Move to journal” once it is done (cannot be moved back; the original is no longer shown).","🎤 Create a schedule item or journal entry by voice (3-month trial from the first launch, then enter an activation code to extend it by another 3 months): say the date, time and content and the form is filled in for you to review and save.","📤 Share a note via Zalo, Messenger (image + title + link) or a QR code. If the link opens in a temporary Zalo/Messenger window: tap “Open in app”, or ⋮ › Open in browser, or copy the link and use “Paste copied note” under the QR button.","💾 Back up notes to a file and sync them back from a backup file. Menu › Settings: turn on “Auto backup when closing the app” to save your data over a single backup inside the app each time you leave it (restore it or download it any time).","↩️ Swipe Back: closes the open window; from the View weather screen it returns to the main screen; only on the main screen does it leave the app.","🔒 Notes are stored on your device; weather data needs an internet connection."],
   vcBtn:"🎤 Speak to create", vcStop:"⏹ Stop listening", vcHint:"Say the date, time and content (in Vietnamese).", vcListen:"Listening... e.g. “Ngày mai 8 giờ sáng họp với khách hàng”", vcNo:"This browser does not support speech recognition (use a recent Chrome or Safari).", vcErr:"Could not hear anything. Allow the microphone and check your connection.", vcHeard:"Heard", vcNoDate:"No date/time recognised, please check the fields below.", vcLimit:"This feature’s usage period has ended. Enter an activation code to extend it, or contact us for support.", vcCodePh:"Enter activation code", vcCodeBtn:"Activate", vcCodeBad:"Wrong activation code. Please check it and try again.", vcCodeOk:"Activated. This feature works until the end of {d}.",
-  updated:"updated at", feels:"feels like", hum:"Humidity", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
+  nTime:"Time", vcBtnNk:"🎤 Speak to journal", vcListenNk:"Listening... e.g. “Hôm qua 8 giờ tối đi chợ Phú Gia”", vcHintNk:"Say the date, time and content in Vietnamese (e.g. hôm qua, hôm kia, thứ hai tuần trước).",
+  setT:"Settings", setAuto:"Auto backup when closing the app", setAutoD:"Each time you leave or close the app, your schedule and journal are saved over ONE single backup kept inside the app (no extra files, no extra storage). Nothing is saved while there are no notes.", setLast:"Latest backup: {d} ({n} notes)", setNone:"No automatic backup yet.", setRest:"Restore from the automatic backup", setDl:"Download the automatic backup",
+  logT:"Update history", abHide:"Do not show again when opening the app",
+  updated:"updated at", feels:"feels like", hum:"Humidity", sunrise:"Sunrise", sunset:"Sunset", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
   hourly:"Hourly", next24:"next 24 hours (from {h}:00)", fullDay:"(0:00 – 23:00)",
   tTemp:"Temperature", tRain:"Chance of rain", tWind:"Wind (km/h)",
   days:"Next 10 days (tap a day for the hourly view)", today:"Today", nowShort:"Now",
@@ -1276,6 +1361,30 @@ let kieu = "nhiet";   // loại đồ thị theo giờ: nhiet / mua / gio
 const CACHE = {};
 const tatCa = () => [viTri, ...daLuu].filter(Boolean);
 const ten = p => p===viTri ? t("here") : p.name.split(",")[0].trim();
+const gioMt = (a,k) => (a && a[k]) ? a[k].slice(11,16) : "–";     // "2026-10-23T05:58" -> "05:58"
+// ----- Hình nền theo thời tiết của nơi đang chọn: ngày nắng / ngày mưa / đêm -----
+const NEN_MAU = {nang:"#2f86c9", mua:"#4f6475", dem:"#070f26"};
+const laMua = c => (c>=51 && c<=67) || (c>=80 && c<=82) || c>=95;     // mưa phùn, mưa, mưa rào, dông
+function datNen(w){
+  let nen = "nang", mua = "0";
+  if(w && w.current){
+    const c = w.current, d = w.daily || {};
+    let dem = c.is_day===0;
+    try{                                               // giờ địa phương của nơi đó so với giờ mặt trời mọc/lặn của ngày hôm nay
+      const lc = new Date().toLocaleString("sv-SE", {timeZone:w.timezone, hour12:false}).replace(" ","T").slice(0,16);
+      const k = (d.time||[]).indexOf(lc.slice(0,10));
+      if(k>=0 && d.sunrise && d.sunset && d.sunrise[k] && d.sunset[k]) dem = lc < d.sunrise[k] || lc >= d.sunset[k];
+    }catch(e){}
+    mua = laMua(c.weather_code) ? "1" : "0";
+    nen = dem ? "dem" : (mua==="1" ? "mua" : "nang");
+  }
+  const el = document.documentElement;
+  if(el.dataset.nen!==nen){
+    el.dataset.nen = nen;
+    const m = document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute("content", NEN_MAU[nen]);
+  }
+  if(el.dataset.mua!==mua) el.dataset.mua = mua;
+}
 
 // Đổi chữ cố định trên trang theo ngôn ngữ
 function applyStatic(){
@@ -1295,6 +1404,7 @@ function setLang(l){
   applyStatic(); veTabs();
   if(chon) tai(chon);
   if(!lichPop.hidden) veLich();
+  if(!ctPop.hidden) veCt();
   if(!xnPop.hidden && xoaId) hoiXoa(xoaId);
   if(!xnPop.hidden && xoaAll) hoiXoaHet();
   veDongHo();
@@ -1414,7 +1524,7 @@ function veDongHo(){
     amBtn.title = nhanAm(d,m,y);
   }
   const mk = hom+p2(now.getHours())+p2(now.getMinutes())+lang;   // danh sách "sắp tới" làm mới mỗi phút
-  if(mk!==upKey){ upKey = mk; veSapToi(); }
+  if(mk!==upKey){ upKey = mk; veSapToi(); if(DL) datNen(DL); }
 }
 
 // ----- Ghi chú / lịch công việc (lưu trong trình duyệt của máy) -----
@@ -1470,7 +1580,7 @@ let upRange = "7", upAuto = true;      // upAuto: lần vẽ kế tiếp sẽ cu
 try{ const v = localStorage.getItem("tpRange"); if(v==="7" || v==="month" || v==="today") upRange = v; }catch(e){}
 function veSapToi(){
   const box = document.getElementById("up"), cu = box.querySelector(".up-list"), cuon = cu ? cu.scrollTop : 0;
-  const hom = homNay(), now = new Date(), hhmm = p2(now.getHours())+":"+p2(now.getMinutes()), [hy,hm] = parseD(hom);
+  const hom = homNay(), now = new Date(), hhmm = p2(now.getHours())+":"+p2(now.getMinutes()), [hy,hm] = parseD(hom), ngMai = addDays(hom,1);
   const start = upRange==="month" ? dstr(hy,hm,1) : hom;
   const soNgay = upRange==="month" ? dimon(hy,hm) : upRange==="today" ? 1 : 7;
   const ds = [];
@@ -1480,19 +1590,31 @@ function veSapToi(){
         + ibtn("open", IC_CAL, t("nOpen")) + ibtn("scan", IC_QR, t("qrBtn")) + ibtn("all", IC_LIST, t("nAllBtn")+" ("+GC.length+")")
         + '<button class="btn p" data-act="add">＋ '+t("add")+'</button></span></div>'
         + '<div class="seg">'+seg+'</div><div class="up-list">';
-  h += ds.length ? ds.map(x=>{
+  if(ds.length){
+    let cur = "";                                   // nhóm theo ngày: mỗi ngày một tiêu đề, bên dưới là các việc của ngày đó
+    ds.forEach(x=>{
+      if(x.day!==cur){
+        cur = x.day;
+        h += '<div class="mh up-mh'+(cur===hom ? ' hn' : '')+'">'+(cur===hom ? t("today")+' · ' : cur===ngMai ? t("tomorrow")+' · ' : '')+ngayNgan(cur, true)+' · '+t("lunar")+' '+amShort(amDS(cur))+'</div>';
+      }
       const nk = laNK(x.n), qua = !nk && (x.day<hom || (x.day===hom && x.n.gio && x.n.gio<hhmm));     // lịch đã qua thì làm mờ
-      return '<div class="up-it'+(nk ? ' nk' : qua ? ' qua' : '')+'" data-up="'+x.day+'|'+x.n.id+'"><span class="u">'+nhanNgay(x.day)+'</span><span class="gi">'+(x.n.gio || "")+'</span>'
+      h += '<div class="up-it'+(nk ? ' nk' : qua ? ' qua' : '')+'" data-up="'+x.day+'|'+x.n.id+'"><span class="gi">'+(x.n.gio || "")+'</span>'
         +'<span class="nd">'+bieuTuong(x.n)+dong1(x.n)+(x.n.lap!=="none" ? " 🔁" : "")+'</span>'
         +'<button class="xd" data-del="'+x.n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
-    }).join("")
-    : '<div class="up-it" style="cursor:default">'+t(upRange==="today" ? "nNoneT" : upRange==="month" ? "nNoneM" : "nNone7")+'</div>';
+    });
+  } else h += '<div class="up-it" style="cursor:default">'+t(upRange==="today" ? "nNoneT" : upRange==="month" ? "nNoneM" : "nNone7")+'</div>';
   h += '</div>';
   box.innerHTML = h;
   const li = box.querySelector(".up-list");
-  if(upAuto){                                    // đổi chế độ xem: cuộn tới lịch đầu tiên chưa qua
-    const f = li.querySelector(".up-it:not(.qua):not(.nk)");
-    li.scrollTop = (f && f!==li.firstElementChild) ? f.offsetTop : 0;
+  if(upAuto){                                    // đổi chế độ xem: cuộn tới lịch đầu tiên chưa qua (kèm tiêu đề ngày nếu là việc đầu tiên của ngày)
+    const f = li.querySelector(".up-it:not(.qua):not(.nk)"), hd = li.querySelector(".up-mh"), hh = hd ? hd.offsetHeight : 0;
+    let y = 0;
+    if(f){
+      const pv = f.previousElementSibling;
+      if(pv && pv.classList.contains("up-mh")) y = (pv===li.firstElementChild) ? 0 : pv.offsetTop;
+      else y = Math.max(0, f.offsetTop - hh);    // giữa ngày: chừa chỗ cho tiêu đề ngày đang dính ở đầu
+    }
+    li.scrollTop = y;
     upAuto = false;
   } else li.scrollTop = cuon;                    // làm mới mỗi phút: giữ nguyên chỗ đang cuộn
 }
@@ -1503,7 +1625,7 @@ document.getElementById("up").onclick = e => {
   const ac = e.target.closest("[data-act]");
   if(ac){ const v = ac.dataset.act; if(v==="add") moThem(); else if(v==="open") moLich(); else if(v==="all") moTatCa(); else if(v==="scan") moQuet(); return; }
   const el = e.target.closest("[data-up]"); if(!el) return;
-  const [day,id] = el.dataset.up.split("|"); moLich(day, id);
+  const [day,id] = el.dataset.up.split("|"); moChiTiet(day, id);
 };
 
 // ----- Hộp xác nhận xóa nhanh (dùng cho cả danh sách ở màn hình chính và "Tất cả ghi chú") -----
@@ -1540,58 +1662,55 @@ xnPop.onclick = e => {
   dongXn();
 };
 
-// ----- Lịch dương + âm (popup) kèm danh sách ghi chú -----
+// ----- Lịch dương + âm (popup): chỉ để xem danh sách. Chi tiết và form thêm/sửa mở ở popup riêng (ctPop) -----
 let lichY = 0, lichM = 0, lichSel = "", lichView = "list", lichId = null, lichDel = false, lichErr = "", FM = null;
 // lichSel rỗng = chưa chọn ngày nào => hiện lịch của CẢ THÁNG; chọn một ngày thì chỉ hiện lịch của ngày đó
-// lichView: list (ngày/tháng) | detail | form | all (tất cả ghi chú)
-// lichBack: ghi chú được mở từ đâu để quay lại cho đúng: "" = danh sách ngày, "month" = danh sách cả tháng, "all" = tất cả ghi chú
-// lichDirect: form mở thẳng từ nút "Thêm ghi chú" ở màn hình chính => lưu/hủy xong thì đóng luôn
-let lichBack = "", lichDirect = false;
+// lichView: list (ngày/tháng) | all (tất cả ghi chú)
+// ctView: popup chi tiết/form ("" = đóng | detail | form); ctDay: ngày của lần xuất hiện đang xem (lịch lặp)
+let ctView = "", ctDay = "";
 let locLoai = "all";                              // bộ lọc danh sách: all | lich | nk (mặc định Tất cả mỗi lần mở)
 const passLoc = n => locLoai==="all" || (locLoai==="nk" ? laNK(n) : !laNK(n));
 const locBar = () => '<div class="loai">'+[["all","locAll"],["lich","locLich"],["nk","locNk"]].map(([v,k])=>'<button type="button" data-a="loc" data-v="'+v+'"'+(locLoai===v ? ' class="on"' : '')+'>'+t(k)+'</button>').join("")+'</div>';
-let lichRecv = false, vcHeard = "", vcWarn = false, vcOn = false, rec = null;   // lichRecv: form mở từ mã QR; vc*: giọng nói
-function moLich(ds, id){
+let lichRecv = false, vcHeard = "", vcWarn = false, vcOn = false, rec = null;   // lichRecv: form mở từ mã QR/liên kết; vc*: giọng nói
+const ctPop = document.getElementById("ctPop");
+function moLich(ds){
   locLoai = "all";
   const q2 = parseD(ds || homNay());
-  lichSel = ds || ""; lichY = q2[0]; lichM = q2[1];
-  lichView = id ? "detail" : "list"; lichId = id || null; lichDel = false; lichErr = ""; FM = null; lichBack = ""; lichDirect = false; lichRecv = false; vcHeard = ""; vcWarn = false;
+  lichSel = ds || ""; lichY = q2[0]; lichM = q2[1]; lichView = "list";
   veLich(); lichPop.hidden = false;
+}
+// Lọc từ ngày đến ngày ở màn "Tất cả lịch & nhật ký": mặc định lấy khoảng đang chọn ở màn hình chính (7 ngày / tháng này / hôm nay)
+let rgOn = true, rgTu = "", rgDen = "";
+function rgMacDinh(){
+  const hom = homNay(), [hy,hm] = parseD(hom);
+  if(upRange==="month") return [dstr(hy,hm,1), dstr(hy,hm,dimon(hy,hm))];
+  if(upRange==="today") return [hom, hom];
+  return [hom, addDays(hom,6)];
 }
 function moTatCa(){
-  locLoai = "all";
-  lichView = "all"; lichSel = ""; lichId = null; lichDel = false; lichErr = ""; FM = null; lichBack = ""; lichDirect = false;
+  locLoai = "all"; lichView = "all"; lichSel = "";
+  rgOn = true; [rgTu, rgDen] = rgMacDinh(); veLich.vk = "";
   veLich(); lichPop.hidden = false;
 }
-function moThem(){ moLich(); lichDirect = true; batDauThem(homNay()); }
-function batDauThem(ds){
-  const q2 = parseD(ds); lichY = q2[0]; lichM = q2[1];
-  lichView = "form"; lichId = null; lichErr = ""; lichRecv = false; vcHeard = ""; vcWarn = false;
+function moThem(){ batDauThem(homNay()); }
+function batDauThem(ds, nk){                       // mở popup thêm mới (nk = true: chọn sẵn Nhật ký)
+  lichId = null; lichDel = false; lichErr = ""; lichRecv = false; vcHeard = ""; vcWarn = false;
   FM = {nd:"", ngay:ds, che:"d", coGio:false, gio:"08:00", lap:"none", bd:"", kt:"", loai:""};
-  veLich();
+  if(nk) sangNk(FM);
+  ctView = "form"; veCt(true); ctPop.hidden = false;
 }
 function ngayMacDinh(){
   if(lichSel) return lichSel;
   const hom = homNay(), [hy,hm] = parseD(hom);
   return (hy===lichY && hm===lichM) ? hom : dstr(lichY,lichM,1);
 }
-function dongLich(){
-  lichPop.hidden = true; veLich.vk = ""; lichRecv = false; vcHeard = ""; vcWarn = false;
-  if(rec && vcOn){ try{ rec.abort(); }catch(e){} } vcOn = false;
-}
+function dongLich(){ lichPop.hidden = true; veLich.vk = ""; }
 function doiThang(n){
   lichM += n; if(lichM<1){ lichM = 12; lichY--; } if(lichM>12){ lichM = 1; lichY++; }
   if(lichView==="list") lichSel = "";            // sang tháng khác: hiện lịch cả tháng đó
   veLich();
 }
-function chonNgay(ds){ lichSel = ds; const q2 = parseD(ds); lichY = q2[0]; lichM = q2[1]; lichView = "list"; lichId = null; lichDel = false; FM = null; lichBack = ""; lichDirect = false; veLich(); }
-function veVe(){                                 // quay lại nơi đã mở ghi chú
-  lichId = null; lichDel = false; lichErr = ""; FM = null;
-  if(lichBack==="all"){ lichView = "all"; lichSel = ""; }
-  else { lichView = "list"; if(lichBack==="month") lichSel = ""; }
-  lichBack = "";
-  veLich();
-}
+function chonNgay(ds){ lichSel = ds; const q2 = parseD(ds); lichY = q2[0]; lichM = q2[1]; lichView = "list"; veLich(); }
 
 const ghiHead = (btn) => '<div class="gcp-h"><b>'+thuDai(lichSel)+', '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</b>'+(btn||"")+'</div>';
 function panelList(){              // lịch của MỘT ngày đã chọn
@@ -1612,63 +1731,154 @@ function panelMonth(){             // lịch của CẢ THÁNG đang xem, xếp 
   }
   return h + (co ? '' : '<div class="note">'+t("nMonthEmpty")+'</div>');
 }
-function panelDetail(n){
-  const nk = laNK(n);
+// ===== Popup riêng cho chi tiết và form thêm/sửa: tiêu đề + nút luôn nhìn thấy, chỉ phần nội dung ở giữa cuộn =====
+function sangNk(f){                                // đổi form sang Nhật ký (không lặp, không khoảng áp dụng, không ở tương lai)
+  f._tl = {ngay:f.ngay, coGio:f.coGio, gio:f.gio, che:f.che, lap:f.lap, bd:f.bd, kt:f.kt};   // nhớ để đổi ngược lại về Lịch
+  const hom = homNay(), d = new Date();
+  if(!f.ngay || f.ngay>hom) f.ngay = hom;          // ngày không quá hôm nay (ngày đã qua thì giữ nguyên)
+  if(!f.coGio && f.ngay===hom){ f.coGio = true; f.gio = p2(d.getHours())+":"+p2(d.getMinutes()); }   // lịch đã có giờ thì giữ giờ của lịch
+  f.loai = "nk"; f.lap = "none"; f.che = "d"; f.bd = ""; f.kt = "";
+}
+function moChiTiet(ds, id){
+  const n = GC.find(x=>x.id===id); if(!n) return;
+  lichId = id; ctDay = ds || n.ngay; ctView = "detail"; lichDel = false; lichErr = ""; FM = null; lichRecv = false; vcHeard = ""; vcWarn = false;
+  veCt(true); ctPop.hidden = false;
+}
+function dongCt(){
+  if(rec && vcOn){ try{ rec.abort(); }catch(e){} } vcOn = false;
+  ctPop.hidden = true; ctPop.innerHTML = ""; ctView = ""; FM = null; lichId = null; lichDel = false; lichErr = ""; lichRecv = false; vcHeard = ""; vcWarn = false;
+}
+function ctDetail(n){
+  const nk = laNK(n), day = ctDay || n.ngay;
   const khoang = [n.bd ? t("nFrom")+" "+dmy(n.bd) : "", n.kt ? t("nTo")+" "+dmy(n.kt) : ""].filter(Boolean).join(" · ");
-  return ghiHead('<button class="btn" data-a="back">'+t("nBack")+'</button>')
-    + '<div class="gc-big">'+esc(n.nd)+'</div>'
-    + '<div class="note">'+(nk ? '<span class="tag-nk">📓 '+t("nkTag")+'</span>' : '<span class="tag-nk" style="background:#0f5f8c">🗓️ '+t("lichTag")+'</span>')+'🕒 '+(n.gio || t("nAllDay"))+' · '+t("nSolar")+' '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</div>'
+  const body = '<div class="gc-big">'+esc(n.nd)+'</div>'
+    + '<div class="note">🕒 '+(n.gio || t("nAllDay"))+' · '+thuDai(day)+', '+dmy(day)+' · '+t("lunar")+' '+amShort(amDS(day))+'</div>'
     + (n.lap!=="none" ? '<div class="note">🔁 '+lapText(n)+'</div>' : '')
     + (khoang ? '<div class="note">📆 '+khoang+'</div>' : '')
-    + (lichDel ? '<div class="err">'+t("nDelAsk")+'</div><div class="btns"><button class="btn d" data-a="delOk">'+t("nDel")+'</button><button class="btn" data-a="delNo">'+t("nCancel")+'</button></div>'
-               : '<div class="btns"><button class="btn p" data-a="edit">'+t("nEdit")+'</button>'
-                 + (nk ? '' : '<button class="btn" data-a="toNk">📓 '+t("nkTo")+'</button><button class="btn" data-a="share">📤 '+t("nShare")+'</button>')
-                 + '<button class="btn d" data-a="del">'+t("nDel")+'</button></div>');
+    + (lichDel ? '<div class="err" style="font-size:13px">'+t(n.lap!=="none" ? "nDelAsk" : "nDelAsk1")+'</div>' : '');
+  const foot = lichDel
+    ? '<button class="btn d" data-a="delOk">'+t("nDel")+'</button><button class="btn" data-a="delNo">'+t("nCancel")+'</button>'
+    : '<button class="btn p" data-a="edit">'+t("nEdit")+'</button>'
+      + (nk ? '' : '<button class="btn" data-a="toNk">📓 '+t("nkTo")+'</button><button class="btn" data-a="share">📤 '+t("nShare")+'</button>')
+      + '<button class="btn d" data-a="del">'+t("nDel")+'</button>';
+  return {title:(nk ? "📓 " : "🗓️ ")+t(nk ? "nkTag" : "lichTag"), nk, body, foot, err:""};
 }
-function panelForm(){
+function ctForm(){
   const f = FM, nk = f.loai==="nk", a = f.ngay ? amDS(f.ngay) : null, tmp = {ngay:f.ngay, che:f.che, lap:f.lap, am:a};
   const opt = (v,k) => '<option value="'+v+'"'+(f.lap===v ? " selected" : "")+'>'+t(k)+'</option>';
   const chonLoai = !lichId && !f.chuyenTu;            // chỉ khi thêm mới mới được chọn loại; sửa hoặc chuyển từ lịch thì giữ nguyên loại
-  return '<div class="fm"><div class="gcp-h"><b>'+t(nk ? (lichId ? "nkEditT" : "nkAddT") : (lichId ? "nEditT" : "nAddT"))+'</b></div>'
-    + (chonLoai ? '<div class="loai"><button type="button" data-a="loai" data-v=""'+(nk ? '' : ' class="on"')+'>🗓️ '+t("tLich")+'</button><button type="button" data-a="loai" data-v="nk"'+(nk ? ' class="on"' : '')+'>📓 '+t("tNk")+'</button></div>' : '')
+  const coMic = !lichId && !f.chuyenTu;               // giọng nói: khi thêm mới (cả Lịch lẫn Nhật ký)
+  const nutMic = t(vcOn ? "vcStop" : (nk ? "vcBtnNk" : "vcBtn"));
+  const b = (chonLoai ? '<div class="loai"><button type="button" data-a="loai" data-v=""'+(nk ? '' : ' class="on"')+'>🗓️ '+t("tLich")+'</button><button type="button" data-a="loai" data-v="nk"'+(nk ? ' class="on"' : '')+'>📓 '+t("tNk")+'</button></div>' : '')
     + (f.chuyenTu ? '<div class="note">'+t("nkConv")+(f.chuyenLap ? ' '+t("nkConvRep").replace("{d}", dmy(f.chuyenNgay)) : '')+'</div>' : '')
     + (nk && !f.chuyenTu ? '<div class="note">'+t("nkHint")+'</div>' : '')
     + (lichId && !nk ? '<div class="note">'+t("nEditHint")+'</div>' : '')
     + (lichRecv ? '<div class="ok">'+t(typeof lichRecv==="string" ? lichRecv : "qrRecv")+'</div>' : '')
     + (lichRecv==="lkRecv" && lkHash && laAndroid && !laApp() ? '<div class="lkb"><div class="note">ℹ️ '+t("lkTab")+'</div><div class="btns" style="margin-top:0"><button class="btn p" data-a="openApp">📲 '+t("lkOpen")+'</button><button class="btn" data-a="copyLink">📋 '+t("lkCopy")+'</button></div><div class="ok" id="lkSt"></div></div>' : '')
-    + (!lichId && !nk && !f.chuyenTu ? '<div class="vc"><button class="btn" data-a="mic" id="micBtn">'+t(vcOn ? "vcStop" : "vcBtn")+'</button><small>'+t("vcHint")+'</small>'
+    + (coMic ? '<div class="vc"><button class="btn" data-a="mic" id="micBtn">'+nutMic+'</button><small>'+t(nk ? "vcHintNk" : "vcHint")+'</small>'
         + '<div class="note" id="vcSt">'+(vcHeard ? t("vcHeard")+': “'+esc(vcHeard)+'”'+(vcWarn ? '<br><span class="err">'+t("vcNoDate")+'</span>' : '') : '')+'</div></div>' : '')
     + '<label>'+t("nContent")+'</label><textarea data-f="nd" rows="3" placeholder="'+t("nPh")+'">'+esc(f.nd)+'</textarea>'
-    + '<label>'+t("nDate")+'</label><input type="date" data-f="ngay" value="'+f.ngay+'"'+(nk ? ' max="'+homNay()+'"' : '')+'>'
+    + '<div class="row"><div><label>'+t("nDate")+'</label><input type="date" data-f="ngay" value="'+f.ngay+'"'+(nk ? ' max="'+homNay()+'"' : '')+'></div>'
+    + (f.coGio ? '<div style="flex:0 0 116px"><label>'+t("nTime")+'</label><input type="time" data-f="gio" value="'+f.gio+'"></div>' : '')+'</div>'
     + (a ? '<div class="note">'+t("nLunarOf")+': <b>'+amShort(a)+' '+canChi(a[2])+'</b></div>' : '')
     + '<label class="ck"><input type="checkbox" data-f="coGio"'+(f.coGio ? " checked" : "")+'> '+t("nTimeOn")+'</label>'
-    + (f.coGio ? '<input type="time" data-f="gio" value="'+f.gio+'">' : '')
     + (nk ? '' :
         '<label>'+t("nRepeat")+'</label><select data-f="lap">'+opt("none","nR0")+(f.che==="d" ? opt("week","nRw") : "")+opt("month","nRm")+opt("year","nRy")+'</select>'
       + (f.lap!=="none" && a ? '<div class="note">🔁 '+lapText(tmp)+'</div>' : '')
       + '<label>'+t("nRange")+'</label><div class="row"><div><small>'+t("nFrom")+'</small><input type="date" data-f="bd" value="'+f.bd+'"></div>'
-      + '<div><small>'+t("nTo")+'</small><input type="date" data-f="kt" value="'+f.kt+'"></div></div><div class="note">'+t("nRangeHint")+'</div>')
-    + (lichErr ? '<div class="err">'+lichErr+'</div>' : '')
-    + '<div class="btns"><button class="btn p" data-a="save">'+t(nk ? "nkSave" : "nSave")+'</button><button class="btn" data-a="cancel">'+t("nCancel")+'</button></div></div>';
+      + '<div><small>'+t("nTo")+'</small><input type="date" data-f="kt" value="'+f.kt+'"></div></div><div class="note">'+t("nRangeHint")+'</div>');
+  const foot = '<button class="btn" data-a="cancel">'+t("nCancel")+'</button><button class="btn p w" data-a="save">'+t(nk ? "nkSave" : "nSave")+'</button>';
+  return {title:t(nk ? (lichId ? "nkEditT" : "nkAddT") : (lichId ? "nEditT" : "nAddT")), nk, body:b, foot, err:lichErr};
 }
-function veTatCa(){                // màn hình "Tất cả lịch & nhật ký": nhóm theo từng ngày, kèm nút xóa nhanh
-  const ls = GC.filter(passLoc).sort((a,b)=>a.ngay.localeCompare(b.ngay) || (a.gio||"").localeCompare(b.gio||""));
-  const hom = homNay();
+function veCt(reset){
+  let n = null;
+  if(ctView==="detail"){ n = GC.find(x=>x.id===lichId); if(!n){ dongCt(); return; } }
+  const old = ctPop.querySelector(".ct-b"), cuon = (old && !reset) ? old.scrollTop : 0;
+  const r = ctView==="form" ? ctForm() : ctDetail(n);
+  ctPop.innerHTML = '<div class="ct fm" role="dialog" aria-modal="true"><div class="ct-h'+(r.nk ? ' nk' : '')+'"><b>'+r.title+'</b><button type="button" data-a="close" aria-label="'+t("close")+'">✕</button></div>'
+    + '<div class="ct-b">'+r.body+'</div>' + (r.err ? '<div class="ct-e">'+r.err+'</div>' : '')
+    + '<div class="ct-f">'+r.foot+'</div></div>';
+  const nb = ctPop.querySelector(".ct-b"); if(nb) nb.scrollTop = cuon;
+}
+ctPop.onclick = e => {
+  if(e.target===ctPop){ if(ctView==="detail" && !lichDel) dongCt(); return; }     // form: chạm ra ngoài không đóng, tránh mất dữ liệu đang nhập
+  const el = e.target.closest("[data-a]"); if(!el) return;
+  const a = el.dataset.a;
+  if(a==="close"){ dongCt(); }
+  else if(a==="share"){ moChiaSe(GC.find(x=>x.id===lichId)); }
+  else if(a==="mic"){ batGiongNoi(); }
+  else if(a==="vcKich"){ kichHoat(); }
+  else if(a==="openApp"){ moTrongApp(); }
+  else if(a==="copyLink"){ lkChep(); }
+  else if(a==="loai"){ if(!FM) return;
+    const nk = el.dataset.v==="nk"; if(nk===(FM.loai==="nk")) return;
+    if(nk) sangNk(FM);
+    else { FM.loai = ""; if(FM._tl) Object.assign(FM, FM._tl); }
+    if(rec && vcOn){ try{ rec.abort(); }catch(e2){} vcOn = false; }
+    lichErr = ""; veCt(); }
+  else if(a==="toNk"){                              // chuyển lịch đang xem thành nhật ký (không chuyển ngược lại); lịch có giờ thì lấy giờ của lịch
+    const n = GC.find(x=>x.id===lichId); if(!n || laNK(n)) return;
+    const hom = homNay(), occ = ctDay || n.ngay, ngay = occ<=hom ? occ : hom, gio = n.gio || "";
+    FM = {nd:n.nd, ngay, che:"d", coGio:!!gio, gio:gio || "08:00", lap:"none", bd:"", kt:"", loai:"nk", chuyenTu:n.id, chuyenNgay:occ, chuyenLap:n.lap!=="none"};
+    lichId = null; ctView = "form"; lichErr = ""; veCt(true); }
+  else if(a==="edit"){ const n = GC.find(x=>x.id===lichId); if(!n) return;
+    FM = {nd:n.nd, ngay:n.ngay, che:n.che, coGio:!!n.gio, gio:n.gio || "08:00", lap:n.lap, bd:n.bd || "", kt:n.kt || "", loai:n.loai || ""};
+    ctView = "form"; lichErr = ""; veCt(true); }
+  else if(a==="del"){ lichDel = true; veCt(); }
+  else if(a==="delNo"){ lichDel = false; veCt(); }
+  else if(a==="delOk"){ GC = GC.filter(x=>x.id!==lichId); luuGC(); veSapToi(); dongCt(); if(!lichPop.hidden) veLich(); }
+  else if(a==="cancel"){
+    if(rec && vcOn){ try{ rec.abort(); }catch(e2){} vcOn = false; }
+    if(FM && FM.chuyenTu){ lichId = FM.chuyenTu; FM = null; ctView = "detail"; lichErr = ""; veCt(true); return; }   // hủy chuyển: quay lại lịch gốc
+    if(lichId){ FM = null; ctView = "detail"; lichErr = ""; veCt(true); return; }                                    // hủy sửa: quay lại chi tiết
+    dongCt();
+  }
+  else if(a==="save"){
+    const tuAll = lichView==="all", thang = (lichSel==="");
+    if(luuForm()){
+      veSapToi(); dongCt();                          // lưu xong đóng luôn: không cần thêm thao tác nào
+      if(!lichPop.hidden){
+        if(!tuAll){ lichView = "list"; if(thang) lichSel = ""; }   // đang xem cả tháng thì vẫn ở lại xem cả tháng
+        veLich();
+      }
+    } else veCt();
+  }
+};
+ctPop.onkeydown = e => { if(e.key==="Enter" && e.target.id==="vcCode"){ e.preventDefault(); kichHoat(); } };
+ctPop.oninput = e => { const f = e.target.dataset.f; if(FM && (f==="nd" || f==="gio")) FM[f] = e.target.value; };
+ctPop.onchange = e => {
+  const el = e.target, f = el.dataset.f; if(!f || !FM) return;
+  FM[f] = el.type==="checkbox" ? el.checked : el.value;
+  if(f!=="nd" && f!=="gio") veCt();
+};
+
+function veTatCa(){                // màn hình "Tất cả lịch & nhật ký": nhóm theo từng ngày, kèm nút xóa nhanh, có lọc từ ngày đến ngày
+  const hom = homNay(), items = [];
+  if(rgOn){                                          // trong khoảng ngày: mở rộng cả các lần lặp lại, giống màn hình chính
+    const dif = x => { const [y,m,d] = parseD(x); return Date.UTC(y,m-1,d)/864e5; };
+    const soNgay = Math.min(3660, dif(rgDen)-dif(rgTu)+1);
+    for(let i=0;i<soNgay;i++){ const day = addDays(rgTu,i); ghiChuNgay(day).filter(passLoc).forEach(n=>items.push({day, n})); }
+  } else {                                           // bỏ lọc: toàn bộ ghi chú, mỗi ghi chú một dòng theo ngày gốc
+    GC.filter(passLoc).sort((a,b)=>a.ngay.localeCompare(b.ngay) || (a.gio||"").localeCompare(b.gio||"")).forEach(n=>items.push({day:n.ngay, n}));
+  }
   let body = "", cur = "";
-  ls.forEach(n=>{
-    if(n.ngay!==cur){                                // tiêu đề của ngày mới: để thấy trong một ngày có những việc gì
-      cur = n.ngay;
+  items.forEach(({day, n})=>{
+    if(day!==cur){                                   // tiêu đề của ngày mới: để thấy trong một ngày có những việc gì
+      cur = day;
       body += '<div class="mh'+(cur===hom ? ' hn' : '')+'" style="cursor:default">'+ngayNgan(cur)+' · '+t("lunar")+' '+amShort(amDS(cur))+(cur===hom ? ' · '+t("today") : '')+'</div>';
     }
     const lap = n.lap!=="none" ? ' · 🔁 '+lapText(n) : '';
-    body += '<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div>'
+    body += '<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'" data-day="'+day+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div>'
       +'<div class="gc-m"><b>'+bieuTuong(n)+dong1(n)+'</b>'+(lap ? '<small>'+lap.slice(3)+'</small>' : '')+'</div>'
       +'<button class="xd" data-del="'+n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
   });
-  if(!ls.length) body = '<div class="note">'+t("nAllEmpty")+'</div>';
-  return '<div class="lich" role="dialog" aria-modal="true"><div class="lich-h"><b>📋 '+t("nAllT")+' ('+ls.length+')</b><button data-a="close" aria-label="'+t("close")+'">✕</button></div>'
-    + '<div style="padding:8px 12px 0;background:#fff">'+locBar()+'</div><div class="gcp" style="border-top:0">'+body+'</div>'
-    + '<div class="lich-f"><span>'+(locLoai==="lich" && ls.length ? '<button class="dg" data-a="delAll">🗑 '+t("dAll")+'</button>' : '')+'</span><span class="bt"><button data-a="add">'+t("nAdd")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
+  if(!items.length) body = '<div class="note">'+t(rgOn ? "fEmpty" : "nAllEmpty")+'</div>';
+  const rg = rgOn
+    ? '<div class="rg"><label>'+t("fFrom")+'<input type="date" data-rg="tu" value="'+rgTu+'"></label><label>'+t("fTo")+'<input type="date" data-rg="den" value="'+rgDen+'"></label><button type="button" data-a="rgOff">'+t("fAllTime")+'</button></div>'
+    : '<div class="rg"><button type="button" data-a="rgOn">'+t("fOn")+'</button></div>';
+  return '<div class="lich" role="dialog" aria-modal="true"><div class="lich-h"><b>📋 '+t("nAllT")+' ('+items.length+')</b><button data-a="close" aria-label="'+t("close")+'">✕</button></div>'
+    + '<div style="padding:8px 12px 0;background:#fff">'+locBar()+rg+'</div><div class="gcp" style="border-top:0">'+body+'</div>'
+    + '<div class="lich-f"><span>'+(!rgOn && locLoai==="lich" && items.length ? '<button class="dg" data-a="delAll">🗑 '+t("dAll")+'</button>' : '')+'</span><span class="bt"><button data-a="add">'+t("nAdd")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
 }
 function veLich(){
   const cu = lichPop.querySelector(".lich"), cuon = cu ? cu.scrollTop : 0;
@@ -1683,21 +1893,18 @@ function veLich(){
   const hom = homNay(), off = (new Date(Date.UTC(lichY, lichM-1, 1)).getUTCDay()+6)%7;   // tuần bắt đầu từ thứ Hai
   const [hy,hm,hd] = parseD(hom);
   let cells = "";
-  const gon = lichView==="form" && lichDirect;     // form mở thẳng từ màn hình chính: không cần lưới lịch
-  for(let i=0;i<(gon ? 0 : 42);i++){
+  for(let i=0;i<42;i++){
     const dt = new Date(Date.UTC(lichY, lichM-1, 1-off+i));
     const y = dt.getUTCFullYear(), m = dt.getUTCMonth()+1, d = dt.getUTCDate(), a = amLich(d,m,y), ds = dstr(y,m,d);
     const cls = (m!==lichM ? "kh " : "") + (i%7===5 ? "t7 " : "") + (i%7===6 ? "cn " : "") + (ds===hom ? "nay " : "") + (locLoai!=="nk" && GC.some(n=>!laNK(n) && khop(n,ds)) ? "gc " : "") + (locLoai!=="lich" && GC.some(n=>laNK(n) && khop(n,ds)) ? "nk " : "") + (ds===lichSel ? "chon" : "");
     cells += '<div class="'+cls+'" data-d="'+ds+'"><span class="s">'+d+'</span><span class="a">'+(a[0]===1 ? a[0]+"/"+a[1] : a[0])+'</span></div>';
   }
-  let n = lichView==="detail" ? GC.find(x=>x.id===lichId) : null;
-  if(lichView==="detail" && !n) lichView = "list";
-  const panel = lichView==="form" ? panelForm() : lichView==="detail" ? panelDetail(n) : (lichSel ? panelList() : panelMonth());
+  const panel = lichSel ? panelList() : panelMonth();
   lichPop.innerHTML = '<div class="lich" role="dialog" aria-modal="true">'
-    + (gon ? '' : '<div class="lich-h"><button data-a="prev" aria-label="‹">‹</button><b>'+p2(lichM)+'/'+lichY+'</b><button data-a="next" aria-label="›">›</button></div>'
+    + '<div class="lich-h"><button data-a="prev" aria-label="‹">‹</button><b>'+p2(lichM)+'/'+lichY+'</b><button data-a="next" aria-label="›">›</button></div>'
     + '<div class="lich-w">'+t("wd").map((x,i)=>'<div class="'+(i===5?"t7":i===6?"cn":"")+'">'+x+'</div>').join("")+'</div>'
-    + '<div class="lich-g">'+cells+'</div>')
-    + '<div class="gcp"'+(gon ? ' style="border-top:0"' : '')+'>'+panel+'</div>'
+    + '<div class="lich-g">'+cells+'</div>'
+    + '<div class="gcp">'+panel+'</div>'
     + '<div class="lich-f"><span>'+t("lichNote")+'<br><b>'+t("today")+':</b> '+nhanAm(hd,hm,hy)+'</span><span class="bt"><button data-a="today">'+t("today")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
   const moi = lichPop.querySelector(".lich"); if(moi) moi.scrollTop = cuon;
   khoiPhuc();
@@ -1737,73 +1944,28 @@ lichPop.onclick = e => {
   else if(a==="next") doiThang(1);
   else if(a==="today") chonNgay(homNay());
   else if(a==="close") dongLich();
-  else if(a==="vcKich") kichHoat();
-  else if(a==="openApp") moTrongApp();
-  else if(a==="copyLink") lkChep();
   else if(a==="delAll") hoiXoaHet();
   else if(a==="wholeMonth"){ lichSel = ""; lichView = "list"; veLich(); }
-  else if(a==="add"){ if(lichView==="all"){ lichBack = "all"; batDauThem(homNay()); } else batDauThem(ngayMacDinh()); }
-  else if(a==="open"){
-    if(lichView==="all"){                         // mở từ "Tất cả ghi chú"
-      const n = GC.find(x=>x.id===el.dataset.id); if(!n) return;
-      lichBack = "all"; lichSel = n.ngay; const q2 = parseD(n.ngay); lichY = q2[0]; lichM = q2[1];
-    } else if(!lichSel){                          // mở từ danh sách cả tháng
-      lichBack = "month"; lichSel = el.dataset.day;
-    }
-    lichId = el.dataset.id; lichView = "detail"; lichDel = false; veLich();
+  else if(a==="add") batDauThem(lichView==="all" ? homNay() : ngayMacDinh(), locLoai==="nk");   // đang lọc Nhật ký thì chọn sẵn Nhật ký
+  else if(a==="open"){                              // mở chi tiết ở popup riêng, lịch tháng vẫn nằm bên dưới
+    const n = GC.find(x=>x.id===el.dataset.id); if(!n) return;
+    moChiTiet(lichView==="all" ? (el.dataset.day || n.ngay) : (el.dataset.day || lichSel), n.id);
   }
-  else if(a==="back") veVe();
-  else if(a==="share") moChiaSe(GC.find(x=>x.id===lichId));
   else if(a==="loc"){ locLoai = el.dataset.v; veLich(); }
-  else if(a==="mic") batGiongNoi();
-  else if(a==="loai"){ if(!FM) return;
-    const nk = el.dataset.v==="nk"; if(nk===(FM.loai==="nk")) return;
-    FM.loai = el.dataset.v;
-    if(nk){                                        // nhật ký: mặc định ngày giờ hiện tại (vẫn sửa được), không lặp lại, không khoảng áp dụng
-      FM._tl = {ngay:FM.ngay, coGio:FM.coGio, gio:FM.gio};
-      const d = new Date(); FM.ngay = homNay(); FM.coGio = true; FM.gio = p2(d.getHours())+":"+p2(d.getMinutes());
-      FM.lap = "none"; FM.che = "d"; FM.bd = ""; FM.kt = "";
-    } else if(FM._tl){ FM.ngay = FM._tl.ngay; FM.coGio = FM._tl.coGio; FM.gio = FM._tl.gio; }
-    if(rec && vcOn){ try{ rec.abort(); }catch(e){} vcOn = false; }
-    lichErr = ""; veLich(); }
-  else if(a==="toNk"){                            // chuyển lịch đang xem thành nhật ký (không chuyển ngược lại)
-    const n = GC.find(x=>x.id===lichId); if(!n || laNK(n)) return;
-    const hom = homNay(), now = new Date(), hhmm = p2(now.getHours())+":"+p2(now.getMinutes()), occ = lichSel || n.ngay;
-    const ngay = occ<=hom ? occ : hom; let gio = n.gio || "";
-    if(ngay===hom && gio>hhmm) gio = "";
-    FM = {nd:n.nd, ngay, che:"d", coGio:!!gio, gio:gio || "08:00", lap:"none", bd:"", kt:"", loai:"nk", chuyenTu:n.id, chuyenNgay:occ, chuyenLap:n.lap!=="none"};
-    lichId = null; lichView = "form"; lichErr = ""; veLich(); }
-  else if(a==="edit"){ const n = GC.find(x=>x.id===lichId); if(!n) return;
-    FM = {nd:n.nd, ngay:n.ngay, che:n.che, coGio:!!n.gio, gio:n.gio || "08:00", lap:n.lap, bd:n.bd || "", kt:n.kt || "", loai:n.loai || ""}; lichView = "form"; lichErr = ""; veLich(); }
-  else if(a==="del"){ lichDel = true; veLich(); }
-  else if(a==="delNo"){ lichDel = false; veLich(); }
-  else if(a==="delOk"){ GC = GC.filter(x=>x.id!==lichId); luuGC(); veSapToi(); veVe(); }
-  else if(a==="cancel"){
-    if(lichDirect){ dongLich(); return; }
-    if(FM && FM.chuyenTu){ lichId = FM.chuyenTu; FM = null; lichView = "detail"; lichErr = ""; veLich(); return; }   // hủy chuyển: quay lại lịch gốc
-    if(lichId){ lichView = "detail"; lichErr = ""; veLich(); } else veVe();
-  }
-  else if(a==="save"){
-    const tu = lichBack, truc = lichDirect, thang = (lichSel==="");
-    if(luuForm()){
-      FM = null; lichId = null; veSapToi();
-      if(truc){ dongLich(); return; }
-      if(tu==="all"){ lichView = "all"; lichSel = ""; }
-      else { lichView = "list"; if(thang || tu==="month") lichSel = ""; }   // đang xem cả tháng thì vẫn ở lại xem cả tháng
-      lichBack = "";
-    }
-    veLich();
-  }
+  else if(a==="rgOff"){ rgOn = false; veLich.vk = ""; veLich(); }                                  // bỏ lọc: xem toàn bộ
+  else if(a==="rgOn"){ rgOn = true; [rgTu, rgDen] = rgMacDinh(); veLich.vk = ""; veLich(); }       // bật lọc: quay về khoảng của màn hình chính
 };
-lichPop.onkeydown = e => { if(e.key==="Enter" && e.target.id==="vcCode"){ e.preventDefault(); kichHoat(); } };
-lichPop.oninput = e => { const f = e.target.dataset.f; if(FM && (f==="nd" || f==="gio")) FM[f] = e.target.value; };
 lichPop.onchange = e => {
-  const el = e.target, f = el.dataset.f; if(!f || !FM) return;
-  FM[f] = el.type==="checkbox" ? el.checked : el.value;
-  if(f!=="nd" && f!=="gio") veLich();
+  const k = e.target.dataset && e.target.dataset.rg; if(!k) return;
+  const v = e.target.value;
+  if(v){                                             // ngày sau không được trước ngày đầu: tự chỉnh ô còn lại
+    if(k==="tu"){ rgTu = v; if(rgDen<rgTu) rgDen = rgTu; }
+    else { rgDen = v; if(rgTu>rgDen) rgTu = rgDen; }
+  }
+  veLich.vk = ""; veLich();                          // đổi khoảng ngày: danh sách cuộn về đầu
 };
 amBtn.onclick = () => moLich();
-document.addEventListener("keydown", e => { if(e.key==="Escape"){ if(!appPop.hidden) dongApp(); else if(!xnPop.hidden) dongXn(); else if(!lichPop.hidden) dongLich(); else if(!wxPop.hidden) dongTT(); } });
+document.addEventListener("keydown", e => { if(e.key==="Escape"){ if(!appPop.hidden) dongApp(); else if(!xnPop.hidden) dongXn(); else if(!ctPop.hidden) dongCt(); else if(!lichPop.hidden) dongLich(); else if(!wxPop.hidden) dongTT(); } });
 
 // ================= BỔ SUNG: chống trùng lịch, mã QR, sao lưu, menu, giọng nói =================
 const chuanND = s => s.trim().replace(/\s+/g," ").toLowerCase();
@@ -1858,6 +2020,10 @@ appPop.onclick = e => {
   else if(a==="wx"){ dongApp(); moThoiTiet(); }
   else if(a==="bk") moBk();
   else if(a==="about") moGioiThieu();
+  else if(a==="set") moCaiDat();
+  else if(a==="log") moLichSu();
+  else if(a==="autorest"){ const o = autoTin(); if(o) bkXet(o, "set"); }
+  else if(a==="autodl") autoTai();
   else if(a==="bkout") bkOut();
   else if(a==="bkin") document.getElementById("bkFile").click();
   else if(a==="bkmerge") bkGop();
@@ -1871,6 +2037,9 @@ appPop.onclick = e => {
   else if(a==="qrpaste") qrDan();
 };
 appPop.onchange = e => {
+  const id0 = e.target.id;
+  if(id0==="introHide"){ try{ localStorage.setItem("tpIntroHide", e.target.checked ? "1" : "0"); }catch(_){} return; }
+  if(id0==="setAuto"){ try{ localStorage.setItem(AUTO_ON, e.target.checked ? "1" : "0"); }catch(_){} if(e.target.checked) autoBk(); moCaiDat(); return; }   // áp dụng ngay, không hỏi lại
   const f = e.target.files && e.target.files[0]; if(!f) return;
   const id = e.target.id; e.target.value = "";
   if(id==="bkFile") bkDoc(f); else if(id==="qrFile") qrAnh(f);
@@ -1882,14 +2051,75 @@ function taiFile(blob, ten){
   document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
 }
 
-// ----- Menu + Giới thiệu -----
+// ----- Cửa sổ phụ có tiêu đề + nút cố định (nội dung ở giữa cuộn): dùng cho Giới thiệu, Cài đặt, Lịch sử cập nhật -----
+function moApp2(tt, body, foot){
+  dongApp(true); appStop = null;
+  appPop.innerHTML = '<div class="ap ap2" role="dialog" aria-modal="true"><h3 class="ap2-h">'+tt+'</h3><div class="ap2-b">'+body+'</div><div class="ap2-f">'+foot+'</div></div>';
+  appPop.hidden = false;
+}
+const nutBackClose = () => '<div class="btns" style="margin-top:0"><button class="btn" data-p="menu">'+t("nBack")+'</button><button class="btn p" data-p="close">'+t("close")+'</button></div>';
+
+// ----- Menu + Cài đặt + Lịch sử cập nhật + Giới thiệu -----
 function moMenu(){
-  moApp('<h3>☰ '+t("menu")+'</h3><button class="mi" data-p="wx">🌤️ '+t("wxT")+'</button><button class="mi" data-p="bk">💾 '+t("bkT")+'</button><button class="mi" data-p="about">ℹ️ '+t("abT")+'</button>'
+  moApp('<h3>☰ '+t("menu")+'</h3><button class="mi" data-p="wx">🌤️ '+t("wxT")+'</button><button class="mi" data-p="bk">💾 '+t("bkT")+'</button>'
+    + '<button class="mi" data-p="set">⚙️ '+t("setT")+'</button><button class="mi" data-p="log">🕘 '+t("logT")+'</button><button class="mi" data-p="about">ℹ️ '+t("abT")+'</button>'
     + btnDong.replace("{c}", t("close")));
 }
-function moGioiThieu(){
-  moApp('<h3>ℹ️ '+t("abT")+'</h3><p>'+t("abIntro")+'</p><ul>'+t("abL").map(x=>'<li>'+x+'</li>').join("")+'</ul><p class="note">'+t("copy")+'</p>'
-    + '<div class="btns"><button class="btn" data-p="menu">'+t("nBack")+'</button><button class="btn" data-p="close">'+t("close")+'</button></div>');
+const introAn = () => { try{ return localStorage.getItem("tpIntroHide")==="1"; }catch(e){ return false; } };
+function moGioiThieu(dau){                          // dau = true: tự mở khi vào ứng dụng (chỉ có nút Đóng)
+  moApp2('ℹ️ '+t("abT"),
+    '<p>'+t("abIntro")+'</p><ul>'+t("abL").map(x=>'<li>'+x+'</li>').join("")+'</ul><p class="note">'+t("copy")+'</p>',
+    '<label class="ck"><input type="checkbox" id="introHide"'+(introAn() ? ' checked' : '')+'> '+t("abHide")+'</label>'
+    + '<div class="btns" style="margin-top:6px">'+(dau ? '' : '<button class="btn" data-p="menu">'+t("nBack")+'</button>')+'<button class="btn p" data-p="close">'+t("close")+'</button></div>');
+}
+// Lịch sử cập nhật: thêm phiên bản mới lên đầu danh sách
+const LOG = [
+  {v:"1.0.1.22", d:"23/10/2026",
+   vi:["Kéo thả (giữ rồi kéo) để thay đổi thứ tự các thành phố đã chọn.","Hình nền tự đổi theo nơi đang chọn: ngày nắng, ngày mưa, ban đêm.","Thêm giờ mặt trời mọc/lặn vào chi tiết thời tiết."],
+   en:["Press and drag to reorder saved cities.","Background changes with the selected place: sunny day, rainy day, night.","Added sunrise/sunset times to the weather details."]},
+  {v:"1.0.1.21", d:"23/10/2026",
+   vi:["Màn hình Tất cả lịch & nhật ký: thêm lọc từ ngày đến ngày (mặc định theo khoảng thời gian đang chọn ở màn hình chính; bấm Bỏ lọc để xem toàn bộ)."],
+   en:["All schedule & journal: added a from-date to to-date filter (defaults to the range chosen on the home screen; tap Clear filter to see everything)."]},
+  {v:"1.0.1.20", d:"23/10/2026",
+   vi:["Thêm tính năng tạo nhật ký bằng giọng nói.","Tính năng tự động sao lưu."],
+   en:["Create journal entries by voice.","Automatic backup."]}
+];
+function moLichSu(){
+  moApp2('🕘 '+t("logT"),
+    LOG.map(x=>'<p style="margin:8px 0 2px"><b>Ver-'+x.v+'</b> · '+x.d+'</p><ul>'+x[lang].map(s=>'<li>'+s+'</li>').join("")+'</ul>').join(""),
+    nutBackClose());
+}
+
+// ----- Tự động sao lưu: mỗi lần tắt/rời ứng dụng, ghi đè vào MỘT bản sao lưu duy nhất (không tạo thêm file) -----
+const AUTO_KEY = "tpAutoBk", AUTO_ON = "tpAutoOn";
+const autoBat = () => { try{ return localStorage.getItem(AUTO_ON)==="1"; }catch(e){ return false; } };
+function autoBk(){
+  if(!autoBat() || !GC.length) return;              // chưa có ghi chú thì không ghi đè lên bản sao lưu cũ
+  try{ localStorage.setItem(AUTO_KEY, JSON.stringify(bkData())); }catch(e){}
+}
+document.addEventListener("visibilitychange", () => { if(document.hidden) autoBk(); });   // điện thoại: thoát/chuyển ứng dụng
+window.addEventListener("pagehide", autoBk);                                              // máy tính: đóng thẻ/trình duyệt
+function autoTin(){
+  let o = null; try{ o = JSON.parse(localStorage.getItem(AUTO_KEY) || "null"); }catch(e){}
+  return (o && o.app==="thoitiet-lich" && Array.isArray(o.lich)) ? o : null;
+}
+function moCaiDat(msg, cls){
+  const o = autoTin();
+  const fm = iso => { const d = new Date(iso); return dmy(dstr(d.getFullYear(), d.getMonth()+1, d.getDate()))+" "+p2(d.getHours())+":"+p2(d.getMinutes()); };
+  moApp2('⚙️ '+t("setT"),
+    '<label class="ck"><input type="checkbox" id="setAuto"'+(autoBat() ? ' checked' : '')+'> <b>'+t("setAuto")+'</b></label>'
+    + '<p class="note" style="font-size:12px;opacity:.85">'+t("setAutoD")+'</p>'
+    + '<p class="note" style="font-size:12px">'+(o ? t("setLast").replace("{d}", fm(o.taoLuc)).replace("{n}", o.lich.length) : t("setNone"))+'</p>'
+    + (o ? '<button class="mi" data-p="autorest">♻️ '+t("setRest")+'</button><button class="mi" data-p="autodl">⬇️ '+t("setDl")+'</button>' : '')
+    + '<div id="apSt" class="'+(cls || "note")+'">'+(msg || "")+'</div>',
+    nutBackClose());
+}
+function autoTai(){
+  let raw = ""; try{ raw = localStorage.getItem(AUTO_KEY) || ""; }catch(e){}
+  if(!raw) return;
+  const f = "app_thoitiet_lich_auto_bk.json";
+  taiFile(new Blob([raw], {type:"application/json"}), f);
+  apSt(t("bkSaved").replace("{f}", f), "ok");
 }
 document.getElementById("menuBtn").onclick = moMenu;
 
@@ -2046,10 +2276,10 @@ async function qrAnh(file){
   }catch(e){ apSt(t(e && e.message==="lib" ? "qrLib" : "qrNoRead"), "err"); }
 }
 function moNhan(o, key){                           // mở form lưu lịch nhận được (key: lời nhắc hiển thị trên form)
-  dongTT(); dongApp(); moLich(); lichDirect = true; lichView = "form"; lichId = null; lichErr = ""; lichRecv = key;
-  FM = {nd:o.nd, ngay:o.ngay, che:o.che, coGio:!!o.gio, gio:o.gio || "08:00", lap:o.lap, bd:o.bd, kt:o.kt};
-  const q2 = parseD(o.ngay); lichY = q2[0]; lichM = q2[1];
-  veLich();
+  dongTT(); dongApp();
+  lichId = null; lichDel = false; lichErr = ""; lichRecv = key; vcHeard = ""; vcWarn = false;
+  FM = {nd:o.nd, ngay:o.ngay, che:o.che, coGio:!!o.gio, gio:o.gio || "08:00", lap:o.lap, bd:o.bd, kt:o.kt, loai:o.loai || ""};
+  ctView = "form"; veCt(true); ctPop.hidden = false;
 }
 async function qrDan(){                           // dán liên kết hoặc mã lịch đã sao chép (dùng khi nhận lịch từ cửa sổ tạm)
   let tx = "";
@@ -2092,7 +2322,7 @@ function nhanLink(){
     moNhan(o, "lkRecv");
     // Trong trình duyệt nhúng (Zalo/Messenger) trên Android: tự thử chuyển sang ứng dụng ngoài một lần
     if(laAndroid && !laApp() && laTrongApp){ try{ if(!sessionStorage.getItem("tpIntent")){ sessionStorage.setItem("tpIntent","1"); setTimeout(moTrongApp, 500); } }catch(e){} }
-  } else if(!(lichRecv==="lkRecv" && !lichPop.hidden)){            // đã có form nhận lịch đang mở thì không báo lỗi chồng lên
+  } else if(!(lichRecv==="lkRecv" && !ctPop.hidden)){            // đã có form nhận lịch đang mở thì không báo lỗi chồng lên
     moApp('<h3>📥 '+t("shT")+'</h3><div class="err">'+t("lkBad")+'</div>'+btnDong.replace("{c}", t("close")));
   }
 }
@@ -2121,9 +2351,13 @@ function moBk(msg, cls){
     + '<div id="apSt" class="'+(cls || "note")+'">'+(msg || "")+'</div>'
     + '<div class="btns"><button class="btn" data-p="menu">'+t("nBack")+'</button><button class="btn" data-p="close">'+t("close")+'</button></div>');
 }
-function bkTao(){                                  // tạo và tải file sao lưu, trả về tên file
+function bkData(){                                 // dữ liệu sao lưu (dùng cho cả sao lưu tay và tự động)
   const o = {app:"thoitiet-lich", ver:1, taoLuc:new Date().toISOString(),
     lich:GC.map(n=>({id:n.id, nd:n.nd, ngay:n.ngay, che:n.che, gio:n.gio||"", lap:n.lap, bd:n.bd||"", kt:n.kt||"", ...(laNK(n) ? {loai:"nk"} : {}), ...(n.bo && n.bo.length ? {bo:n.bo} : {})}))};
+  return o;
+}
+function bkTao(){                                  // tạo và tải file sao lưu, trả về tên file
+  const o = bkData();
   const f = tenBk();
   taiFile(new Blob([JSON.stringify(o, null, 1)], {type:"application/json"}), f);
   return f;
@@ -2135,20 +2369,24 @@ function bkOut(){
 async function bkDoc(file){
   let o = null;
   try{ o = JSON.parse(await file.text()); }catch(e){}
-  if(!o || o.app!=="thoitiet-lich" || !Array.isArray(o.lich)){ moBk(t("bkBad"), "err"); return; }
+  bkXet(o, "bk");
+}
+function bkXet(o, quay){                            // phân tích dữ liệu sao lưu (từ file hoặc bản tự động); quay: "bk" | "set" = nơi quay về khi hủy
+  const bao = m => { if(quay==="set") moCaiDat(m, "err"); else moBk(m, "err"); };
+  if(!o || o.app!=="thoitiet-lich" || !Array.isArray(o.lich)){ bao(t("bkBad")); return; }
   let loi = 0; const kF = new Set(), uniq = [];
   o.lich.forEach(r=>{
     const c = kiemLich(r); if(!c){ loi++; return; }
     const k = khoaGC(c); if(kF.has(k)) return;
     kF.add(k); c.id = (r && typeof r.id==="string" && r.id.length<40) ? r.id : ""; uniq.push(c);
   });
-  if(!uniq.length){ moBk(t("bkBad"), "err"); return; }
+  if(!uniq.length){ bao(t("bkBad")); return; }
   const kGC = new Set(GC.map(khoaGC)), moi = uniq.filter(c=>!kGC.has(khoaGC(c)));
   bkCho = {uniq, moi};
   moApp('<h3>💾 '+t("bkT")+'</h3><p>'+t("bkSum").replace("{a}", uniq.length).replace("{b}", moi.length).replace("{c}", uniq.length-moi.length)+'</p>'
     + (loi ? '<p class="err">'+t("bkBadN").replace("{d}", loi)+'</p>' : '') + (moi.length ? '' : '<p class="note">'+t("bkNone")+'</p>')
     + '<div class="btns">'+(moi.length ? '<button class="btn p" data-p="bkmerge">'+t("bkMerge").replace("{b}", moi.length)+'</button>' : '')
-    + '<button class="btn d" data-p="bkrep">'+t("bkRep")+'</button><button class="btn" data-p="bk">'+t("nCancel")+'</button></div>');
+    + '<button class="btn d" data-p="bkrep">'+t("bkRep")+'</button><button class="btn" data-p="'+quay+'">'+t("nCancel")+'</button></div>');
 }
 function bkGhi(ds, thay){
   const ids = new Set(thay ? [] : GC.map(x=>x.id)), ra = [];
@@ -2195,7 +2433,7 @@ function gio24(h, p){
   return h;                              // sáng hoặc không nói buổi
 }
 // raw: câu đã nghe được; hom: hôm nay "YYYY-MM-DD". Trả về {nd, ngay, gio, lap} (trường nào không nhận ra thì để rỗng)
-function giongNoi(raw, hom){
+function giongNoi(raw, hom, qk){                // qk = true: nhật ký, ngày hiểu theo hướng quá khứ (hôm qua, hôm kia, thứ ... tuần trước)
   let s = " " + String(raw).normalize("NFC").replace(/[,;!?]/g," ").replace(/\.(?=\s|$)/g," ").replace(/\s+/g," ").trim() + " ";
   const kq = {nd:"", ngay:"", gio:"", lap:""}, re = p => new RegExp(p, "i");
   const cat = (m, giu) => { s = s.slice(0, m.index) + (giu || " ") + s.slice(m.index + m[0].length); };
@@ -2231,7 +2469,8 @@ function giongNoi(raw, hom){
     const d = +m[1], mo = +m[2]; let y = m[3] ? (m[3].length===2 ? 2000+ +m[3] : +m[3]) : hy;
     if(mo>=1 && mo<=12 && d>=1 && d<=dimon(y,mo)){
       kq.ngay = dstr(y,mo,d);
-      if(!m[3] && kq.ngay<hom && d<=dimon(y+1,mo)) kq.ngay = dstr(y+1,mo,d);   // ngày đã qua: hiểu là năm sau
+      if(qk){ if(!m[3] && kq.ngay>hom && d<=dimon(y-1,mo)) kq.ngay = dstr(y-1,mo,d); }   // nhật ký: ngày chưa tới hiểu là năm trước
+      else if(!m[3] && kq.ngay<hom && d<=dimon(y+1,mo)) kq.ngay = dstr(y+1,mo,d);   // ngày đã qua: hiểu là năm sau
       cat(m);
     }
   }
@@ -2243,6 +2482,10 @@ function giongNoi(raw, hom){
       [re("\\s"+PER+"\\s+mai(?=\\s)"), 1, 1],
       [re("\\s(?:ngày kia|ngày mốt)(?=\\s)"), 2, 0]
     ];
+    if(qk) R.unshift(                                      // nhật ký: hôm qua / hôm kia / tối qua
+      [re("\\s"+PER+"\\s+(?:hôm\\s+)?qua(?=\\s)"), -1, 1], [re("\\s(?:ngày\\s+)?(?:hôm qua|bữa qua)(?=\\s)"), -1, 0], [re("^\\s*(?:hôm\\s+)?qua(?=\\s)"), -1, 0],
+      [re("\\s(?:hôm kia|hôm kìa|ngày kia)(?=\\s)"), -2, 0]
+    );
     for(const [rx, off, giu] of R){
       const x = rx.exec(s);
       if(x){ kq.ngay = addDays(hom, off); cat(x, giu ? " "+x[1]+" " : " "); break; }
@@ -2257,23 +2500,25 @@ function giongNoi(raw, hom){
       if(ts) cat(ts); else { const tn = re("\\s(?:tuần này|tuần nay)(?=\\s)").exec(s); if(tn) cat(tn); }
       const [ty,tm,td] = parseD(hom), ti = (new Date(Date.UTC(ty,tm-1,td)).getUTCDay()+6)%7;
       let off = (wd - ti + 7) % 7;
-      if(ts) off = (7 - ti) + wd; else if(off===0) off = 7;
+      if(qk){ const tt = re("\\s(?:tuần trước|tuần rồi|tuần qua)(?=\\s)").exec(s); if(tt){ cat(tt); off = wd - ti - 7; } else off = -((ti - wd + 7) % 7); }   // nhật ký: ngày gần nhất đã qua
+      else if(ts) off = (7 - ti) + wd; else if(off===0) off = 7;
       kq.ngay = addDays(hom, off);
     }
   }
   if(!kq.ngay){                                            // "ngày 25" (không nói tháng)
-    m = re("\\s(?:vào\\s+)?(?:ngày|mùng|mồng)\\s+(\\d{1,2})(?=\\s)(?:\\s+(tháng sau|tháng tới|tháng này))?").exec(s);
+    m = re("\\s(?:vào\\s+)?(?:ngày|mùng|mồng)\\s+(\\d{1,2})(?=\\s)(?:\\s+(tháng sau|tháng tới|tháng này|tháng trước|tháng rồi))?").exec(s);
     if(m){
       const d = +m[1], [ty,tm,td] = parseD(hom);
       let y = ty, mo = tm;
-      if((m[2] && /sau|tới/i.test(m[2])) || (!m[2] && d<td)){ mo++; if(mo>12){ mo = 1; y++; } }
+      if(qk){ if((m[2] && /trước|rồi/i.test(m[2])) || (!m[2] && d>td)){ mo--; if(mo<1){ mo = 12; y--; } } }
+      else if((m[2] && /sau|tới/i.test(m[2])) || (!m[2] && d<td)){ mo++; if(mo>12){ mo = 1; y++; } }
       if(d>=1 && d<=dimon(y,mo)){ kq.ngay = dstr(y,mo,d); cat(m); }
     }
   }
 
   // 4) Nội dung: phần còn lại, bỏ các từ nối thừa
   let nd = s.replace(/\s+/g," ").trim();
-  const dau = /^(?:(?:hãy\s+)?(?:tạo|thêm|đặt|lên)\s+(?:cho\s+(?:tôi|mình)\s+)?(?:một\s+)?(?:lịch|ghi chú|lời nhắc|nhắc nhở|cuộc hẹn)(?:\s+hẹn)?|vào lúc|vào|lúc|nội dung|là)(?:\s+|$)/i;
+  const dau = /^(?:(?:hãy\s+)?(?:tạo|thêm|đặt|lên|ghi)\s+(?:cho\s+(?:tôi|mình)\s+)?(?:một\s+)?(?:lịch|nhật ký|ghi chú|lời nhắc|nhắc nhở|cuộc hẹn)(?:\s+hẹn)?|vào lúc|vào|lúc|nội dung|là)(?:\s+|$)/i;
   const cuoi = /(?:^|\s)(?:vào lúc|vào ngày|vào|lúc|nhé|nha|giúp tôi)$/i;
   for(let i=0;i<6;i++){ const a = nd.replace(dau,"").replace(cuoi,"").trim(); if(a===nd) break; nd = a; }
   nd = nd.replace(/^[\s.:\-–]+|[\s.:\-–]+$/g,"");
@@ -2282,16 +2527,16 @@ function giongNoi(raw, hom){
 }
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 const vcSt = (msg, cls) => { const el = document.getElementById("vcSt"); if(el){ el.className = cls || "note"; el.innerHTML = msg; } };
-const vcNut = () => { const b = document.getElementById("micBtn"); if(b) b.textContent = t(vcOn ? "vcStop" : "vcBtn"); };
-function apDungGiongNoi(text){                      // điền kết quả phân tích vào form
-  if(lichPop.hidden || !FM || lichView!=="form" || lichId) return;
-  const r = giongNoi(text, homNay());
+const vcNut = () => { const b = document.getElementById("micBtn"); if(b) b.textContent = t(vcOn ? "vcStop" : (FM && FM.loai==="nk" ? "vcBtnNk" : "vcBtn")); };
+function apDungGiongNoi(text){                      // điền kết quả phân tích vào form (Lịch hoặc Nhật ký)
+  if(ctPop.hidden || !FM || ctView!=="form" || lichId || FM.chuyenTu) return;
+  const nk = FM.loai==="nk", r = giongNoi(text, homNay(), nk);
   FM.nd = r.nd || text.trim();
-  if(r.ngay){ FM.ngay = r.ngay; const q2 = parseD(r.ngay); lichY = q2[0]; lichM = q2[1]; }
+  if(r.ngay) FM.ngay = r.ngay;
   if(r.gio){ FM.coGio = true; FM.gio = r.gio; }
-  if(r.lap) FM.lap = r.lap;
+  if(r.lap && !nk) FM.lap = r.lap;                  // nhật ký không lặp lại
   vcHeard = text.trim(); vcWarn = !r.ngay && !r.gio; lichErr = "";
-  veLich();
+  veCt();
 }
 // Chức năng giọng nói: dùng thử 3 tháng kể từ lần đầu mở ứng dụng; hết hạn thì nhập mã kích hoạt để gia hạn thêm 3 tháng
 const MA_GIA_HAN = "thaonh3810@gmail.com";
@@ -2333,7 +2578,7 @@ function batGiongNoi(){
     if(!text.trim()){ vcSt(esc(t("vcErr")), "err"); return; }
     apDungGiongNoi(text);
   };
-  try{ rec.start(); vcOn = true; vcNut(); vcSt(esc(t("vcListen"))); }
+  try{ rec.start(); vcOn = true; vcNut(); vcSt(esc(t(FM && FM.loai==="nk" ? "vcListenNk" : "vcListen"))); }
   catch(e){ vcOn = false; vcSt(esc(t("vcErr")), "err"); }
 }
 
@@ -2451,7 +2696,7 @@ function luu(){ try{ localStorage.setItem("tpDaLuu", JSON.stringify(daLuu)); }ca
 function moDauTien(){
   const ds = tatCa();
   if(ds.length){ tai(ds[0]); return; }
-  chon = null; DL = null; out.innerHTML = ""; nowMain.innerHTML = ""; gioMain.innerHTML = ""; veTabs(); veDiaChi();
+  chon = null; DL = null; datNen(null); out.innerHTML = ""; nowMain.innerHTML = ""; gioMain.innerHTML = ""; veTabs(); veDiaChi();
   setMsg("empty");
   tim.hidden = false;
 }
@@ -2468,7 +2713,9 @@ function veTabs(){                  // vẽ cùng một danh sách thành phố 
       const b = document.createElement("button");
       b.textContent = (p===viTri ? "📍 " : "") + ten(p);
       if(p===chon) b.className = "on";
-      b.onclick = ()=>tai(p);
+      b.onclick = ()=>{ if(Date.now()-vuaKeo<350) return; tai(p); };      // vừa thả sau khi kéo thì không mở
+      const si = daLuu.indexOf(p);
+      if(si>=0){ b.dataset.sv = si; b.oncontextmenu = e=>e.preventDefault(); }
       if(daLuu.includes(p)){
         const x = document.createElement("span");
         x.textContent = "✕"; x.title = t("del");
@@ -2486,6 +2733,74 @@ function veTabs(){                  // vẽ cùng một danh sách thành phố 
     box.appendChild(nutThem);
   });
 }
+
+// ----- Kéo thả đổi thứ tự các thành phố đã thêm: điện thoại giữ khoảng 0,4 giây rồi kéo; chuột thì kéo luôn. Vị trí hiện tại (📍) luôn đứng đầu -----
+let vuaKeo = 0;
+function initKeo(box){
+  let b = null, items = [], rects = [], from = -1, to = -1, x0 = 0, y0 = 0, s0 = 0, px = 0, keo = false, hen = 0, raf = 0;
+  function chan(e){ if(keo && e.cancelable) e.preventDefault(); }          // đang kéo: không cho trang cuộn theo
+  function don(){
+    keo = false; clearTimeout(hen); cancelAnimationFrame(raf);
+    document.removeEventListener("pointermove", mv); document.removeEventListener("pointerup", up);
+    document.removeEventListener("pointercancel", hu); document.removeEventListener("touchmove", chan);
+  }
+  function xoaDang(){ items.forEach(el=>{ el.style.transform = ""; el.classList.remove("keo"); }); box.classList.remove("dangKeo"); }
+  function bat(){
+    keo = true;
+    items = [...box.querySelectorAll("button[data-sv]")];
+    from = items.indexOf(b); to = from; s0 = box.scrollLeft;
+    rects = items.map(el=>{ const r = el.getBoundingClientRect(); return {l:r.left, w:r.width}; });
+    b.classList.add("keo"); box.classList.add("dangKeo");
+    if(navigator.vibrate){ try{ navigator.vibrate(12); }catch(e){} }
+    vong();
+  }
+  function cn(){                                                           // đặt lại vị trí các nút theo ngón tay/chuột
+    if(from<0) return;
+    const cen = rects.map(r=>r.l+r.w/2);
+    let dx = px - x0 + (box.scrollLeft - s0);
+    dx = Math.max(cen[0]-cen[from], Math.min(cen[cen.length-1]-cen[from], dx));
+    const dc = cen[from] + dx;
+    to = 0; cen.forEach((c,j)=>{ if(j!==from && c<dc) to++; });
+    const gap = rects.length<2 ? 5 : Math.abs(from+1<rects.length ? rects[from+1].l-(rects[from].l+rects[from].w) : rects[from].l-(rects[from-1].l+rects[from-1].w));
+    const sl = rects[from].w + gap;
+    items.forEach((el,j)=>{
+      if(j===from){ el.style.transform = "translateX("+dx+"px) scale(1.06)"; return; }
+      const kk = j<from ? j : j-1, nj = kk<to ? kk : kk+1;
+      el.style.transform = nj>j ? "translateX("+sl+"px)" : nj<j ? "translateX("+(-sl)+"px)" : "";
+    });
+  }
+  function vong(){                                                         // gần mép thì tự cuộn thanh thành phố
+    if(!keo) return;
+    const r = box.getBoundingClientRect();
+    if(px < r.left+36) box.scrollLeft -= 7; else if(px > r.right-36) box.scrollLeft += 7;
+    cn(); raf = requestAnimationFrame(vong);
+  }
+  function mv(e){
+    px = e.clientX;
+    if(keo) return;
+    const mx = Math.abs(e.clientX-x0), my = Math.abs(e.clientY-y0);
+    if(e.pointerType==="mouse"){ if(mx>5) bat(); }
+    else if(mx>8 || my>8) don();                                           // ngón tay đang vuốt cuộn: không phải kéo thả
+  }
+  function up(){
+    const was = keo, f = from, g = to;
+    don();
+    if(!was) return;
+    vuaKeo = Date.now(); xoaDang();
+    if(g!==f){ const a = daLuu.slice(), m = a.splice(f,1)[0]; a.splice(g,0,m); daLuu = a; luu(); }
+    veTabs();                                                              // vẽ lại cả hai thanh thành phố theo thứ tự mới
+  }
+  function hu(){ const was = keo; don(); if(was) xoaDang(); }
+  box.addEventListener("pointerdown", e=>{
+    if(keo || (e.pointerType==="mouse" && e.button!==0)) return;
+    const el = e.target.closest("button[data-sv]"); if(!el || e.target.closest("span")) return;
+    b = el; x0 = px = e.clientX; y0 = e.clientY; from = -1;
+    document.addEventListener("pointermove", mv); document.addEventListener("pointerup", up);
+    document.addEventListener("pointercancel", hu); document.addEventListener("touchmove", chan, {passive:false});
+    if(e.pointerType!=="mouse") hen = setTimeout(bat, 400);
+  });
+}
+tabsEls.forEach(initKeo);
 
 // Gõ tên thành phố -> hiện gợi ý (chờ 0,3 giây sau khi ngừng gõ)
 let hen;
@@ -2534,8 +2849,8 @@ async function layDuLieu(p){
   const kc = p.lat+","+p.lon, cu = CACHE[kc];
   if(cu && Date.now()-cu.t < 600000) return cu;   // dùng lại dữ liệu mới tải trong 10 phút
   const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}`
-    +`&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,cloud_cover,precipitation`
-    +`&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max`
+    +`&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,cloud_cover,precipitation,is_day`
+    +`&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,sunrise,sunset`
     +`&hourly=relative_humidity_2m,temperature_2m,precipitation_probability,wind_speed_10m&timezone=auto&forecast_days=10`).then(r=>r.json());
   let aqi = {}, aqiNow = null;
   try{
@@ -2556,7 +2871,7 @@ async function tai(p){
     if(chon!==p) return;   // bạn đã chuyển sang nơi khác trong lúc chờ
     const doAm = trungBinhNgay(w.hourly.time, w.hourly.relative_humidity_2m);
     const c = w.current, d = w.daily;
-    DL = w; ngayChon = 0;
+    DL = w; ngayChon = 0; datNen(w);
     const [icon, chu] = moTa(c.weather_code);
     const [mucNow, mauNow] = mucAqi(aqiNow);
 
@@ -2571,6 +2886,7 @@ async function tai(p){
       +'<div class="chip">'+t("cloud")+'<b>'+Math.round(c.cloud_cover)+'%</b></div>'
       +'<div class="chip">'+t("precip")+'<b>'+c.precipitation+' mm</b></div>'
       +'<div class="chip" style="grid-column:span 2">'+t("air")+'<b style="color:'+mauNow+'">'+(aqiNow!=null ? aqiNow+' – ' : '')+mucNow+'</b></div>'
+      +'<div class="chip" style="grid-column:span 3;display:flex;justify-content:space-around;gap:6px"><span>🌅 '+t("sunrise")+' <b style="display:inline">'+gioMt(d.sunrise,0)+'</b></span><span>🌇 '+t("sunset")+' <b style="display:inline">'+gioMt(d.sunset,0)+'</b></span></div>'
       +'</div></div>';
 
     let html = boxNow; nowMain.innerHTML = boxNow;     // màn hình chính chỉ hiện ô này; màn hình thời tiết hiện đầy đủ
@@ -2593,6 +2909,7 @@ async function tai(p){
             +'<div>💧 '+(d.precipitation_probability_max[k] ?? "–")+'%</div>'
             +'<div>💨 '+Math.round(d.wind_speed_10m_max[k])+' km/h</div>'
             +'<div>💦 '+(doAm[tm] ?? "–")+'%</div>'
+            +'<div>🌅 '+gioMt(d.sunrise,k)+'</div><div>🌇 '+gioMt(d.sunset,k)+'</div>'
             +'<div class="aqi" style="background:'+mau+'">'+(aqi[tm]!=null ? 'AQI '+aqi[tm] : t("na"))+'</div></div>';
         }).join('')
       + '</div><p class="note">'+t("note")+'</p></div>';
@@ -2622,12 +2939,13 @@ hanGiong();                                  // lần mở đầu tiên: bắt �
 layViTri();
 nhanLink();
 nhanChiaSe();
+if(!introAn() && [wxPop, lichPop, ctPop, xnPop, appPop].every(e=>e.hidden)) moGioiThieu(true);   // mở ứng dụng: hiện giới thiệu (có ô tích không hiển thị lại)
 window.addEventListener("hashchange", nhanLink);
 // Lịch có thể vừa được lưu ở một cửa sổ khác của cùng trang: nạp lại khi quay về ứng dụng để không mất hoặc ghi đè lịch mới
 function dongBoGC(){
   let m; try{ m = JSON.parse(localStorage.getItem("tpGhiChu") || "[]"); }catch(e){ return; }
   if(!Array.isArray(m) || JSON.stringify(m)===JSON.stringify(GC)) return;
-  GC = m; veSapToi(); if(!lichPop.hidden && lichView!=="form") veLich();
+  GC = m; veSapToi(); if(!lichPop.hidden) veLich(); if(ctView==="detail") veCt();
 }
 window.addEventListener("storage", e => { if(e.key===null || e.key==="tpGhiChu") dongBoGC(); });
 document.addEventListener("visibilitychange", () => { if(!document.hidden) dongBoGC(); });
@@ -2636,7 +2954,7 @@ window.addEventListener("pageshow", dongBoGC);
 
 // ----- Vuốt Back: đóng cửa sổ trên cùng (menu, lịch, hộp xác nhận, màn Xem thời tiết) thay vì thoát ứng dụng -----
 // Mỗi cửa sổ đang mở ứng với một mục trong lịch sử trình duyệt; chỉ ở màn hình chính, Back mới thoát ứng dụng.
-const OVS = [wxPop, lichPop, xnPop, appPop];
+const OVS = [wxPop, lichPop, ctPop, xnPop, appPop];
 let ovDepth = 0, ovBusy = false;
 const ovDem = () => OVS.filter(e=>!e.hidden).length;
 function ovSync(){                                   // đưa số mục lịch sử khớp với số cửa sổ đang mở
@@ -2648,7 +2966,7 @@ function ovSync(){                                   // đưa số mục lịch 
     setTimeout(()=>{ if(ovBusy){ ovBusy = false; ovSync(); } }, 700);
   }
 }
-function ovDongTren(){ if(!appPop.hidden) dongApp(); else if(!xnPop.hidden) dongXn(); else if(!lichPop.hidden) dongLich(); else if(!wxPop.hidden) dongTT(); }
+function ovDongTren(){ if(!appPop.hidden) dongApp(); else if(!xnPop.hidden) dongXn(); else if(!ctPop.hidden) dongCt(); else if(!lichPop.hidden) dongLich(); else if(!wxPop.hidden) dongTT(); }
 window.addEventListener("popstate", e => {
   if(ovBusy){ ovBusy = false; ovSync(); return; }      // do chính ứng dụng đóng cửa sổ bằng nút
   if(location.hash.indexOf("#lich=")===0) return;      // mở liên kết chia sẻ, không phải Back

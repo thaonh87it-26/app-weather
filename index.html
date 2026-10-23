@@ -311,6 +311,13 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,.btn:focus-visib
 .ct-h,.lich-h{min-height:42px}
 .seg button{min-height:28px}
 .xd{width:28px;height:28px}
+
+/* ===== v1.0.1.29: nhóm ngày rõ hơn, icon thông tin căn phải ===== */
+.up-list .up-mh{background:#d3e5f1;color:#0b4766;font-weight:700;padding:5px 8px;border-left:4px solid var(--chinh);border-radius:0 8px 8px 0}
+.up-list .up-mh.hn{background:#ffefc2;color:#7a4f00;border-left-color:#e0a000}
+.up-list .up-mh:not(:first-child){margin-top:10px}
+.up-list .up-it{padding-left:8px;border-top:0;border-bottom:1px solid #0001}
+.up-it .ti{flex:none;display:flex;align-items:center;justify-content:flex-end;gap:5px;font-size:calc(14px * var(--fs,1))}
 </style>
 </head>
 <body>
@@ -1359,7 +1366,7 @@ vi:{
   nTime:"Giờ", vcBtnNk:"🎤 Nói để ghi nhật ký", vcListenNk:"Đang nghe... Ví dụ: “Hôm qua 8 giờ tối đi chợ Phú Gia”", vcHintNk:"Nói ngày, giờ, nội dung (có thể nói: hôm qua, hôm kia, thứ hai tuần trước...).",
   setT:"Cài đặt", setAuto:"Tự động sao lưu khi tắt ứng dụng", setAutoD:"Mỗi lần thoát hoặc rời khỏi ứng dụng, lịch và nhật ký được lưu đè vào MỘT bản sao lưu duy nhất ngay trong ứng dụng (không tạo thêm file, không tốn thêm dung lượng). Chưa có ghi chú nào thì không sao lưu.", setLast:"Bản sao lưu gần nhất: {d} ({n} ghi chú)", setNone:"Chưa có bản sao lưu tự động.", setRest:"Khôi phục bản tự động", setDl:"Tải bản tự động",
   logT:"Cập nhật", abHide:"Không hiển thị lại khi mở ứng dụng",
-  updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", sunrise:"Mặt trời mọc", sunset:"Mặt trời lặn", nAlarm:"Tạo báo thức (theo giờ của lịch)", nAlarmNote:"Báo thức sẽ kêu đúng giờ của lịch (khi ứng dụng đang mở hoặc chạy nền).", nAlarmOn:"Có báo thức lúc", alT:"Báo thức", alOff:"Tắt báo thức", notiSoon:"Sắp có lịch lúc {g}", notiLeft:"còn {m} phút", notiTest:"Thông báo thử", notiTestB:"Thông báo đang hoạt động.",
+  updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", sunrise:"Mặt trời mọc", sunset:"Mặt trời lặn", nAlarm:"Tạo báo thức (theo giờ của lịch)", nAlarmNote:"Báo thức kêu đúng giờ khi ứng dụng đang mở hoặc chạy nền. Muốn báo cả khi đã thoát app, bấm \"Lịch máy\" trong chi tiết lịch để thêm vào lịch điện thoại.", icsBtn:"Lịch máy", icsOk:"Đã tạo file lịch. Mở file để thêm vào lịch điện thoại (có kèm nhắc giờ).", nAlarmOn:"Có báo thức lúc", alT:"Báo thức", alOff:"Tắt báo thức", notiSoon:"Sắp có lịch lúc {g}", notiLeft:"còn {m} phút", notiTest:"Thông báo thử", notiTestB:"Thông báo đang hoạt động.",
   setFs:"Cỡ chữ", setFsD:"Kéo thanh trượt để chỉnh; áp dụng ngay cho toàn bộ ứng dụng.", setFsReset:"Mặc định",
   anhT:"Ảnh", anhMay:"Chọn từ máy", anhCam:"Chụp ảnh", anhAdd:"Thêm", anhErr:"Không thêm được ảnh. Hãy thử ảnh khác (JPG/PNG).", anhUrlBad:"Đường dẫn ảnh phải bắt đầu bằng http:// hoặc https://.", anhLoi:"không tải được ảnh", anhMax:"Tối đa {n} ảnh cho mỗi nhật ký.",
   anhNote:"Nhật ký chỉ lưu đường dẫn ảnh (không lưu dữ liệu ảnh). Ảnh chọn từ máy hoặc chụp được giữ trong bộ nhớ của ứng dụng trên máy này; muốn xem trên máy khác, hãy dùng đường dẫn (URL) ảnh trên mạng.",
@@ -1409,7 +1416,7 @@ en:{
   nTime:"Time", vcBtnNk:"🎤 Speak to journal", vcListenNk:"Listening... e.g. “Hôm qua 8 giờ tối đi chợ Phú Gia”", vcHintNk:"Say the date, time and content in Vietnamese (e.g. hôm qua, hôm kia, thứ hai tuần trước).",
   setT:"Settings", setAuto:"Auto backup when closing the app", setAutoD:"Each time you leave or close the app, your schedule and journal are saved over ONE single backup kept inside the app (no extra files, no extra storage). Nothing is saved while there are no notes.", setLast:"Latest backup: {d} ({n} notes)", setNone:"No automatic backup yet.", setRest:"Restore auto backup", setDl:"Download auto backup",
   logT:"Updates", abHide:"Do not show again when opening the app",
-  updated:"updated at", feels:"feels like", hum:"Humidity", sunrise:"Sunrise", sunset:"Sunset", nAlarm:"Set an alarm (at the schedule time)", nAlarmNote:"The alarm rings at the schedule time (while the app is open or running in the background).", nAlarmOn:"Alarm at", alT:"Alarm", alOff:"Turn off alarm", notiSoon:"Schedule coming up at {g}", notiLeft:"{m} min left", notiTest:"Test notification", notiTestB:"Notifications are working.",
+  updated:"updated at", feels:"feels like", hum:"Humidity", sunrise:"Sunrise", sunset:"Sunset", nAlarm:"Set an alarm (at the schedule time)", nAlarmNote:"The alarm rings on time while the app is open or running in the background. To be alerted even after closing the app, tap \"Phone cal.\" in the schedule details to add it to your phone calendar.", icsBtn:"Phone cal.", icsOk:"Calendar file created. Open it to add the event to your phone calendar (with reminders).", nAlarmOn:"Alarm at", alT:"Alarm", alOff:"Turn off alarm", notiSoon:"Schedule coming up at {g}", notiLeft:"{m} min left", notiTest:"Test notification", notiTestB:"Notifications are working.",
   setFs:"Font size", setFsD:"Drag the slider to adjust; applies to the whole app immediately.", setFsReset:"Default",
   anhT:"Photos", anhMay:"From device", anhCam:"Camera", anhAdd:"Add", anhErr:"Could not add the photo. Try another one (JPG/PNG).", anhUrlBad:"The photo link must start with http:// or https://.", anhLoi:"photo failed to load", anhMax:"Up to {n} photos per journal entry.",
   anhNote:"The journal stores photo links only (no image data). Photos picked from the device or taken with the camera are kept in this app's storage on this device; to see them on another device, use an online photo link (URL).",
@@ -1698,7 +1705,8 @@ function veSapToi(){
       }
       const nk = laNK(x.n), qua = !nk && (x.day<hom || (x.day===hom && x.n.gio && x.n.gio<hhmm));     // lịch đã qua thì làm mờ
       h += '<div class="up-it'+(nk ? ' nk' : qua ? ' qua' : '')+'" data-up="'+x.day+'|'+x.n.id+'"><span class="gi">'+(x.n.gio || "")+'</span>'
-        +'<span class="nd">'+bieuTuong(x.n)+dong1(x.n)+icAnh(x.n)+(x.n.lap!=="none" ? " 🔁" : "")+(x.n.bt ? " ⏰" : "")+'</span>'
+        +'<span class="nd">'+bieuTuong(x.n)+dong1(x.n)+'</span>'
+        +'<span class="ti">'+(x.n.anh && x.n.anh.length ? '<span title="'+t("anhT")+'">📷</span>' : '')+(x.n.lap!=="none" ? '<span>🔁</span>' : '')+(x.n.bt ? '<span>⏰</span>' : '')+'</span>'
         +'<button class="xd" data-del="'+x.n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
     });
   } else h += '<div class="up-it" style="cursor:default">'+t(upRange==="today" ? "nNoneT" : upRange==="month" ? "nNoneM" : "nNone7")+'</div>';
@@ -1860,7 +1868,7 @@ function ctDetail(n){
   const foot = lichDel
     ? '<button class="btn d" data-a="delOk">'+t("nDel")+'</button><button class="btn" data-a="delNo">'+t("nCancel")+'</button>'
     : '<button class="btn p" data-a="edit">'+t("nEdit")+'</button>'
-      + (nk ? '' : '<button class="btn" data-a="toNk">＋ '+t("nkTo")+'</button><button class="btn" data-a="share">📤 '+t("nShare")+'</button>')
+      + (nk ? '' : '<button class="btn" data-a="toNk">＋ '+t("nkTo")+'</button><button class="btn" data-a="share">📤 '+t("nShare")+'</button>'+(n.gio ? '<button class="btn" data-a="ics">📅 '+t("icsBtn")+'</button>' : ''))
       + '<button class="btn d" data-a="del">'+t("nDel")+'</button>';
   return {title:(nk ? "📓 " : "🗓️ ")+t(nk ? "nkTag" : "lichTag"), nk, body, foot, err:""};
 }
@@ -1915,6 +1923,7 @@ ctPop.onclick = e => {
   const a = el.dataset.a;
   if(a==="close"){ dongCt(); }
   else if(a==="share"){ moChiaSe(GC.find(x=>x.id===lichId)); }
+  else if(a==="ics"){ const n = GC.find(x=>x.id===lichId); if(n){ taiIcs(n); toast("📅 "+t("icsBtn"), t("icsOk")); } }
   else if(a==="anhFile"){ document.getElementById("anhFile").click(); }
   else if(a==="anhCam"){ document.getElementById("anhCamIn").click(); }
   else if(a==="anhUrlAdd"){ anhUrlThem(); }
@@ -2219,6 +2228,9 @@ function moGioiThieu(dau){                          // dau = true: tự mở khi
 }
 // Lịch sử cập nhật: thêm phiên bản mới lên đầu danh sách
 const LOG = [
+  {v:"1.0.1.29", d:"23/10/2026",
+   vi:["Chi tiết lịch: thêm nút Lịch máy - xuất file .ics để điện thoại tự nhắc và báo thức kể cả khi đã thoát app.","Danh sách lịch: nhóm ngày nổi bật, rõ ràng hơn; các icon ảnh, lặp lại, báo thức căn lề phải."],
+   en:["Schedule details: added Phone cal. - exports an .ics file so your phone reminds/alarms even when the app is closed.","Schedule list: clearer day groups; photo, repeat and alarm icons are right-aligned."]},
   {v:"1.0.1.28", d:"23/10/2026",
    vi:["Cài đặt: thêm đơn vị nhiệt độ (°C / °F, mặc định °C).","Menu: tách Quản lý ảnh thành mục riêng, dưới Xem thời tiết.","Xem ảnh: vuốt ngang để chuyển ảnh, thêm nút xóa ảnh.","Lịch tháng: viền bao quanh nhạt hơn. Lịch sử cập nhật chỉ giữ 7 bản gần nhất."],
    en:["Settings: added temperature unit (°C / °F, default °C).","Menu: Manage photos is now its own item below View weather.","Photo viewer: swipe sideways to switch photos, plus a delete button.","Month calendar: lighter border. Update history keeps the last 7 versions."]},
@@ -2237,9 +2249,6 @@ const LOG = [
   {v:"1.0.1.23", d:"23/10/2026",
    vi:["Khi tạo lịch: thêm ô chọn Tạo báo thức (theo giờ của lịch).","Cài đặt: thêm Gửi thông báo và số phút báo trước khi có lịch."],
    en:["Schedule form: added Set an alarm (at the schedule time).","Settings: added notifications and the number of minutes to notify before a schedule."]},
-  {v:"1.0.1.22", d:"23/10/2026",
-   vi:["Kéo thả (giữ rồi kéo) để thay đổi thứ tự các thành phố đã chọn.","Hình nền tự đổi theo nơi đang chọn: ngày nắng, ngày mưa, ban đêm.","Thêm giờ mặt trời mọc/lặn vào ô thời tiết hiện tại (ô này được thu nhỏ gọn hơn)."],
-   en:["Press and drag to reorder saved cities.","Background changes with the selected place: sunny day, rainy day, night.","Added sunrise/sunset times to the current weather box (now more compact)."]},
 ];
 function moLichSu(){
   moApp2('🕘 '+t("logT"),
@@ -2429,6 +2438,29 @@ setTimeout(kiemBao, 1500);
 
 ctPop.addEventListener("error", e => { if(e.target.tagName==="IMG" && e.target.parentNode) e.target.parentNode.classList.add("loi"); }, true);
 
+
+// ----- Xuất lịch (.ics) để điện thoại tự nhắc/báo thức kể cả khi đã thoát app -----
+function taiIcs(n){
+  const [y,m,d] = n.ngay.split("-").map(Number), [hh,mm] = (n.gio || "00:00").split(":").map(Number);
+  const f = (dt) => dt.getFullYear()+p2(dt.getMonth()+1)+p2(dt.getDate())+"T"+p2(dt.getHours())+p2(dt.getMinutes())+"00";
+  const bd = new Date(y, m-1, d, hh, mm), kt = new Date(bd.getTime()+30*60000);
+  const esc2 = x => String(x).replace(/\\/g,"\\\\").replace(/\r?\n/g,"\\n").replace(/[,;]/g,"\\$&");
+  const dong = n.nd.split("\n"), now = new Date();
+  const L = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Lich Nhat ky//VI","BEGIN:VEVENT","UID:"+n.id+"@lich-nhatky","DTSTAMP:"+f(now),
+    "DTSTART:"+f(bd),"DTEND:"+f(kt),"SUMMARY:"+esc2(dong[0])];
+  if(dong.length>1) L.push("DESCRIPTION:"+esc2(dong.slice(1).join("\n")));
+  if(n.lap && n.lap!=="none" && !n.am){                       // lịch âm không có quy tắc lặp tương ứng nên chỉ xuất 1 lần
+    let r = "RRULE:FREQ="+({week:"WEEKLY", month:"MONTHLY", year:"YEARLY"}[n.lap] || "DAILY");
+    if(n.lap==="month" && d<=28) r += ";BYMONTHDAY="+d;
+    if(n.kt) r += ";UNTIL="+n.kt.replace(/-/g,"")+"T235959";
+    L.push(r);
+  }
+  const al = (tr) => L.push("BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+esc2(dong[0]),"TRIGGER:"+tr,"END:VALARM");
+  if(n.bt) al("PT0S");                                         // báo thức đúng giờ
+  if(notiBat()) al("-PT"+notiPhut()+"M");                      // nhắc trước theo cài đặt
+  L.push("END:VEVENT","END:VCALENDAR");
+  taiFile(new Blob([L.join("\r\n")+"\r\n"], {type:"text/calendar"}), "lich_"+n.ngay.replace(/-/g,"")+"_"+(n.gio || "").replace(":","")+".ics");
+}
 // ----- Ảnh trong nhật ký: nhật ký chỉ giữ ĐƯỜNG DẪN -----
 // Ảnh trên mạng: lưu đúng URL. Ảnh chọn từ máy / chụp: trình duyệt không cho biết đường dẫn thật của file, nên ảnh được thu nhỏ rồi giữ
 // trong kho IndexedDB của ứng dụng; nhật ký, sao lưu chỉ chứa mã tham chiếu "local:<mã>" (không chứa dữ liệu ảnh).

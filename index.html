@@ -10,6 +10,8 @@
 <meta property="og:title" content="Lịch - Nhật ký">
 <meta property="og:description" content="Xem thời tiết, lịch âm và quản lý lịch cá nhân. Bấm vào liên kết để mở ứng dụng và lưu lịch được chia sẻ.">
 <meta property="og:image" content="icon-512.png">
+<script>(function(){function h(m){try{var b=document.getElementById("tpLoi");if(!b){b=document.createElement("div");b.id="tpLoi";b.style.cssText="position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#c62f3a;color:#fff;font:12px/1.4 sans-serif;padding:6px 10px;max-height:30vh;overflow:auto;white-space:pre-wrap";b.onclick=function(){b.remove()};(document.body||document.documentElement).appendChild(b)}if(b.textContent.length<800)b.textContent+=m+"\n"}catch(_){}}
+window.addEventListener("error",function(e){h("Lỗi: "+e.message+" ("+(e.lineno||"?")+")")});window.addEventListener("unhandledrejection",function(e){h("Lỗi: "+(e.reason&&e.reason.message||e.reason))})})();</script>
 <script>try{var f=parseFloat(localStorage.getItem("tpFs"));if(f>=.8&&f<=1.5)document.documentElement.style.setProperty("--fs",f)}catch(e){}</script>
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -318,6 +320,12 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,.btn:focus-visib
 .up-list .up-mh:not(:first-child){margin-top:10px}
 .up-list .up-it{padding-left:8px;border-top:0;border-bottom:1px solid #0001}
 .up-it .ti{flex:none;display:flex;align-items:center;justify-content:flex-end;gap:5px;font-size:calc(14px * var(--fs,1))}
+
+/* ===== v1.0.1.30 ===== */
+.btn.up-add{width:40px;height:40px;min-height:40px;padding:0;border-radius:50%;font-size:calc(26px * var(--fs,1));font-weight:400;line-height:1;box-shadow:0 2px 8px rgba(15,95,140,.4)}
+.gc-it>div:nth-child(2){flex:1;min-width:0}
+.gc-it .ti{flex:none;align-self:center;display:flex;gap:5px;font-size:calc(14px * var(--fs,1))}
+.seg button{padding-left:10px;padding-right:10px}
 </style>
 </head>
 <body>
@@ -1342,7 +1350,7 @@ vi:{
   loading:"Đang tải dữ liệu...", loadErr:"Không tải được dữ liệu. Hãy kiểm tra kết nối mạng, rồi vào Menu › Xem thời tiết và bấm lại tên địa điểm.",
   empty:"Chưa có thành phố nào. Vào Menu › Xem thời tiết, bấm Thêm để chọn thành phố.", findAddr:"Đang xác định địa chỉ...",
   lunar:"Âm lịch", leap:"nhuận",
-  upT:"Lịch & nhật ký", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", tomorrow:"Ngày mai", nOpen:"Mở lịch",
+  upT:"Lịch & nhật ký", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", rY:"Hôm qua", nNoneY:"Hôm qua không có lịch nào.", tomorrow:"Ngày mai", nOpen:"Mở lịch",
   nNone7:"Không có lịch nào trong 7 ngày tới.", nNoneM:"Tháng này chưa có lịch nào.", nNoneT:"Hôm nay chưa có lịch nào.",
   fFrom:"Từ ngày", fTo:"Đến ngày", fAllTime:"Bỏ lọc", fOn:"📅 Lọc ngày", fEmpty:"Không có lịch hoặc nhật ký nào trong khoảng ngày này.", nAllBtn:"Tất cả lịch & nhật ký", nAllT:"Tất cả lịch & nhật ký", dAll:"Xóa tất cả", dAllAsk:"Xóa tất cả lịch?", dAllN:"Sẽ xóa {n} lịch (nhật ký được giữ nguyên). Không thể hoàn tác.", dAllWarn:"Nên sao lưu trước khi xóa tất cả.", dAllBk:"Sao lưu ngay", dAllDone:"Đã sao lưu: {f}", nAllEmpty:"Chưa có lịch hay nhật ký nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có lịch hoặc nhật ký nào.", nWholeM:"Cả tháng",
   nDelAsk1:"Xóa ghi chú này?", nDelRep:"Ghi chú này có lặp lại: tất cả các ngày lặp lại cũng sẽ bị xóa.",
@@ -1366,7 +1374,7 @@ vi:{
   nTime:"Giờ", vcBtnNk:"🎤 Nói để ghi nhật ký", vcListenNk:"Đang nghe... Ví dụ: “Hôm qua 8 giờ tối đi chợ Phú Gia”", vcHintNk:"Nói ngày, giờ, nội dung (có thể nói: hôm qua, hôm kia, thứ hai tuần trước...).",
   setT:"Cài đặt", setAuto:"Tự động sao lưu khi tắt ứng dụng", setAutoD:"Mỗi lần thoát hoặc rời khỏi ứng dụng, lịch và nhật ký được lưu đè vào MỘT bản sao lưu duy nhất ngay trong ứng dụng (không tạo thêm file, không tốn thêm dung lượng). Chưa có ghi chú nào thì không sao lưu.", setLast:"Bản sao lưu gần nhất: {d} ({n} ghi chú)", setNone:"Chưa có bản sao lưu tự động.", setRest:"Khôi phục bản tự động", setDl:"Tải bản tự động",
   logT:"Cập nhật", abHide:"Không hiển thị lại khi mở ứng dụng",
-  updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", sunrise:"Mặt trời mọc", sunset:"Mặt trời lặn", nAlarm:"Tạo báo thức (theo giờ của lịch)", nAlarmNote:"Báo thức kêu đúng giờ khi ứng dụng đang mở hoặc chạy nền. Muốn báo cả khi đã thoát app, bấm \"Lịch máy\" trong chi tiết lịch để thêm vào lịch điện thoại.", icsBtn:"Lịch máy", icsOk:"Đã tạo file lịch. Mở file để thêm vào lịch điện thoại (có kèm nhắc giờ).", nAlarmOn:"Có báo thức lúc", alT:"Báo thức", alOff:"Tắt báo thức", notiSoon:"Sắp có lịch lúc {g}", notiLeft:"còn {m} phút", notiTest:"Thông báo thử", notiTestB:"Thông báo đang hoạt động.",
+  updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", sunrise:"Mặt trời mọc", sunset:"Mặt trời lặn", nAlarm:"Tạo báo thức (theo giờ của lịch)", nAlarmNote:"Báo thức kêu đúng giờ khi ứng dụng đang mở hoặc chạy nền. Muốn báo cả khi đã thoát app, bấm \"Lịch máy\" trong chi tiết lịch để thêm vào lịch điện thoại.", icsBtn:"Lịch máy", icsAll:"Xuất sang lịch máy", icsAllD:"File .ics để điện thoại tự nhắc/báo thức kể cả khi đã thoát app ({n} lịch có giờ).", icsNone:"Chưa có lịch nào có giờ để xuất.", icsOk:"Đã tạo file lịch. Mở file để thêm vào lịch điện thoại (có kèm nhắc giờ).", nAlarmOn:"Có báo thức lúc", alT:"Báo thức", alOff:"Tắt báo thức", notiSoon:"Sắp có lịch lúc {g}", notiLeft:"còn {m} phút", notiTest:"Thông báo thử", notiTestB:"Thông báo đang hoạt động.",
   setFs:"Cỡ chữ", setFsD:"Kéo thanh trượt để chỉnh; áp dụng ngay cho toàn bộ ứng dụng.", setFsReset:"Mặc định",
   anhT:"Ảnh", anhMay:"Chọn từ máy", anhCam:"Chụp ảnh", anhAdd:"Thêm", anhErr:"Không thêm được ảnh. Hãy thử ảnh khác (JPG/PNG).", anhUrlBad:"Đường dẫn ảnh phải bắt đầu bằng http:// hoặc https://.", anhLoi:"không tải được ảnh", anhMax:"Tối đa {n} ảnh cho mỗi nhật ký.",
   anhNote:"Nhật ký chỉ lưu đường dẫn ảnh (không lưu dữ liệu ảnh). Ảnh chọn từ máy hoặc chụp được giữ trong bộ nhớ của ứng dụng trên máy này; muốn xem trên máy khác, hãy dùng đường dẫn (URL) ảnh trên mạng.",
@@ -1392,7 +1400,7 @@ en:{
   loading:"Loading data...", loadErr:"Could not load data. Check your connection, then open Menu › View weather and tap the place name again.",
   empty:"No city yet. Open Menu › View weather and tap Add to choose one.", findAddr:"Finding address...",
   lunar:"Lunar", leap:"leap",
-  upT:"Schedule & journal", r7:"7 days", rM:"This month", rT:"Today", tomorrow:"Tomorrow", nOpen:"Open calendar",
+  upT:"Schedule & journal", r7:"7 days", rM:"This month", rT:"Today", rY:"Yesterday", nNoneY:"Nothing scheduled yesterday.", tomorrow:"Tomorrow", nOpen:"Open calendar",
   nNone7:"Nothing scheduled in the next 7 days.", nNoneM:"Nothing scheduled this month.", nNoneT:"Nothing scheduled today.",
   fFrom:"From date", fTo:"To date", fAllTime:"Clear filter", fOn:"📅 Filter dates", fEmpty:"No schedule or journal in this date range.", nAllBtn:"All schedule & journal", nAllT:"All schedule & journal", dAll:"Delete all", dAllAsk:"Delete all schedule items?", dAllN:"This will delete {n} schedule items (journal entries are kept). It cannot be undone.", dAllWarn:"Back up your notes before deleting everything.", dAllBk:"Back up now", dAllDone:"Backed up: {f}", nAllEmpty:"No schedule or journal yet.", nMonthT:"Month", nMonthEmpty:"No schedule or journal this month.", nWholeM:"Whole month",
   nDelAsk1:"Delete this note?", nDelRep:"This note repeats: every repeat of it will be removed too.",
@@ -1416,7 +1424,7 @@ en:{
   nTime:"Time", vcBtnNk:"🎤 Speak to journal", vcListenNk:"Listening... e.g. “Hôm qua 8 giờ tối đi chợ Phú Gia”", vcHintNk:"Say the date, time and content in Vietnamese (e.g. hôm qua, hôm kia, thứ hai tuần trước).",
   setT:"Settings", setAuto:"Auto backup when closing the app", setAutoD:"Each time you leave or close the app, your schedule and journal are saved over ONE single backup kept inside the app (no extra files, no extra storage). Nothing is saved while there are no notes.", setLast:"Latest backup: {d} ({n} notes)", setNone:"No automatic backup yet.", setRest:"Restore auto backup", setDl:"Download auto backup",
   logT:"Updates", abHide:"Do not show again when opening the app",
-  updated:"updated at", feels:"feels like", hum:"Humidity", sunrise:"Sunrise", sunset:"Sunset", nAlarm:"Set an alarm (at the schedule time)", nAlarmNote:"The alarm rings on time while the app is open or running in the background. To be alerted even after closing the app, tap \"Phone cal.\" in the schedule details to add it to your phone calendar.", icsBtn:"Phone cal.", icsOk:"Calendar file created. Open it to add the event to your phone calendar (with reminders).", nAlarmOn:"Alarm at", alT:"Alarm", alOff:"Turn off alarm", notiSoon:"Schedule coming up at {g}", notiLeft:"{m} min left", notiTest:"Test notification", notiTestB:"Notifications are working.",
+  updated:"updated at", feels:"feels like", hum:"Humidity", sunrise:"Sunrise", sunset:"Sunset", nAlarm:"Set an alarm (at the schedule time)", nAlarmNote:"The alarm rings on time while the app is open or running in the background. To be alerted even after closing the app, tap \"Phone cal.\" in the schedule details to add it to your phone calendar.", icsBtn:"Phone cal.", icsAll:"Export to phone calendar", icsAllD:"An .ics file so your phone reminds/alarms even when the app is closed ({n} timed schedules).", icsNone:"No timed schedules to export.", icsOk:"Calendar file created. Open it to add the event to your phone calendar (with reminders).", nAlarmOn:"Alarm at", alT:"Alarm", alOff:"Turn off alarm", notiSoon:"Schedule coming up at {g}", notiLeft:"{m} min left", notiTest:"Test notification", notiTestB:"Notifications are working.",
   setFs:"Font size", setFsD:"Drag the slider to adjust; applies to the whole app immediately.", setFsReset:"Default",
   anhT:"Photos", anhMay:"From device", anhCam:"Camera", anhAdd:"Add", anhErr:"Could not add the photo. Try another one (JPG/PNG).", anhUrlBad:"The photo link must start with http:// or https://.", anhLoi:"photo failed to load", anhMax:"Up to {n} photos per journal entry.",
   anhNote:"The journal stores photo links only (no image data). Photos picked from the device or taken with the camera are kept in this app's storage on this device; to see them on another device, use an online photo link (URL).",
@@ -1659,6 +1667,11 @@ function khop(n, ds){
 const ghiChuNgay = ds => GC.filter(n=>khop(n,ds)).sort((a,b)=>(a.gio||"").localeCompare(b.gio||""));   // "cả ngày" lên trước
 const dong1 = n => esc(n.nd.split("\n")[0]);
 const laNK = n => n.loai==="nk";
+const icPhai = n => { const a = [];
+  if(n.anh && n.anh.length) a.push('<span title="'+t("anhT")+'">📷</span>');
+  if(n.lap && n.lap!=="none") a.push('<span>🔁</span>');
+  if(n.bt) a.push('<span>⏰</span>');
+  return a.length ? '<span class="ti">'+a.join("")+'</span>' : ""; };
 const icAnh = n => (n.anh && n.anh.length) ? ' <span title="'+t("anhT")+'">📷</span>' : "";
 const bieuTuong = n => '<span class="ic" title="'+t(laNK(n) ? "nkTag" : "lichTag")+'">'+(laNK(n) ? "📓" : "🗓️")+'</span>';
 function lapText(n){
@@ -1683,18 +1696,18 @@ function nhanNgay(ds, nam){
 
 // ----- Ô "Lịch của bạn" ở màn hình chính: chọn 7 ngày / tháng này / hôm nay -----
 let upRange = "7", upAuto = true;      // upAuto: lần vẽ kế tiếp sẽ cuộn tới lịch chưa qua
-try{ const v = localStorage.getItem("tpRange"); if(v==="7" || v==="month" || v==="today") upRange = v; }catch(e){}
+try{ const v = localStorage.getItem("tpRange"); if(v==="7" || v==="month" || v==="today" || v==="yesterday") upRange = v; }catch(e){}
 function veSapToi(){
   const box = document.getElementById("up"), cu = box.querySelector(".up-list"), cuon = cu ? cu.scrollTop : 0;
   const hom = homNay(), now = new Date(), hhmm = p2(now.getHours())+":"+p2(now.getMinutes()), [hy,hm] = parseD(hom), ngMai = addDays(hom,1);
-  const start = upRange==="month" ? dstr(hy,hm,1) : hom;
-  const soNgay = upRange==="month" ? dimon(hy,hm) : upRange==="today" ? 1 : 7;
+  const start = upRange==="month" ? dstr(hy,hm,1) : upRange==="yesterday" ? addDays(hom,-1) : hom;
+  const soNgay = upRange==="month" ? dimon(hy,hm) : (upRange==="today" || upRange==="yesterday") ? 1 : 7;
   const ds = [];
   for(let i=0;i<soNgay;i++){ const day = addDays(start,i); ghiChuNgay(day).forEach(n=>ds.push({day, n})); }   // đã xếp theo ngày, rồi theo giờ
-  const seg = [["7","r7"],["month","rM"],["today","rT"]].map(([k,l])=>'<button data-r="'+k+'"'+(upRange===k ? ' class="on"' : '')+'>'+t(l)+'</button>').join("");
+  const seg = [["yesterday","rY"],["today","rT"],["7","r7"],["month","rM"]].map(([k,l])=>'<button data-r="'+k+'"'+(upRange===k ? ' class="on"' : '')+'>'+t(l)+'</button>').join("");
   let h = '<div class="up-h"><span>📝 '+t("upT")+'</span><span class="up-act">'
         + ibtn("open", IC_CAL, t("nOpen")) + ibtn("scan", IC_QR, t("qrBtn")) + ibtn("all", IC_LIST, t("nAllBtn")+" ("+GC.length+")")
-        + '<button class="btn p" data-act="add">＋ '+t("add")+'</button></span></div>'
+        + '<button class="btn p up-add" data-act="add" title="'+esc(t("add"))+'" aria-label="'+esc(t("add"))+'">＋</button></span></div>'
         + '<div class="seg">'+seg+'</div><div class="up-list">';
   if(ds.length){
     let cur = "";                                   // nhóm theo ngày: mỗi ngày một tiêu đề, bên dưới là các việc của ngày đó
@@ -1709,7 +1722,7 @@ function veSapToi(){
         +'<span class="ti">'+(x.n.anh && x.n.anh.length ? '<span title="'+t("anhT")+'">📷</span>' : '')+(x.n.lap!=="none" ? '<span>🔁</span>' : '')+(x.n.bt ? '<span>⏰</span>' : '')+'</span>'
         +'<button class="xd" data-del="'+x.n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
     });
-  } else h += '<div class="up-it" style="cursor:default">'+t(upRange==="today" ? "nNoneT" : upRange==="month" ? "nNoneM" : "nNone7")+'</div>';
+  } else h += '<div class="up-it" style="cursor:default">'+t(upRange==="today" ? "nNoneT" : upRange==="yesterday" ? "nNoneY" : upRange==="month" ? "nNoneM" : "nNone7")+'</div>';
   h += '</div>';
   box.innerHTML = h;
   const li = box.querySelector(".up-list");
@@ -1780,22 +1793,24 @@ const passLoc = n => locLoai==="all" || (locLoai==="nk" ? laNK(n) : !laNK(n));
 const locBar = () => '<div class="loai">'+[["all","locAll"],["lich","locLich"],["nk","locNk"]].map(([v,k])=>'<button type="button" data-a="loc" data-v="'+v+'"'+(locLoai===v ? ' class="on"' : '')+'>'+t(k)+'</button>').join("")+'</div>';
 let lichRecv = false, vcHeard = "", vcWarn = false, vcOn = false, rec = null;   // lichRecv: form mở từ mã QR/liên kết; vc*: giọng nói
 const ctPop = document.getElementById("ctPop");
-function moLich(ds){
-  locLoai = "all";
+function moLich(ds, xem){
+  lichXem = !!xem; locLoai = "all";
   const q2 = parseD(ds || homNay());
   lichSel = ds || ""; lichY = q2[0]; lichM = q2[1]; lichView = "list";
   veLich(); lichPop.hidden = false;
 }
 // Lọc từ ngày đến ngày ở màn "Tất cả lịch & nhật ký": mặc định lấy khoảng đang chọn ở màn hình chính (7 ngày / tháng này / hôm nay)
+let lichXem = false;                              // true: mở từ ngày/âm lịch ở góc trên - chỉ xem ngày, không hiện lịch cá nhân/nhật ký
 let rgOn = true, rgTu = "", rgDen = "";
 function rgMacDinh(){
   const hom = homNay(), [hy,hm] = parseD(hom);
   if(upRange==="month") return [dstr(hy,hm,1), dstr(hy,hm,dimon(hy,hm))];
   if(upRange==="today") return [hom, hom];
+  if(upRange==="yesterday"){ const y = addDays(hom,-1); return [y, y]; }
   return [hom, addDays(hom,6)];
 }
 function moTatCa(){
-  locLoai = "all"; lichView = "all"; lichSel = "";
+  lichXem = false; locLoai = "all"; lichView = "all"; lichSel = "";
   rgOn = true; [rgTu, rgDen] = rgMacDinh(); veLich.vk = "";
   veLich(); lichPop.hidden = false;
 }
@@ -1820,11 +1835,15 @@ function doiThang(n){
 function chonNgay(ds){ lichSel = ds; const q2 = parseD(ds); lichY = q2[0]; lichM = q2[1]; lichView = "list"; veLich(); }
 
 const ghiHead = (btn) => '<div class="gcp-h"><b>'+thuDai(lichSel)+', '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</b>'+(btn||"")+'</div>';
+function panelXem(){                 // chỉ xem ngày: không liệt kê lịch cá nhân / nhật ký
+  const ds = lichSel || homNay(), [y,m,d] = parseD(ds);
+  return '<div class="gcp-h"><b>'+ngayNgan(ds)+'</b></div><div class="note" style="padding:6px 2px;font-size:calc(14px * var(--fs,1))"><b>'+t("lunar")+':</b> '+nhanAm(d,m,y)+'</div>';
+}
 function panelList(){              // lịch của MỘT ngày đã chọn
   const ls = ghiChuNgay(lichSel).filter(passLoc);
   return ghiHead('<span class="bt2"><button class="btn" data-a="wholeMonth">'+t("nWholeM")+'</button><button class="btn p" data-a="add">'+t("nAdd")+'</button></span>') + locBar()
-    + (ls.length ? ls.map(n=>'<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+bieuTuong(n)+dong1(n)+icAnh(n)+(n.lap!=="none" ? " 🔁" : "")+(n.bt ? " ⏰" : "")+'</b>'
-        +'<small>'+t("nSolar")+' '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</small></div></div>').join("")
+    + (ls.length ? ls.map(n=>'<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+bieuTuong(n)+dong1(n)+'</b>'
+        +'<small>'+t("nSolar")+' '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</small></div>'+icPhai(n)+'</div>').join("")
       : '<div class="note">'+t("nEmpty")+'</div>');
 }
 function panelMonth(){             // lịch của CẢ THÁNG đang xem, xếp theo ngày rồi giờ
@@ -1834,7 +1853,7 @@ function panelMonth(){             // lịch của CẢ THÁNG đang xem, xếp 
     const ds = dstr(lichY, lichM, d), ls = ghiChuNgay(ds).filter(passLoc); if(!ls.length) continue;
     co = true;
     h += '<div class="mh'+(ds===hom ? ' hn' : '')+'" data-d="'+ds+'">'+ngayNgan(ds)+' · '+t("lunar")+' '+amShort(amDS(ds))+(ds===hom ? ' · '+t("today") : '')+'</div>';
-    h += ls.map(n=>'<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'" data-day="'+ds+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+bieuTuong(n)+dong1(n)+icAnh(n)+(n.lap!=="none" ? " 🔁" : "")+(n.bt ? " ⏰" : "")+'</b></div></div>').join("");
+    h += ls.map(n=>'<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'" data-day="'+ds+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+bieuTuong(n)+dong1(n)+'</b></div>'+icPhai(n)+'</div>').join("");
   }
   return h + (co ? '' : '<div class="note">'+t("nMonthEmpty")+'</div>');
 }
@@ -1996,7 +2015,7 @@ function veTatCa(){                // màn hình "Tất cả lịch & nhật ký
     }
     const lap = n.lap!=="none" ? ' · 🔁 '+lapText(n) : '';
     body += '<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'" data-day="'+day+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div>'
-      +'<div class="gc-m"><b>'+bieuTuong(n)+dong1(n)+icAnh(n)+(n.bt ? " ⏰" : "")+'</b>'+(lap ? '<small>'+lap.slice(3)+'</small>' : '')+'</div>'
+      +'<div class="gc-m"><b>'+bieuTuong(n)+dong1(n)+'</b>'+(lap ? '<small>'+lap.slice(3)+'</small>' : '')+'</div>'+icPhai(n)
       +'<button class="xd" data-del="'+n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
   });
   if(!items.length) body = '<div class="note">'+t(rgOn ? "fEmpty" : "nAllEmpty")+'</div>';
@@ -2023,16 +2042,16 @@ function veLich(){
   for(let i=0;i<42;i++){
     const dt = new Date(Date.UTC(lichY, lichM-1, 1-off+i));
     const y = dt.getUTCFullYear(), m = dt.getUTCMonth()+1, d = dt.getUTCDate(), a = amLich(d,m,y), ds = dstr(y,m,d);
-    const cls = (m!==lichM ? "kh " : "") + (i%7===5 ? "t7 " : "") + (i%7===6 ? "cn " : "") + (ds===hom ? "nay " : "") + (locLoai!=="nk" && GC.some(n=>!laNK(n) && khop(n,ds)) ? "gc " : "") + (locLoai!=="lich" && GC.some(n=>laNK(n) && khop(n,ds)) ? "nk " : "") + (ds===lichSel ? "chon" : "");
+    const cls = (m!==lichM ? "kh " : "") + (i%7===5 ? "t7 " : "") + (i%7===6 ? "cn " : "") + (ds===hom ? "nay " : "") + (!lichXem && locLoai!=="nk" && GC.some(n=>!laNK(n) && khop(n,ds)) ? "gc " : "") + (!lichXem && locLoai!=="lich" && GC.some(n=>laNK(n) && khop(n,ds)) ? "nk " : "") + (ds===lichSel ? "chon" : "");
     cells += '<div class="'+cls+'" data-d="'+ds+'"><span class="s">'+d+'</span><span class="a">'+(a[0]===1 ? a[0]+"/"+a[1] : a[0])+'</span></div>';
   }
-  const panel = lichSel ? panelList() : panelMonth();
+  const panel = lichXem ? panelXem() : lichSel ? panelList() : panelMonth();
   lichPop.innerHTML = '<div class="lich" role="dialog" aria-modal="true">'
     + '<div class="lich-h"><button data-a="prev" aria-label="‹">‹</button><b>'+p2(lichM)+'/'+lichY+'</b><button data-a="next" aria-label="›">›</button></div>'
     + '<div class="lich-w">'+t("wd").map((x,i)=>'<div class="'+(i===5?"t7":i===6?"cn":"")+'">'+x+'</div>').join("")+'</div>'
     + '<div class="lich-g">'+cells+'</div>'
     + '<div class="gcp">'+panel+'</div>'
-    + '<div class="lich-f"><span>'+t("lichNote")+'<br><b>'+t("today")+':</b> '+nhanAm(hd,hm,hy)+'</span><span class="bt"><button data-a="today">'+t("today")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
+    + '<div class="lich-f"><span>'+(lichXem ? '' : t("lichNote")+'<br>')+'<b>'+t("today")+':</b> '+nhanAm(hd,hm,hy)+'</span><span class="bt"><button data-a="today">'+t("today")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
   const moi = lichPop.querySelector(".lich"); if(moi) moi.scrollTop = cuon;
   khoiPhuc();
 }
@@ -2092,7 +2111,7 @@ lichPop.onchange = e => {
   }
   veLich.vk = ""; veLich();                          // đổi khoảng ngày: danh sách cuộn về đầu
 };
-amBtn.onclick = () => moLich();
+amBtn.onclick = () => moLich(undefined, true);
 document.addEventListener("keydown", e => { if(e.key==="Escape"){ if(!imPop.hidden) dongIm(); else if(!appPop.hidden) dongApp(); else if(!xnPop.hidden) dongXn(); else if(!ctPop.hidden) dongCt(); else if(!lichPop.hidden) dongLich(); else if(!wxPop.hidden) dongTT(); } });
 
 // ================= BỔ SUNG: chống trùng lịch, mã QR, sao lưu, menu, giọng nói =================
@@ -2162,6 +2181,7 @@ appPop.onclick = e => {
   else if(a==="autorest"){ const o = autoTin(); if(o) bkXet(o, "set"); }
   else if(a==="autodl") autoTai();
   else if(a==="bkout") bkOut();
+  else if(a==="icsall") taiIcsAll();
   else if(a==="bkin") document.getElementById("bkFile").click();
   else if(a==="bkmerge") bkGop();
   else if(a==="bkrep") bkHoiThay();
@@ -2228,6 +2248,9 @@ function moGioiThieu(dau){                          // dau = true: tự mở khi
 }
 // Lịch sử cập nhật: thêm phiên bản mới lên đầu danh sách
 const LOG = [
+  {v:"1.0.1.30", d:"23/10/2026",
+   vi:["Màn hình chính: nút thêm chỉ còn dấu ＋ nổi bật; thêm lọc Hôm qua.","Danh sách lịch trong Tất cả lịch/nhật ký: icon ảnh, lặp lại, báo thức căn lề phải.","Bấm ngày/âm lịch góc trên trái: chỉ hiện lịch tháng để xem ngày.","Sao lưu: thêm Xuất sang lịch máy (tất cả lịch có giờ) để điện thoại nhắc kể cả khi thoát app.","Phòng lỗi treo trên một số máy tính bảng; lỗi nếu có sẽ hiện ở đáy màn hình."],
+   en:["Home: the add button is now a prominent ＋ icon; added a Yesterday filter.","Schedule lists in All: photo, repeat and alarm icons are right-aligned.","Tapping the date/lunar date at the top left now shows only the month calendar.","Backup: added Export to phone calendar (all timed schedules) so your phone reminds you even when the app is closed.","Safeguards against freezing on some tablets; any error is shown at the bottom of the screen."]},
   {v:"1.0.1.29", d:"23/10/2026",
    vi:["Chi tiết lịch: thêm nút Lịch máy - xuất file .ics để điện thoại tự nhắc và báo thức kể cả khi đã thoát app.","Danh sách lịch: nhóm ngày nổi bật, rõ ràng hơn; các icon ảnh, lặp lại, báo thức căn lề phải."],
    en:["Schedule details: added Phone cal. - exports an .ics file so your phone reminds/alarms even when the app is closed.","Schedule list: clearer day groups; photo, repeat and alarm icons are right-aligned."]},
@@ -2246,9 +2269,6 @@ const LOG = [
   {v:"1.0.1.24", d:"23/10/2026",
    vi:["Đổi tên ứng dụng thành Lịch - Nhật ký.","Cài đặt: thêm chỉnh cỡ chữ (80% - 150%).","Sửa lỗi Gửi thông báo trước khi có lịch không giữ được thiết lập: nay lưu đúng lựa chọn, báo trạng thái ngay dưới ô bật; nếu trình duyệt không cho thông báo hệ thống thì hiện thông báo ngay trong ứng dụng.","Nhật ký: thêm danh sách ảnh (lưới 4 cột, chạm để xem lớn) - chọn từ máy, chụp từ camera hoặc nhập đường dẫn ảnh trên mạng; chỉ lưu đường dẫn, sao lưu cũng chỉ chứa đường dẫn."],
    en:["Renamed the app to Calendar - Journal.","Settings: added font size (80% - 150%).","Fixed the notify-before-schedule setting not being kept: the choice is now saved, its status shows right under the switch, and an in-app notice appears when system notifications are unavailable.","Journal: added a photo list (4-column grid, tap to view) - pick from device, take with camera or enter an online photo link; only links are stored, and backups contain only links."]},
-  {v:"1.0.1.23", d:"23/10/2026",
-   vi:["Khi tạo lịch: thêm ô chọn Tạo báo thức (theo giờ của lịch).","Cài đặt: thêm Gửi thông báo và số phút báo trước khi có lịch."],
-   en:["Schedule form: added Set an alarm (at the schedule time).","Settings: added notifications and the number of minutes to notify before a schedule."]},
 ];
 function moLichSu(){
   moApp2('🕘 '+t("logT"),
@@ -2440,14 +2460,13 @@ ctPop.addEventListener("error", e => { if(e.target.tagName==="IMG" && e.target.p
 
 
 // ----- Xuất lịch (.ics) để điện thoại tự nhắc/báo thức kể cả khi đã thoát app -----
-function taiIcs(n){
+function icsSuKien(n){                                        // các dòng VEVENT của một lịch
   const [y,m,d] = n.ngay.split("-").map(Number), [hh,mm] = (n.gio || "00:00").split(":").map(Number);
   const f = (dt) => dt.getFullYear()+p2(dt.getMonth()+1)+p2(dt.getDate())+"T"+p2(dt.getHours())+p2(dt.getMinutes())+"00";
   const bd = new Date(y, m-1, d, hh, mm), kt = new Date(bd.getTime()+30*60000);
   const esc2 = x => String(x).replace(/\\/g,"\\\\").replace(/\r?\n/g,"\\n").replace(/[,;]/g,"\\$&");
-  const dong = n.nd.split("\n"), now = new Date();
-  const L = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Lich Nhat ky//VI","BEGIN:VEVENT","UID:"+n.id+"@lich-nhatky","DTSTAMP:"+f(now),
-    "DTSTART:"+f(bd),"DTEND:"+f(kt),"SUMMARY:"+esc2(dong[0])];
+  const dong = n.nd.split("\n");
+  const L = ["BEGIN:VEVENT","UID:"+n.id+"@lich-nhatky","DTSTAMP:"+f(new Date()),"DTSTART:"+f(bd),"DTEND:"+f(kt),"SUMMARY:"+esc2(dong[0])];
   if(dong.length>1) L.push("DESCRIPTION:"+esc2(dong.slice(1).join("\n")));
   if(n.lap && n.lap!=="none" && !n.am){                       // lịch âm không có quy tắc lặp tương ứng nên chỉ xuất 1 lần
     let r = "RRULE:FREQ="+({week:"WEEKLY", month:"MONTHLY", year:"YEARLY"}[n.lap] || "DAILY");
@@ -2458,8 +2477,20 @@ function taiIcs(n){
   const al = (tr) => L.push("BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+esc2(dong[0]),"TRIGGER:"+tr,"END:VALARM");
   if(n.bt) al("PT0S");                                         // báo thức đúng giờ
   if(notiBat()) al("-PT"+notiPhut()+"M");                      // nhắc trước theo cài đặt
-  L.push("END:VEVENT","END:VCALENDAR");
-  taiFile(new Blob([L.join("\r\n")+"\r\n"], {type:"text/calendar"}), "lich_"+n.ngay.replace(/-/g,"")+"_"+(n.gio || "").replace(":","")+".ics");
+  L.push("END:VEVENT");
+  return L;
+}
+function icsFile(ds, ten){
+  const L = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Lich Nhat ky//VI"];
+  ds.forEach(n=>icsSuKien(n).forEach(x=>L.push(x)));
+  L.push("END:VCALENDAR");
+  taiFile(new Blob([L.join("\r\n")+"\r\n"], {type:"text/calendar"}), ten);
+}
+function taiIcs(n){ icsFile([n], "lich_"+n.ngay.replace(/-/g,"")+"_"+(n.gio || "").replace(":","")+".ics"); }
+function taiIcsAll(){
+  const ds = GC.filter(n=>!laNK(n) && n.gio);
+  if(!ds.length){ toast("📅 "+t("icsAll"), t("icsNone")); return; }
+  icsFile(ds, "lich_may_tatca.ics"); toast("📅 "+t("icsAll"), t("icsOk"));
 }
 // ----- Ảnh trong nhật ký: nhật ký chỉ giữ ĐƯỜNG DẪN -----
 // Ảnh trên mạng: lưu đúng URL. Ảnh chọn từ máy / chụp: trình duyệt không cho biết đường dẫn thật của file, nên ảnh được thu nhỏ rồi giữ
@@ -2832,6 +2863,7 @@ function moBk(msg, cls){
   moApp('<h3>💾 '+t("bkT")+'</h3>'
     + '<button class="mi" data-p="bkout">⬇️ '+t("bkOut")+sm(t("bkOutD").replace("{n}", GC.length))+'</button>'
     + '<button class="mi" data-p="bkin">⬆️ '+t("bkIn")+sm(t("bkInD"))+'</button>'
+    + '<button class="mi" data-p="icsall">📅 '+t("icsAll")+sm(t("icsAllD").replace("{n}", GC.filter(n=>!laNK(n) && n.gio).length))+'</button>'
     + '<input type="file" id="bkFile" accept=".json,application/json" hidden>'
     + '<div id="apSt" class="'+(cls || "note")+'">'+(msg || "")+'</div>'
     + '<div class="btns"><button class="btn" data-p="menu">'+t("nBack")+'</button><button class="btn" data-p="close">'+t("close")+'</button></div>');
@@ -3416,8 +3448,11 @@ async function tai(p){
 // Cập nhật kích thước/vị trí vùng nhìn thấy cho các popup
 (function(){
   const vv = window.visualViewport; if(!vv) return; const r = document.documentElement;
-  const dat = () => { r.style.setProperty("--vvt", Math.max(0, vv.offsetTop)+"px"); r.style.setProperty("--vvl", Math.max(0, vv.offsetLeft)+"px"); r.style.setProperty("--vvw", vv.width+"px"); r.style.setProperty("--vvh", vv.height+"px"); };
-  dat(); vv.addEventListener("resize", dat); vv.addEventListener("scroll", dat);
+  let last = "", cho = 0;                                    // chỉ cập nhật khi số đo thật sự đổi, tối đa 1 lần mỗi khung hình (tránh vòng lặp resize trên một số trình duyệt máy tính bảng)
+  const dat = () => { const a = [Math.max(0, Math.round(vv.offsetTop)), Math.max(0, Math.round(vv.offsetLeft)), Math.round(vv.width), Math.round(vv.height)]; const k = a.join(","); if(k===last) return; last = k;
+    r.style.setProperty("--vvt", a[0]+"px"); r.style.setProperty("--vvl", a[1]+"px"); r.style.setProperty("--vvw", a[2]+"px"); r.style.setProperty("--vvh", a[3]+"px"); };
+  const lap = () => { if(cho) return; cho = requestAnimationFrame(()=>{ cho = 0; dat(); }); };
+  dat(); vv.addEventListener("resize", lap); vv.addEventListener("scroll", lap);
 })();
 applyStatic();
 hanGiong();                                  // lần mở đầu tiên: bắt đầu tính 3 tháng dùng thử chức năng giọng nói

@@ -20,12 +20,8 @@ body{margin:0;color:var(--chu);font-family:system-ui,"Segoe UI",Roboto,sans-seri
 .bg{position:fixed;inset:0;z-index:-1}
 .bg svg{width:100%;height:100%;display:block}
 /* Hình nền theo thời tiết nơi đang chọn: ngày nắng / ngày mưa / đêm (html[data-nen], html[data-mua]) */
-.bg .nen-nang,.bg .nen-mua,.bg .nen-dem,.bg .lop-mua{opacity:0;transition:opacity .6s}
+.bg .nen-nang,.bg .nen-mua,.bg .nen-dem,.bg .lop-mua{opacity:0}
 html:not([data-nen]) .bg .nen-nang,html[data-nen="nang"] .bg .nen-nang,html[data-nen="mua"] .bg .nen-mua,html[data-nen="dem"] .bg .nen-dem,html[data-mua="1"] .bg .lop-mua{opacity:1}
-.bg .roi{animation:roi .7s linear infinite;animation-play-state:paused}
-html[data-mua="1"] .bg .roi{animation-play-state:running}
-@keyframes roi{to{transform:translateY(60px)}}
-@media (prefers-reduced-motion:reduce){.bg .roi{animation:none}}
 html[data-nen="mua"] .wx{background:linear-gradient(180deg,#4f6475 0%,#8195a3 62%,#c3ced6 100%)}
 html[data-nen="dem"] .wx{background:linear-gradient(180deg,#070f26 0%,#1b2f5e 62%,#3f5688 100%)}
 main{max-width:720px;margin:0 auto;padding:8px 8px 16px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
@@ -55,11 +51,14 @@ h1{margin:2px 4px 6px;font-size:18px;line-height:1.25;color:#fff;text-shadow:0 1
 .js-msg,.js-tip{color:#fff;text-shadow:0 1px 3px #0008;padding:2px 4px;font-size:13px}
 .js-msg:empty,.js-tip:empty{display:none}
 .now{display:flex;align-items:center;gap:10px}
-.now .icon{font-size:38px;line-height:1}
-.now .temp{font-size:32px;font-weight:700;line-height:1}
-.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:6px}
-.chip{background:#fff9;border-radius:8px;padding:3px 6px;font-size:12px;text-align:center}
-.chip b{display:block;font-size:14px}
+.now .icon{font-size:30px;line-height:1}
+.now .temp{font-size:26px;font-weight:700;line-height:1}
+.now{gap:8px}
+.mt{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:12px;margin:2px 0 4px}
+.mt b{font-weight:700}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
+.chip{background:#fff9;border-radius:8px;padding:2px 3px;font-size:11px;text-align:center}
+.chip b{display:block;font-size:13px}
 .days{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
 .day{flex:0 0 100px;background:#fffb;border-radius:10px;padding:5px 4px;text-align:center;display:flex;flex-direction:column;gap:1px;font-size:12px;cursor:pointer;border:2px solid transparent}
 .day.sel{background:#fff;border-color:#f2b705}
@@ -286,7 +285,7 @@ main>.diachi{padding-bottom:8px}
       <path d="M0 700 Q100 630 200 690 T400 660 V800 H0Z" fill="#274a55" opacity=".95"/>
       <path d="M0 750 Q120 700 230 745 T400 725 V800 H0Z" fill="#17323d"/>
     </g>
-    <g class="lop-mua"><g class="roi"><rect x="0" y="-800" width="400" height="1600" fill="url(#hat)"/></g></g>
+    <g class="lop-mua"><rect x="0" y="0" width="400" height="800" fill="url(#hat)"/></g>
   </svg>
 </div>
 
@@ -1272,7 +1271,7 @@ vi:{
   dup:"Trùng lịch: đã có lịch cùng ngày, giờ và nội dung này.",
   menu:"Menu", wxT:"Xem thời tiết", bkT:"Sao lưu - Đồng bộ", bkOut:"Sao lưu lịch ra file", bkOutD:"Tải về một file chứa toàn bộ lịch hiện có ({n} ghi chú).", bkIn:"Đồng bộ từ file sao lưu", bkInD:"Chọn file đã sao lưu trước đó để thêm lịch vào máy này.", bkEmpty:"Chưa có lịch nào để sao lưu.", bkSaved:"Đã tạo file sao lưu: {f}", bkBad:"File không hợp lệ: đây không phải file sao lưu lịch của ứng dụng này.", bkSum:"File có {a} lịch: {b} lịch mới, {c} lịch trùng (sẽ bỏ qua).", bkBadN:"Có {d} mục lỗi trong file, đã bỏ qua.", bkMerge:"Gộp {b} lịch mới", bkRep:"Thay thế toàn bộ", bkRepAsk:"Xóa {n} ghi chú hiện có và thay bằng {a} lịch trong file?", bkYes:"Đồng ý thay thế", bkDoneM:"Đã đồng bộ: thêm {b} lịch mới.", bkDoneR:"Đã khôi phục {a} lịch từ file.", bkNone:"Không có lịch mới để thêm.",
   abT:"Giới thiệu", abIntro:"Ứng dụng xem thời tiết, lịch âm dương và quản lý lịch cá nhân; có thể cài lên màn hình chính điện thoại.",
-  abL:["🏠 Màn hình chính: lịch của bạn (7 ngày / tháng này / hôm nay, nhóm theo ngày), thời tiết hiện tại và đồ thị thời tiết theo giờ của thành phố đang chọn. Thanh chọn thành phố đồng bộ với màn hình Xem thời tiết.","🌤️ Menu › Xem thời tiết: thời tiết hiện tại, đồ thị theo giờ, dự báo 10 ngày, đồ thị tổng hợp và chỉ số không khí (AQI); bấm Thêm để thêm thành phố; giữ rồi kéo tên thành phố đã thêm để đổi thứ tự. Hình nền tự đổi theo nơi đang chọn: ngày nắng, ngày mưa hoặc ban đêm; có giờ mặt trời mọc/lặn.","🗓️ Lịch dương kèm âm lịch (can chi); bấm vào dòng ngày ở đầu trang để mở lịch tháng.","📝 Lịch cá nhân: ghi chú theo ngày và giờ, lặp hằng tuần/tháng/năm (theo dương hoặc âm lịch), báo trùng lịch. Ba nút biểu tượng: Mở lịch, Quét QR, Tất cả lịch & nhật ký (có lọc từ ngày đến ngày, mặc định theo khoảng thời gian đang chọn ở màn hình chính; bấm Bỏ lọc để xem toàn bộ, lúc đó chọn lọc Lịch thì có nút Xóa tất cả lịch, nên sao lưu trước khi xóa).","📓 Nhật ký: ghi lại việc đã xảy ra (ngày không quá hôm nay, không lặp lại, có thể kèm giờ), hiển thị chung với lịch, phân biệt bằng biểu tượng 🗓️ / 📓 và có bộ lọc Tất cả / Lịch / Nhật ký. Mở một lịch rồi bấm “Chuyển thành nhật ký” khi đã thực hiện xong (không chuyển ngược lại; lịch gốc không hiện nữa).","🎤 Tạo lịch hoặc nhật ký bằng giọng nói (dùng thử 3 tháng từ lần đầu mở ứng dụng, sau đó nhập mã kích hoạt để gia hạn thêm 3 tháng): nói ngày, giờ, nội dung, ứng dụng tự điền vào form để bạn kiểm tra rồi lưu.","📤 Chia sẻ lịch qua Zalo, Messenger (ảnh + tiêu đề + liên kết) hoặc mã QR. Nếu liên kết mở trong cửa sổ tạm của Zalo/Messenger: bấm “Mở trong ứng dụng”, hoặc ⋮ › Mở bằng trình duyệt, hoặc sao chép liên kết rồi dùng “Dán lịch đã sao chép” ở nút QR.","💾 Sao lưu lịch ra file và đồng bộ lại từ file sao lưu. Menu › Cài đặt: bật “Tự động sao lưu khi tắt ứng dụng” để mỗi lần thoát, dữ liệu được lưu đè vào một bản sao lưu duy nhất trong ứng dụng (có thể khôi phục hoặc tải về máy).","↩️ Vuốt Back: đóng cửa sổ đang mở; từ màn hình Xem thời tiết quay về màn hình chính; chỉ ở màn hình chính mới thoát ứng dụng.","🔒 Lịch lưu ngay trên máy của bạn; dữ liệu thời tiết cần kết nối mạng."],
+  abL:["🏠 Màn hình chính: lịch của bạn (7 ngày / tháng này / hôm nay, nhóm theo ngày), thời tiết hiện tại và đồ thị thời tiết theo giờ của thành phố đang chọn. Thanh chọn thành phố đồng bộ với màn hình Xem thời tiết.","🌤️ Menu › Xem thời tiết: thời tiết hiện tại, đồ thị theo giờ, dự báo 10 ngày, đồ thị tổng hợp và chỉ số không khí (AQI); bấm Thêm để thêm thành phố; giữ rồi kéo tên thành phố đã thêm để đổi thứ tự. Hình nền tĩnh tự đổi theo nơi đang chọn: ngày nắng, ngày mưa hoặc ban đêm; có giờ mặt trời mọc/lặn ở ô thời tiết hiện tại.","🗓️ Lịch dương kèm âm lịch (can chi); bấm vào dòng ngày ở đầu trang để mở lịch tháng.","📝 Lịch cá nhân: ghi chú theo ngày và giờ, lặp hằng tuần/tháng/năm (theo dương hoặc âm lịch), báo trùng lịch. Ba nút biểu tượng: Mở lịch, Quét QR, Tất cả lịch & nhật ký (có lọc từ ngày đến ngày, mặc định theo khoảng thời gian đang chọn ở màn hình chính; bấm Bỏ lọc để xem toàn bộ, lúc đó chọn lọc Lịch thì có nút Xóa tất cả lịch, nên sao lưu trước khi xóa).","📓 Nhật ký: ghi lại việc đã xảy ra (ngày không quá hôm nay, không lặp lại, có thể kèm giờ), hiển thị chung với lịch, phân biệt bằng biểu tượng 🗓️ / 📓 và có bộ lọc Tất cả / Lịch / Nhật ký. Mở một lịch rồi bấm “Chuyển thành nhật ký” khi đã thực hiện xong (không chuyển ngược lại; lịch gốc không hiện nữa).","🎤 Tạo lịch hoặc nhật ký bằng giọng nói (dùng thử 3 tháng từ lần đầu mở ứng dụng, sau đó nhập mã kích hoạt để gia hạn thêm 3 tháng): nói ngày, giờ, nội dung, ứng dụng tự điền vào form để bạn kiểm tra rồi lưu.","📤 Chia sẻ lịch qua Zalo, Messenger (ảnh + tiêu đề + liên kết) hoặc mã QR. Nếu liên kết mở trong cửa sổ tạm của Zalo/Messenger: bấm “Mở trong ứng dụng”, hoặc ⋮ › Mở bằng trình duyệt, hoặc sao chép liên kết rồi dùng “Dán lịch đã sao chép” ở nút QR.","💾 Sao lưu lịch ra file và đồng bộ lại từ file sao lưu. Menu › Cài đặt: bật “Tự động sao lưu khi tắt ứng dụng” để mỗi lần thoát, dữ liệu được lưu đè vào một bản sao lưu duy nhất trong ứng dụng (có thể khôi phục hoặc tải về máy).","↩️ Vuốt Back: đóng cửa sổ đang mở; từ màn hình Xem thời tiết quay về màn hình chính; chỉ ở màn hình chính mới thoát ứng dụng.","🔒 Lịch lưu ngay trên máy của bạn; dữ liệu thời tiết cần kết nối mạng."],
   vcBtn:"🎤 Nói để tạo lịch", vcStop:"⏹ Dừng nghe", vcHint:"Nói ngày, giờ, nội dung.", vcListen:"Đang nghe... Ví dụ: “Ngày mai 8 giờ sáng họp với khách hàng”", vcNo:"Trình duyệt này chưa hỗ trợ nhận giọng nói (hãy dùng Chrome hoặc Safari bản mới).", vcErr:"Không nghe được giọng nói. Hãy cho phép micro và kiểm tra kết nối mạng.", vcHeard:"Đã nghe", vcNoDate:"Chưa nhận ra ngày/giờ, hãy kiểm tra lại các ô bên dưới.", vcLimit:"Chức năng đã hết thời gian sử dụng. Vui lòng nhập mã kích hoạt để gia hạn, hoặc liên hệ để được hỗ trợ.", vcCodePh:"Nhập mã kích hoạt", vcCodeBtn:"Kích hoạt", vcCodeBad:"Mã kích hoạt không đúng. Vui lòng kiểm tra lại.", vcCodeOk:"Kích hoạt thành công. Chức năng dùng được đến hết ngày {d}.",
   nTime:"Giờ", vcBtnNk:"🎤 Nói để ghi nhật ký", vcListenNk:"Đang nghe... Ví dụ: “Hôm qua 8 giờ tối đi chợ Phú Gia”", vcHintNk:"Nói ngày, giờ, nội dung (có thể nói: hôm qua, hôm kia, thứ hai tuần trước...).",
   setT:"Cài đặt", setAuto:"Tự động sao lưu khi tắt ứng dụng", setAutoD:"Mỗi lần thoát hoặc rời khỏi ứng dụng, lịch và nhật ký được lưu đè vào MỘT bản sao lưu duy nhất ngay trong ứng dụng (không tạo thêm file, không tốn thêm dung lượng). Chưa có ghi chú nào thì không sao lưu.", setLast:"Bản sao lưu gần nhất: {d} ({n} ghi chú)", setNone:"Chưa có bản sao lưu tự động.", setRest:"Khôi phục từ bản sao lưu tự động", setDl:"Tải bản sao lưu tự động về máy",
@@ -2075,8 +2074,8 @@ function moGioiThieu(dau){                          // dau = true: tự mở khi
 // Lịch sử cập nhật: thêm phiên bản mới lên đầu danh sách
 const LOG = [
   {v:"1.0.1.22", d:"23/10/2026",
-   vi:["Kéo thả (giữ rồi kéo) để thay đổi thứ tự các thành phố đã chọn.","Hình nền tự đổi theo nơi đang chọn: ngày nắng, ngày mưa, ban đêm.","Thêm giờ mặt trời mọc/lặn vào chi tiết thời tiết."],
-   en:["Press and drag to reorder saved cities.","Background changes with the selected place: sunny day, rainy day, night.","Added sunrise/sunset times to the weather details."]},
+   vi:["Kéo thả (giữ rồi kéo) để thay đổi thứ tự các thành phố đã chọn.","Hình nền tự đổi theo nơi đang chọn: ngày nắng, ngày mưa, ban đêm.","Thêm giờ mặt trời mọc/lặn vào ô thời tiết hiện tại (ô này được thu nhỏ gọn hơn)."],
+   en:["Press and drag to reorder saved cities.","Background changes with the selected place: sunny day, rainy day, night.","Added sunrise/sunset times to the current weather box (now more compact)."]},
   {v:"1.0.1.21", d:"23/10/2026",
    vi:["Màn hình Tất cả lịch & nhật ký: thêm lọc từ ngày đến ngày (mặc định theo khoảng thời gian đang chọn ở màn hình chính; bấm Bỏ lọc để xem toàn bộ)."],
    en:["All schedule & journal: added a from-date to to-date filter (defaults to the range chosen on the home screen; tap Clear filter to see everything)."]},
@@ -2886,7 +2885,8 @@ async function tai(p){
       +'<div class="chip">'+t("cloud")+'<b>'+Math.round(c.cloud_cover)+'%</b></div>'
       +'<div class="chip">'+t("precip")+'<b>'+c.precipitation+' mm</b></div>'
       +'<div class="chip" style="grid-column:span 2">'+t("air")+'<b style="color:'+mauNow+'">'+(aqiNow!=null ? aqiNow+' – ' : '')+mucNow+'</b></div>'
-      +'<div class="chip" style="grid-column:span 3;display:flex;justify-content:space-around;gap:6px"><span>🌅 '+t("sunrise")+' <b style="display:inline">'+gioMt(d.sunrise,0)+'</b></span><span>🌇 '+t("sunset")+' <b style="display:inline">'+gioMt(d.sunset,0)+'</b></span></div>'
+      +'<div class="chip" title="'+t("sunrise")+'" aria-label="'+t("sunrise")+'">🌅<b>'+gioMt(d.sunrise,0)+'</b></div>'
+      +'<div class="chip" title="'+t("sunset")+'" aria-label="'+t("sunset")+'">🌇<b>'+gioMt(d.sunset,0)+'</b></div>'
       +'</div></div>';
 
     let html = boxNow; nowMain.innerHTML = boxNow;     // màn hình chính chỉ hiện ô này; màn hình thời tiết hiện đầy đủ
@@ -2909,7 +2909,6 @@ async function tai(p){
             +'<div>💧 '+(d.precipitation_probability_max[k] ?? "–")+'%</div>'
             +'<div>💨 '+Math.round(d.wind_speed_10m_max[k])+' km/h</div>'
             +'<div>💦 '+(doAm[tm] ?? "–")+'%</div>'
-            +'<div>🌅 '+gioMt(d.sunrise,k)+'</div><div>🌇 '+gioMt(d.sunset,k)+'</div>'
             +'<div class="aqi" style="background:'+mau+'">'+(aqi[tm]!=null ? 'AQI '+aqi[tm] : t("na"))+'</div></div>';
         }).join('')
       + '</div><p class="note">'+t("note")+'</p></div>';

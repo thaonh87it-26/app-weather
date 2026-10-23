@@ -1,5 +1,5 @@
 // Service worker: giúp app mở được nhanh và có "vỏ" khi mạng yếu (dữ liệu thời tiết vẫn cần mạng)
-const C = "thoitiet-v21";
+const C = "thoitiet-v24";
 const FILES = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(C).then(c => c.addAll(FILES))); self.skipWaiting(); });
 self.addEventListener("activate", e => {

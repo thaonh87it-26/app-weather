@@ -1586,6 +1586,7 @@ function khop(n, ds){
 const ghiChuNgay = ds => GC.filter(n=>khop(n,ds)).sort((a,b)=>(a.gio||"").localeCompare(b.gio||""));   // "cả ngày" lên trước
 const dong1 = n => esc(n.nd.split("\n")[0]);
 const laNK = n => n.loai==="nk";
+const icAnh = n => (n.anh && n.anh.length) ? ' <span title="'+t("anhT")+'">📷</span>' : "";
 const bieuTuong = n => '<span class="ic" title="'+t(laNK(n) ? "nkTag" : "lichTag")+'">'+(laNK(n) ? "📓" : "🗓️")+'</span>';
 function lapText(n){
   if(!n.ngay || n.lap==="none") return "";
@@ -1631,7 +1632,7 @@ function veSapToi(){
       }
       const nk = laNK(x.n), qua = !nk && (x.day<hom || (x.day===hom && x.n.gio && x.n.gio<hhmm));     // lịch đã qua thì làm mờ
       h += '<div class="up-it'+(nk ? ' nk' : qua ? ' qua' : '')+'" data-up="'+x.day+'|'+x.n.id+'"><span class="gi">'+(x.n.gio || "")+'</span>'
-        +'<span class="nd">'+bieuTuong(x.n)+dong1(x.n)+(x.n.lap!=="none" ? " 🔁" : "")+(x.n.bt ? " ⏰" : "")+'</span>'
+        +'<span class="nd">'+bieuTuong(x.n)+dong1(x.n)+icAnh(x.n)+(x.n.lap!=="none" ? " 🔁" : "")+(x.n.bt ? " ⏰" : "")+'</span>'
         +'<button class="xd" data-del="'+x.n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
     });
   } else h += '<div class="up-it" style="cursor:default">'+t(upRange==="today" ? "nNoneT" : upRange==="month" ? "nNoneM" : "nNone7")+'</div>';
@@ -1748,7 +1749,7 @@ const ghiHead = (btn) => '<div class="gcp-h"><b>'+thuDai(lichSel)+', '+dmy(lichS
 function panelList(){              // lịch của MỘT ngày đã chọn
   const ls = ghiChuNgay(lichSel).filter(passLoc);
   return ghiHead('<span class="bt2"><button class="btn" data-a="wholeMonth">'+t("nWholeM")+'</button><button class="btn p" data-a="add">'+t("nAdd")+'</button></span>') + locBar()
-    + (ls.length ? ls.map(n=>'<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+bieuTuong(n)+dong1(n)+(n.lap!=="none" ? " 🔁" : "")+(n.bt ? " ⏰" : "")+'</b>'
+    + (ls.length ? ls.map(n=>'<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+bieuTuong(n)+dong1(n)+icAnh(n)+(n.lap!=="none" ? " 🔁" : "")+(n.bt ? " ⏰" : "")+'</b>'
         +'<small>'+t("nSolar")+' '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</small></div></div>').join("")
       : '<div class="note">'+t("nEmpty")+'</div>');
 }
@@ -1759,7 +1760,7 @@ function panelMonth(){             // lịch của CẢ THÁNG đang xem, xếp 
     const ds = dstr(lichY, lichM, d), ls = ghiChuNgay(ds).filter(passLoc); if(!ls.length) continue;
     co = true;
     h += '<div class="mh'+(ds===hom ? ' hn' : '')+'" data-d="'+ds+'">'+ngayNgan(ds)+' · '+t("lunar")+' '+amShort(amDS(ds))+(ds===hom ? ' · '+t("today") : '')+'</div>';
-    h += ls.map(n=>'<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'" data-day="'+ds+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+bieuTuong(n)+dong1(n)+(n.lap!=="none" ? " 🔁" : "")+(n.bt ? " ⏰" : "")+'</b></div></div>').join("");
+    h += ls.map(n=>'<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'" data-day="'+ds+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+bieuTuong(n)+dong1(n)+icAnh(n)+(n.lap!=="none" ? " 🔁" : "")+(n.bt ? " ⏰" : "")+'</b></div></div>').join("");
   }
   return h + (co ? '' : '<div class="note">'+t("nMonthEmpty")+'</div>');
 }
@@ -1784,7 +1785,7 @@ function ctDetail(n){
   const nk = laNK(n), day = ctDay || n.ngay;
   const khoang = [n.bd ? t("nFrom")+" "+dmy(n.bd) : "", n.kt ? t("nTo")+" "+dmy(n.kt) : ""].filter(Boolean).join(" · ");
   const body = '<div class="gc-big">'+esc(n.nd)+'</div>'
-    + (nk && n.anh && n.anh.length ? anhLuoi(n.anh) : '')
+    + (n.anh && n.anh.length ? anhLuoi(n.anh) : '')
     + '<div class="note">🕒 '+(n.gio || t("nAllDay"))+' · '+thuDai(day)+', '+dmy(day)+' · '+t("lunar")+' '+amShort(amDS(day))+'</div>'
     + (n.lap!=="none" ? '<div class="note">🔁 '+lapText(n)+'</div>' : '')
     + (khoang ? '<div class="note">📆 '+khoang+'</div>' : '')
@@ -1822,7 +1823,7 @@ function ctForm(){
       + (f.lap!=="none" && a ? '<div class="note">🔁 '+lapText(tmp)+'</div>' : '')
       + '<label>'+t("nRange")+'</label><div class="row"><div><small>'+t("nFrom")+'</small><input type="date" data-f="bd" value="'+f.bd+'"></div>'
       + '<div><small>'+t("nTo")+'</small><input type="date" data-f="kt" value="'+f.kt+'"></div></div><div class="note">'+t("nRangeHint")+'</div>');
-  if(nk){ const da = f.anh || [];
+  { const da = f.anh || [];
     b += '<label>'+t("anhT")+' ('+da.length+'/'+ANH_MAX+')</label>'+anhLuoi(da, true)
       + '<div class="anh-bar"><button type="button" class="btn" data-a="anhFile">🖼️ '+t("anhMay")+'</button><button type="button" class="btn" data-a="anhCam">📷 '+t("anhCam")+'</button></div>'
       + '<div class="anh-url"><input type="url" id="anhUrl" inputmode="url" placeholder="https://..." value="'+esc(f._u || "")+'"><button type="button" class="btn p" data-a="anhUrlAdd">'+t("anhAdd")+'</button></div><div class="note">'+t("anhNote")+'</div>'
@@ -1866,7 +1867,7 @@ ctPop.onclick = e => {
   else if(a==="toNk"){                              // chuyển lịch đang xem thành nhật ký (không chuyển ngược lại); lịch có giờ thì lấy giờ của lịch
     const n = GC.find(x=>x.id===lichId); if(!n || laNK(n)) return;
     const hom = homNay(), occ = ctDay || n.ngay, ngay = occ<=hom ? occ : hom, gio = n.gio || "";
-    FM = {nd:n.nd, ngay, che:"d", coGio:!!gio, gio:gio || "08:00", lap:"none", bd:"", kt:"", loai:"nk", anh:[], chuyenTu:n.id, chuyenNgay:occ, chuyenLap:n.lap!=="none"};
+    FM = {nd:n.nd, ngay, che:"d", coGio:!!gio, gio:gio || "08:00", lap:"none", bd:"", kt:"", loai:"nk", anh:(n.anh || []).slice(), chuyenTu:n.id, chuyenNgay:occ, chuyenLap:n.lap!=="none"};
     lichId = null; ctView = "form"; lichErr = ""; veCt(true); }
   else if(a==="edit"){ const n = GC.find(x=>x.id===lichId); if(!n) return;
     FM = {nd:n.nd, ngay:n.ngay, che:n.che, coGio:!!n.gio, gio:n.gio || "08:00", lap:n.lap, bd:n.bd || "", kt:n.kt || "", loai:n.loai || "", bt:!!n.bt, anh:(n.anh || []).slice()};
@@ -1920,7 +1921,7 @@ function veTatCa(){                // màn hình "Tất cả lịch & nhật ký
     }
     const lap = n.lap!=="none" ? ' · 🔁 '+lapText(n) : '';
     body += '<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'" data-day="'+day+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div>'
-      +'<div class="gc-m"><b>'+bieuTuong(n)+dong1(n)+(n.bt ? " ⏰" : "")+'</b>'+(lap ? '<small>'+lap.slice(3)+'</small>' : '')+'</div>'
+      +'<div class="gc-m"><b>'+bieuTuong(n)+dong1(n)+icAnh(n)+(n.bt ? " ⏰" : "")+'</b>'+(lap ? '<small>'+lap.slice(3)+'</small>' : '')+'</div>'
       +'<button class="xd" data-del="'+n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
   });
   if(!items.length) body = '<div class="note">'+t(rgOn ? "fEmpty" : "nAllEmpty")+'</div>';
@@ -1972,7 +1973,8 @@ function luuForm(){
   const cu = lichId ? GC.find(x=>x.id===lichId) : null;
   const n = {id: lichId || "n"+Date.now().toString(36)+Math.random().toString(36).slice(2,6), nd:f.nd.trim(), ngay:f.ngay, che:nk ? "d" : f.che,
              gio:(f.coGio && f.gio) ? f.gio : "", lap:nk ? "none" : ((f.che==="a" && f.lap==="week") ? "none" : f.lap), bd:nk ? "" : f.bd, kt:nk ? "" : f.kt, am:amDS(f.ngay)};
-  if(nk){ n.loai = "nk"; if(f.anh && f.anh.length) n.anh = f.anh.slice(); } else { if(cu && cu.bo && cu.bo.length) n.bo = cu.bo.slice(); if(f.bt && f.coGio && f.gio) n.bt = true; }     // sửa lịch lặp vẫn giữ các lần đã chuyển thành nhật ký
+  if(f.anh && f.anh.length) n.anh = f.anh.slice();
+  if(nk) n.loai = "nk"; else { if(cu && cu.bo && cu.bo.length) n.bo = cu.bo.slice(); if(f.bt && f.coGio && f.gio) n.bt = true; }     // sửa lịch lặp vẫn giữ các lần đã chuyển thành nhật ký
   if(trungGC(n, lichId)){ lichErr = t("dup"); return false; }      // trùng loại + ngày + giờ + nội dung
   const i = GC.findIndex(x=>x.id===n.id);
   if(i>=0) GC[i] = n; else GC.push(n);        // sửa một ghi chú = sửa mọi ngày lặp lại của nó
@@ -2040,8 +2042,9 @@ function kiemLich(o){
   const nk = o.loai==="nk";
   if(nk && (o.lap!=="none" || bd || kt || ngay>homNay())) return null;       // nhật ký: không lặp, không khoảng áp dụng, không ở tương lai
   const r = {nd:nd.trim(), ngay, che:o.che, gio, lap:o.lap, bd, kt};
-  if(nk){ r.loai = "nk"; if(Array.isArray(o.anh)){ const a = o.anh.filter(x=>typeof x==="string" && x.length<2000 && /^(https?:\/\/\S+|local:[\w-]+)$/i.test(x)).slice(0,30); if(a.length) r.anh = a; } }
-  else if(o.bt===true && gio) r.bt = true;
+  if(nk) r.loai = "nk";
+  if(Array.isArray(o.anh)){ const a = o.anh.filter(x=>typeof x==="string" && x.length<2000 && /^(https?:\/\/\S+|local:[\w-]+)$/i.test(x)).slice(0,30); if(a.length) r.anh = a; }
+  if(nk){} else if(o.bt===true && gio) r.bt = true;
   if(!nk && Array.isArray(o.bo) && o.lap!=="none"){ const bo = o.bo.filter(x=>typeof x==="string" && hopLe(x)).slice(0,400); if(bo.length) r.bo = bo; }
   return r;
 }

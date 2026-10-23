@@ -17,7 +17,7 @@
 /* ===== CSS: phần "lớp sơn" - màu sắc và bố cục ===== */
 :root{--fs:1;--chu:#12303f;--chinh:#0f5f8c;--nang:#e08a00;--kinh:rgba(255,255,255,.84)}
 *{box-sizing:border-box}
-body{margin:0;color:var(--chu);font-family:system-ui,"Segoe UI",Roboto,sans-serif;font-size:calc(15px * var(--fs,1));line-height:1.3}
+body{margin:0;color:var(--chu);font-family:system-ui,"Segoe UI",Roboto,sans-serif;font-size:calc(16px * var(--fs,1));line-height:1.3}
 .bg{position:fixed;inset:0;z-index:-1}
 .bg svg{width:100%;height:100%;display:block}
 /* Hình nền theo thời tiết nơi đang chọn: ngày nắng / ngày mưa / đêm (html[data-nen], html[data-mua]) */
@@ -32,13 +32,13 @@ h1{margin:2px 4px 6px;font-size:calc(18px * var(--fs,1));line-height:1.25;color:
 #amlich:focus-visible{outline:2px solid var(--nang);outline-offset:2px;border-radius:4px}
 .topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .phai{max-width:46%;text-align:right}
-.ban{font-size:calc(11px * var(--fs,1));line-height:1.35;color:#fff;text-shadow:0 1px 3px #0008;text-align:center;padding:14px 8px 6px;margin-top:auto}
+.ban{font-size:calc(12px * var(--fs,1));line-height:1.35;color:#fff;text-shadow:0 1px 3px #0008;text-align:center;padding:14px 8px 6px;margin-top:auto}
 .co{display:flex;gap:6px;justify-content:flex-end;margin-top:4px}
 .co button{padding:0;border:2px solid transparent;border-radius:5px;background:none;line-height:0;cursor:pointer;opacity:.65}
 .co button.on{border-color:#fff;opacity:1}
 .co svg{width:26px;height:17px;display:block;border-radius:2px}
 .tabs{display:flex;gap:5px;margin:0 0 6px;overflow-x:auto;padding-bottom:2px}
-.tabs button{padding:4px 10px;border:0;border-radius:999px;background:rgba(255,255,255,.6);color:var(--chu);font:inherit;font-size:calc(13px * var(--fs,1));font-weight:600;white-space:nowrap;cursor:pointer}
+.tabs button{padding:4px 10px;border:0;border-radius:999px;background:rgba(255,255,255,.6);color:var(--chu);font:inherit;font-size:calc(14px * var(--fs,1));font-weight:600;white-space:nowrap;cursor:pointer}
 .tabs button.on{background:var(--chu);color:#fff}
 /* Kéo thả đổi thứ tự thành phố */
 .tabs button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -48,8 +48,8 @@ h1{margin:2px 4px 6px;font-size:calc(18px * var(--fs,1));line-height:1.25;color:
 .tabs button span{margin-left:5px;opacity:.7}
 .tabs .them{background:transparent;border:1px dashed #fff;color:#fff;text-shadow:0 1px 3px #0007}
 .box{background:var(--kinh);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:12px;padding:8px 10px;margin-bottom:6px;box-shadow:0 2px 8px #0002}
-.box h2{margin:0 0 4px;font-size:calc(13px * var(--fs,1));font-weight:600;opacity:.75}
-.js-msg,.js-tip{color:#fff;text-shadow:0 1px 3px #0008;padding:2px 4px;font-size:calc(13px * var(--fs,1))}
+.box h2{margin:0 0 4px;font-size:calc(14px * var(--fs,1));font-weight:600;opacity:.75}
+.js-msg,.js-tip{color:#fff;text-shadow:0 1px 3px #0008;padding:2px 4px;font-size:calc(14px * var(--fs,1))}
 .js-msg:empty,.js-tip:empty{display:none}
 .now{display:flex;align-items:center;gap:10px}
 .now .icon{font-size:calc(30px * var(--fs,1));line-height:1}
@@ -58,45 +58,45 @@ h1{margin:2px 4px 6px;font-size:calc(18px * var(--fs,1));line-height:1.25;color:
 .mt{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:calc(12px * var(--fs,1));margin:2px 0 4px}
 .mt b{font-weight:700}
 .chips{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
-.chip{background:#fff9;border-radius:8px;padding:2px 3px;font-size:calc(11px * var(--fs,1));text-align:center}
-.chip b{display:block;font-size:calc(13px * var(--fs,1))}
+.chip{background:#fff9;border-radius:8px;padding:2px 3px;font-size:calc(12px * var(--fs,1));text-align:center}
+.chip b{display:block;font-size:calc(14px * var(--fs,1))}
 .days{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
 .day{flex:0 0 calc(100px * var(--fs,1));background:#fffb;border-radius:10px;padding:5px 4px;text-align:center;display:flex;flex-direction:column;gap:1px;font-size:calc(12px * var(--fs,1));cursor:pointer;border:2px solid transparent}
 .day.sel{background:#fff;border-color:#f2b705}
 .day .ic{font-size:calc(24px * var(--fs,1));line-height:1.1}
 .day .t{font-size:calc(16px * var(--fs,1));font-weight:700}
 .cao{color:#c77d00}.thap{color:var(--chinh)}
-.aqi{border-radius:6px;color:#fff;font-weight:700;font-size:calc(11px * var(--fs,1));padding:0 4px}
-.note{font-size:calc(11px * var(--fs,1));opacity:.7;margin:3px 0 0}
+.aqi{border-radius:6px;color:#fff;font-weight:700;font-size:calc(12px * var(--fs,1));padding:0 4px}
+.note{font-size:calc(12px * var(--fs,1));opacity:.7;margin:3px 0 0}
 svg.chart{width:100%;height:auto;max-height:190px;color:var(--chu);display:block}
 .legend{font-size:calc(12px * var(--fs,1));margin-top:2px}
 .tim input{width:100%;padding:8px 10px;font:inherit;border:1px solid var(--chinh);border-radius:8px}
 .tim ul{list-style:none;margin:6px 0 0;padding:0}
 .tim li{padding:8px 6px;border-bottom:1px solid #0001;cursor:pointer}
 .tim li.trong{opacity:.6;cursor:default}
-.tim .dong{position:relative;z-index:2;float:right;background:none;border:0;font:inherit;font-size:calc(13px * var(--fs,1));cursor:pointer;color:var(--chinh)}
+.tim .dong{position:relative;z-index:2;float:right;background:none;border:0;font:inherit;font-size:calc(14px * var(--fs,1));cursor:pointer;color:var(--chinh)}
 .kieu{display:flex;gap:14px;margin-bottom:2px;overflow-x:auto}
-.kieu button{background:none;border:0;border-bottom:2px solid transparent;font:inherit;font-size:calc(13px * var(--fs,1));padding:2px 0;cursor:pointer;color:var(--chu);white-space:nowrap}
+.kieu button{background:none;border:0;border-bottom:2px solid transparent;font:inherit;font-size:calc(14px * var(--fs,1));padding:2px 0;cursor:pointer;color:var(--chu);white-space:nowrap}
 .kieu button.on{border-color:#f2b705;font-weight:700}
 [hidden]{display:none!important}
-.diachi{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:3px 10px;color:#fff;text-shadow:0 1px 3px #0008;font-size:calc(13px * var(--fs,1));padding:0 4px 6px}
+.diachi{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:3px 10px;color:#fff;text-shadow:0 1px 3px #0008;font-size:calc(14px * var(--fs,1));padding:0 4px 6px}
 .js-dc{flex:1 1 auto;min-width:0}
-.gio{font-size:calc(13px * var(--fs,1));margin:0 0 6px}
+.gio{font-size:calc(14px * var(--fs,1));margin:0 0 6px}
 .lich-bg{position:fixed;inset:0;background:rgba(10,30,45,.55);display:flex;align-items:center;justify-content:center;padding:10px;z-index:50}
 .lich{width:100%;max-width:420px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px #0006}
 .lich-h{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#0f5f8c;color:#fff}
 .lich-h b{font-size:calc(20px * var(--fs,1))}
 .lich-h button{background:rgba(255,255,255,.22);border:0;color:#fff;font-size:calc(22px * var(--fs,1));line-height:1;width:36px;height:36px;border-radius:50%;cursor:pointer}
 .lich-w,.lich-g{display:grid;grid-template-columns:repeat(7,1fr)}
-.lich-w div{text-align:center;padding:5px 0;font-weight:700;font-size:calc(13px * var(--fs,1));background:#e9f2f6}
+.lich-w div{text-align:center;padding:5px 0;font-weight:700;font-size:calc(14px * var(--fs,1));background:#e9f2f6}
 .lich-g div{position:relative;height:54px;border:1px solid #e3ebf0;padding:3px 5px}
 .lich-g .s{font-size:calc(19px * var(--fs,1));font-weight:700}
-.lich-g .a{position:absolute;right:5px;bottom:2px;font-size:calc(11px * var(--fs,1));color:#0b2f66}
+.lich-g .a{position:absolute;right:5px;bottom:2px;font-size:calc(12px * var(--fs,1));color:#0b2f66}
 .lich-g .kh{opacity:.35}
 .t7{color:#8a2b2b}.cn{color:#d32f2f}
 .lich-g .nay{background:#5bc8cf}
 .lich-f{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;font-size:calc(12px * var(--fs,1));color:#5f7380}
-.lich-f button{border:0;border-radius:999px;padding:5px 12px;font:inherit;font-size:calc(13px * var(--fs,1));font-weight:600;cursor:pointer;background:#dcebf4;color:#12303f;white-space:nowrap}
+.lich-f button{border:0;border-radius:999px;padding:5px 12px;font:inherit;font-size:calc(14px * var(--fs,1));font-weight:600;cursor:pointer;background:#dcebf4;color:#12303f;white-space:nowrap}
 .lich-f .bt{display:flex;gap:6px;flex:none}
 .lich-f button.dg{background:#fde8ea;color:#c62f3a}
 /* Màn hình chính: các khối cách đều nhau */
@@ -117,13 +117,13 @@ main>.diachi{padding-bottom:8px}
 .lich-g .gc{background:#ffe3a1}
 .lich-g .nay.gc{background:#5bc8cf;box-shadow:inset 0 0 0 3px #f2b705}
 .lich-g .chon{outline:2px solid #0f5f8c;outline-offset:-2px}
-.gcp{padding:8px 12px;border-top:1px solid #e3ebf0;font-size:calc(13px * var(--fs,1))}
+.gcp{padding:8px 12px;border-top:1px solid #e3ebf0;font-size:calc(14px * var(--fs,1))}
 .gcp-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 8px;margin-bottom:6px}
 .gc-it{display:flex;gap:8px;padding:7px 8px;border-radius:8px;background:#f3f8fb;margin-bottom:5px;cursor:pointer}
 .gc-it .g{flex:none;min-width:58px;font-weight:700;color:#0f5f8c}
-.gc-it small{display:block;color:#5f7380;font-size:calc(11px * var(--fs,1))}
-.gc-big{white-space:pre-wrap;word-break:break-word;font-size:calc(15px * var(--fs,1));margin:2px 0 6px}
-.btn{border:0;border-radius:999px;padding:6px 13px;font:inherit;font-size:calc(13px * var(--fs,1));font-weight:600;cursor:pointer;background:#dcebf4;color:#12303f;white-space:nowrap}
+.gc-it small{display:block;color:#5f7380;font-size:calc(12px * var(--fs,1))}
+.gc-big{white-space:pre-wrap;word-break:break-word;font-size:calc(16px * var(--fs,1));margin:2px 0 6px}
+.btn{border:0;border-radius:999px;padding:6px 13px;font:inherit;font-size:calc(14px * var(--fs,1));font-weight:600;cursor:pointer;background:#dcebf4;color:#12303f;white-space:nowrap}
 .btn.p{background:#0f5f8c;color:#fff}.btn.d{background:#c62f3a;color:#fff}
 .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .fm label{display:block;font-size:calc(12px * var(--fs,1));font-weight:600;margin:8px 0 3px;color:#5f7380}
@@ -132,21 +132,21 @@ main>.diachi{padding-bottom:8px}
 .fm .rd{display:flex;gap:16px}
 .fm .rd label,.fm .ck{display:flex;align-items:center;gap:6px;font-size:calc(14px * var(--fs,1));font-weight:500;color:#12303f;margin:4px 0}
 .fm .rd input,.fm .ck input{width:auto}
-.fm small{font-size:calc(11px * var(--fs,1));color:#5f7380}
+.fm small{font-size:calc(12px * var(--fs,1));color:#5f7380}
 .err{color:#c62f3a;font-size:calc(12px * var(--fs,1));margin-top:6px}
 #up{padding:6px 10px}
-.up-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px;font-size:calc(13px * var(--fs,1));font-weight:700}
+.up-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px;font-size:calc(14px * var(--fs,1));font-weight:700}
 .seg{display:flex;gap:5px;margin:4px 0}
 .seg button{border:0;border-radius:999px;padding:3px 11px;font:inherit;font-size:calc(12px * var(--fs,1));font-weight:600;background:rgba(15,95,140,.12);color:var(--chu);cursor:pointer}
 .seg button.on{background:var(--chu);color:#fff}
 .up-list{position:relative;max-height:min(32vh,210px);overflow-y:auto;overscroll-behavior:contain}
-.up-it{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:calc(13px * var(--fs,1));border-top:1px solid #0001;cursor:pointer}
+.up-it{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:calc(14px * var(--fs,1));border-top:1px solid #0001;cursor:pointer}
 .up-it .u{flex:none;min-width:70px;color:#0f5f8c;font-weight:700}
 .up-it .gi{flex:none;min-width:38px;font-weight:600}
 .up-it .nd{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .up-it.qua{opacity:.5}
-.xd{flex:none;border:0;border-radius:8px;background:#fde8ea;color:#c62f3a;width:32px;height:32px;font-size:calc(15px * var(--fs,1));line-height:1;cursor:pointer;align-self:center}
-.up-it .xd{width:26px;height:26px;font-size:calc(13px * var(--fs,1))}
+.xd{flex:none;border:0;border-radius:8px;background:#fde8ea;color:#c62f3a;width:32px;height:32px;font-size:calc(16px * var(--fs,1));line-height:1;cursor:pointer;align-self:center}
+.up-it .xd{width:26px;height:26px;font-size:calc(14px * var(--fs,1))}
 .mh{font-size:calc(12px * var(--fs,1));font-weight:700;color:#5f7380;margin:9px 0 4px;cursor:pointer}
 .mh.hn{color:#0f5f8c}
 .bt2{display:flex;gap:6px}
@@ -154,7 +154,7 @@ main>.diachi{padding-bottom:8px}
 .gc-m{flex:1;min-width:0;word-break:break-word}
 #xnPop{z-index:60}
 #alPop{z-index:90}
-.al-it{display:flex;gap:10px;align-items:baseline;margin:6px 0;font-size:calc(15px * var(--fs,1));word-break:break-word}
+.al-it{display:flex;gap:10px;align-items:baseline;margin:6px 0;font-size:calc(16px * var(--fs,1));word-break:break-word}
 .al-it b{font-size:calc(22px * var(--fs,1));color:#c62f3a}
 .xn-box{padding:16px;max-width:340px}
 .xn-t{font-size:calc(16px * var(--fs,1));font-weight:700;margin-bottom:6px}
@@ -165,17 +165,17 @@ main>.diachi{padding-bottom:8px}
 #appPop{z-index:70}
 .ap{width:100%;max-width:400px;background:#fff;border-radius:16px;box-shadow:0 8px 30px #0006;max-height:calc(100vh - 20px);max-height:calc(100dvh - 20px);overflow-y:auto;padding:14px 16px}
 .ap h3{margin:0 0 8px;font-size:calc(17px * var(--fs,1))}
-.ap p,.ap li{font-size:calc(13.5px * var(--fs,1));margin:4px 0}
+.ap p,.ap li{font-size:calc(14px * var(--fs,1));margin:4px 0}
 .ap ul{padding-left:18px;margin:4px 0 8px}
-.mi{display:block;width:100%;text-align:left;border:0;background:#f3f8fb;border-radius:10px;padding:11px 12px;margin-bottom:6px;font:inherit;font-size:calc(15px * var(--fs,1));font-weight:600;color:var(--chu);cursor:pointer}
+.mi{display:block;width:100%;text-align:left;border:0;background:#f3f8fb;border-radius:10px;padding:11px 12px;margin-bottom:6px;font:inherit;font-size:calc(16px * var(--fs,1));font-weight:600;color:var(--chu);cursor:pointer}
 .qr-c{display:block;margin:6px auto;max-width:100%;height:auto;border:1px solid #e3ebf0;border-radius:8px}
 .vid{background:#000;border-radius:10px;overflow:hidden;aspect-ratio:4/3}
 .vid video{width:100%;height:100%;object-fit:cover;display:block}
 .ok{color:#2e7d32;font-size:calc(12px * var(--fs,1));margin-top:6px}
-#apSt.ok,#vcSt.ok{font-size:calc(13px * var(--fs,1))}
-#apSt,#vcSt{margin-top:6px;font-size:calc(13px * var(--fs,1))}
+#apSt.ok,#vcSt.ok{font-size:calc(14px * var(--fs,1))}
+#apSt,#vcSt{margin-top:6px;font-size:calc(14px * var(--fs,1))}
 .vc{background:#eef6fb;border-radius:10px;padding:8px;margin:6px 0}
-.vc small{color:#5f7380;font-size:calc(11px * var(--fs,1));margin-left:4px}
+.vc small{color:#5f7380;font-size:calc(12px * var(--fs,1));margin-left:4px}
 
 /* ===== Bổ sung v2: nút biểu tượng, màn hình thời tiết, chia sẻ Zalo/Messenger ===== */
 .up-h>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -199,7 +199,7 @@ main>.diachi{padding-bottom:8px}
 .ic{margin-right:3px}
 .gc-it.nk{background:#eaf7f0;border-left:3px solid #2e9d6b}
 .up-it.nk .nd{color:#1c6b49}
-.tag-nk{display:inline-block;background:#2e9d6b;color:#fff;border-radius:999px;font-size:calc(11px * var(--fs,1));padding:1px 8px;margin-right:6px;vertical-align:middle}
+.tag-nk{display:inline-block;background:#2e9d6b;color:#fff;border-radius:999px;font-size:calc(12px * var(--fs,1));padding:1px 8px;margin-right:6px;vertical-align:middle}
 .lich-g .nk{background:#cdeedb}
 .lich-g .gc.nk{background:#ffe3a1;box-shadow:inset 0 -4px 0 #2e9d6b}
 .lich-g .nay.nk{background:#5bc8cf;box-shadow:inset 0 0 0 3px #2e9d6b}
@@ -211,7 +211,7 @@ main>.diachi{padding-bottom:8px}
 .rg{display:flex;gap:6px;align-items:flex-end;margin:0 0 8px}
 .rg label{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:calc(12px * var(--fs,1));color:#5f7380}
 .rg input{width:100%;min-width:0;box-sizing:border-box;padding:6px 8px;border:1px solid #b8c7d0;border-radius:10px;font:inherit;font-size:calc(14px * var(--fs,1));color:#12303f;background:#fff}
-.rg button{flex:none;border:0;border-radius:999px;padding:8px 12px;font:inherit;font-size:calc(13px * var(--fs,1));font-weight:600;cursor:pointer;background:#dcebf4;color:#12303f;white-space:nowrap}
+.rg button{flex:none;border:0;border-radius:999px;padding:8px 12px;font:inherit;font-size:calc(14px * var(--fs,1));font-weight:600;cursor:pointer;background:#dcebf4;color:#12303f;white-space:nowrap}
 
 /* ===== v1.0.1.20: popup chi tiết/form có nút cố định, danh sách nhóm theo ngày, cài đặt ===== */
 #ctPop{z-index:55}
@@ -220,8 +220,8 @@ main>.diachi{padding-bottom:8px}
 .ct-h.nk{background:#2e9d6b}
 .ct-h b{font-size:calc(16px * var(--fs,1));min-width:0}
 .ct-h button{flex:none;background:rgba(255,255,255,.22);border:0;color:#fff;font-size:calc(18px * var(--fs,1));line-height:1;width:34px;height:34px;border-radius:50%;cursor:pointer}
-.ct-b{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:10px 14px 12px;font-size:calc(13px * var(--fs,1))}
-.ct-e{flex:none;padding:6px 14px;background:#fde8ea;color:#c62f3a;font-size:calc(13px * var(--fs,1))}
+.ct-b{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:10px 14px 12px;font-size:calc(14px * var(--fs,1))}
+.ct-e{flex:none;padding:6px 14px;background:#fde8ea;color:#c62f3a;font-size:calc(14px * var(--fs,1))}
 .ct-f{flex:none;display:flex;flex-wrap:wrap;gap:8px;padding:10px 14px;border-top:1px solid #e3ebf0;background:#fff}
 .ct-f .btn{padding:9px 16px;font-size:calc(14px * var(--fs,1))}
 .ct-f .btn.w{flex:1}
@@ -251,6 +251,65 @@ main>.diachi{padding-bottom:8px}
 .im-n button{width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.22);color:#fff;font-size:22px;line-height:1;cursor:pointer}
 #toast{position:fixed;left:8px;right:8px;top:calc(8px + env(safe-area-inset-top,0px));max-width:420px;margin:0 auto;z-index:100;background:#12303f;color:#fff;padding:10px 14px;border-radius:12px;box-shadow:0 6px 20px #0006;font-size:calc(14px * var(--fs,1));cursor:pointer}
 .ap input[type=range]{padding:0;border:0}
+
+/* ===== v1.0.1.25: đồng bộ giao diện =====
+   Cỡ chữ: 12 (phụ) / 14 (nội dung, nút) / 16 (nhấn) / 18-20 (tiêu đề).  Bo góc: 10 (control), 16 (cửa sổ), 999 (thẻ nhỏ).
+   Màu: xanh #0f5f8c (Lịch, nút chính) - xanh lá #2e9d6b (Nhật ký) - đỏ #c62f3a (xóa) - nền phụ #e4eef4. */
+:root{--chinh:#0f5f8c;--nk:#2e9d6b;--do:#c62f3a;--phu:#e4eef4;--vien:#c3d1d9;--mo:#5f7380}
+.btn,.lich-f button,.rg button,.seg button,.loai button{font-family:inherit;font-weight:600;transition:background .15s,filter .15s}
+.btn,.rg button,.lich-f button{min-height:40px;padding:0 16px;border-radius:10px;font-size:calc(14px * var(--fs,1));background:var(--phu);color:var(--chu);display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.btn.p{background:var(--chinh);color:#fff}
+.btn.d,.lich-f button.dg{background:var(--do);color:#fff}
+.ct-h.nk ~ .ct-f .btn.p{background:var(--nk)}
+.btn.zl,.btn.ms{background:var(--phu);color:var(--chu);box-shadow:inset 0 0 0 1px var(--vien)}
+.btn:active,.mi:active,.ib:active{filter:brightness(.93)}
+.ct-f .btn{padding:0 16px;font-size:calc(14px * var(--fs,1))}
+.ct-f{gap:8px}
+.mi{min-height:48px;border-radius:12px;background:var(--phu);font-size:calc(15px * var(--fs,1));font-weight:600;padding:12px 14px}
+.mi small{font-size:calc(12px * var(--fs,1))!important;font-weight:400}
+.fm input,.fm textarea,.fm select,.rg input,.tim input,.ap input[type=number],.ap input[type=url]{border-radius:10px;border-color:var(--vien);font-size:calc(14px * var(--fs,1))}
+.fm input:not([type=checkbox]):not([type=radio]),.fm select,.rg input,.ap input[type=number]{min-height:40px}
+input:focus-visible,textarea:focus-visible,select:focus-visible,.btn:focus-visible,.mi:focus-visible,.ib:focus-visible{outline:2px solid var(--chinh);outline-offset:1px;border-color:var(--chinh)}
+.fm label,.fm small{color:var(--mo)}
+.fm label{font-size:calc(12px * var(--fs,1));font-weight:600;margin:12px 0 4px}
+.fm .ck,.fm .rd label,.ap .ck{font-size:calc(14px * var(--fs,1))}
+.ct-h,.lich-h{min-height:48px}
+.ct-h b,.ap h3,.ap2-h{font-size:calc(18px * var(--fs,1))}
+.lich-h b{font-size:calc(18px * var(--fs,1))}
+.ct-h button,.lich-h button{width:36px;height:36px;font-size:calc(18px * var(--fs,1))}
+.ct-b,.gcp{font-size:calc(14px * var(--fs,1))}
+.gc-it{border-radius:10px;padding:8px 10px}
+.gc-it .g,.up-it .u{font-size:calc(14px * var(--fs,1))}
+.gc-it small,.note,.up-it .gi{font-size:calc(12px * var(--fs,1))}
+.seg button,.loai button{min-height:32px;font-size:calc(14px * var(--fs,1))}
+.loai button{min-height:40px;border-radius:10px;border-color:var(--vien)}
+.loai button.on{background:var(--chinh);border-color:var(--chinh)}
+.seg button.on{background:var(--chinh)}
+.ib{background:var(--phu)}
+.ap2-f,.ct-f{border-top:1px solid #e3ebf0}
+.ap hr{margin:14px 0!important}
+.xd{border-radius:10px}
+.up-it{min-height:36px}
+.err{color:var(--do)}
+.ok{color:#2e7d32}
+.at{border-radius:10px}
+
+/* ===== v1.0.1.26: nút gọn hơn, viền lịch tháng ===== */
+.lich-w{margin:8px 10px 0;border:2px solid var(--chinh);border-bottom:0;border-radius:10px 10px 0 0;overflow:hidden}
+.lich-g{margin:0 10px 8px;border:2px solid var(--chinh);border-top:0;border-radius:0 0 10px 10px;overflow:hidden}
+.btn,.rg button,.lich-f button{min-height:34px;padding:0 12px;border-radius:9px}
+.ct-f .btn{padding:0 12px}
+.ct-f{padding:8px 12px;gap:6px}
+.btns{gap:6px;margin-top:8px}
+.mi{min-height:42px;padding:9px 12px;margin-bottom:5px}
+.loai button{min-height:34px}
+.loai{margin:2px 0 6px}
+.fm input:not([type=checkbox]):not([type=radio]),.fm select,.rg input,.ap input[type=number]{min-height:36px;padding:6px 8px}
+.ib{height:28px;width:32px}
+.ct-h button,.lich-h button{width:32px;height:32px}
+.ct-h,.lich-h{min-height:42px}
+.seg button{min-height:28px}
+.xd{width:28px;height:28px}
 </style>
 </head>
 <body>
@@ -1277,9 +1336,9 @@ vi:{
   lunar:"Âm lịch", leap:"nhuận",
   upT:"Lịch & nhật ký", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", tomorrow:"Ngày mai", nOpen:"Mở lịch",
   nNone7:"Không có lịch nào trong 7 ngày tới.", nNoneM:"Tháng này chưa có lịch nào.", nNoneT:"Hôm nay chưa có lịch nào.",
-  fFrom:"Từ ngày", fTo:"Đến ngày", fAllTime:"Bỏ lọc", fOn:"📅 Lọc theo ngày", fEmpty:"Không có lịch hoặc nhật ký nào trong khoảng ngày này.", nAllBtn:"Tất cả lịch & nhật ký", nAllT:"Tất cả lịch & nhật ký", dAll:"Xóa tất cả", dAllAsk:"Xóa tất cả lịch?", dAllN:"Sẽ xóa {n} lịch (nhật ký được giữ nguyên). Không thể hoàn tác.", dAllWarn:"Nên sao lưu trước khi xóa tất cả.", dAllBk:"Sao lưu ngay", dAllDone:"Đã sao lưu: {f}", nAllEmpty:"Chưa có lịch hay nhật ký nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có lịch hoặc nhật ký nào.", nWholeM:"Cả tháng",
+  fFrom:"Từ ngày", fTo:"Đến ngày", fAllTime:"Bỏ lọc", fOn:"📅 Lọc ngày", fEmpty:"Không có lịch hoặc nhật ký nào trong khoảng ngày này.", nAllBtn:"Tất cả lịch & nhật ký", nAllT:"Tất cả lịch & nhật ký", dAll:"Xóa tất cả", dAllAsk:"Xóa tất cả lịch?", dAllN:"Sẽ xóa {n} lịch (nhật ký được giữ nguyên). Không thể hoàn tác.", dAllWarn:"Nên sao lưu trước khi xóa tất cả.", dAllBk:"Sao lưu ngay", dAllDone:"Đã sao lưu: {f}", nAllEmpty:"Chưa có lịch hay nhật ký nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có lịch hoặc nhật ký nào.", nWholeM:"Cả tháng",
   nDelAsk1:"Xóa ghi chú này?", nDelRep:"Ghi chú này có lặp lại: tất cả các ngày lặp lại cũng sẽ bị xóa.",
-  nAdd:"＋ Thêm", nAddT:"Thêm ghi chú", nEditT:"Sửa ghi chú", tLich:"Lịch", tNk:"Nhật ký", locAll:"Tất cả", locLich:"🗓️ Lịch", locNk:"📓 Nhật ký", lichTag:"Lịch", nkTag:"Nhật ký", nkAddT:"Thêm nhật ký", nkEditT:"Sửa nhật ký", nkSave:"Lưu nhật ký", nkTo:"Chuyển thành nhật ký", nkHint:"Nhật ký ghi lại việc đã xảy ra, mặc định lấy ngày giờ hiện tại (bạn có thể sửa). Ngày không quá hôm nay, không lặp lại, chỉ lưu cho một ngày.", nkErrFut:"Nhật ký chỉ ghi việc đã xảy ra, không chọn thời điểm ở tương lai.", nkConv:"Chuyển từ lịch: hãy kiểm tra ngày giờ thực tế đã diễn ra rồi bấm Lưu nhật ký. Lịch gốc sẽ không hiện nữa và không thể chuyển ngược lại.", nkConvRep:"Lịch này lặp lại: chỉ lần ngày {d} được chuyển, các lần lặp khác vẫn giữ.", nEmpty:"Chưa có lịch hoặc nhật ký cho ngày này.", nAllDay:"Cả ngày", nSolar:"Dương lịch",
+  nAdd:"＋ Thêm", nAddT:"Thêm ghi chú", nEditT:"Sửa ghi chú", tLich:"Lịch", tNk:"Nhật ký", locAll:"Tất cả", locLich:"🗓️ Lịch", locNk:"📓 Nhật ký", lichTag:"Lịch", nkTag:"Nhật ký", nkAddT:"Thêm nhật ký", nkEditT:"Sửa nhật ký", nkSave:"Lưu nhật ký", nkTo:"Nhật ký", nkHint:"Nhật ký ghi lại việc đã xảy ra, mặc định lấy ngày giờ hiện tại (bạn có thể sửa). Ngày không quá hôm nay, không lặp lại, chỉ lưu cho một ngày.", nkErrFut:"Nhật ký chỉ ghi việc đã xảy ra, không chọn thời điểm ở tương lai.", nkConv:"Chuyển từ lịch: hãy kiểm tra ngày giờ thực tế đã diễn ra rồi bấm Lưu nhật ký. Lịch gốc sẽ không hiện nữa và không thể chuyển ngược lại.", nkConvRep:"Lịch này lặp lại: chỉ lần ngày {d} được chuyển, các lần lặp khác vẫn giữ.", nEmpty:"Chưa có lịch hoặc nhật ký cho ngày này.", nAllDay:"Cả ngày", nSolar:"Dương lịch",
   nEdit:"Sửa", nDel:"Xóa", nCancel:"Hủy", nSave:"Lưu", nBack:"Quay lại",
   nContent:"Nội dung", nPh:"Việc cần làm...", nDate:"Ngày (dương lịch)", nLunarOf:"Âm lịch tương ứng",
   nTimeOn:"Thêm giờ:phút",
@@ -1289,22 +1348,22 @@ vi:{
   nSumYD:"Lặp vào ngày {d}/{m} dương lịch hằng năm", nSumYA:"Lặp vào ngày {d}/{m} âm lịch hằng năm",
   nDelAsk:"Xóa ghi chú này? Tất cả các ngày lặp lại cũng sẽ bị xóa.", nEditHint:"Sửa ghi chú sẽ thay đổi tất cả các ngày lặp lại.",
   nErrC:"Hãy nhập nội dung.", nErrD:"Hãy chọn ngày.", nErrR:"Ngày kết thúc không được trước ngày bắt đầu.", lichNote:"Số lớn: dương lịch, số nhỏ: âm lịch", wd:["T2","T3","T4","T5","T6","T7","CN"], wdF:["Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ nhật"],
-  nShare:"Chia sẻ", shT:"Chia sẻ lịch", shHint:"Người nhận bấm vào liên kết để mở ứng dụng và lưu lịch. Cũng có thể quét mã QR trong ảnh bằng nút QR của ứng dụng.", shZalo:"Zalo", shMess:"Messenger", shCopy:"Sao chép liên kết", shGo:"Bấm Zalo hoặc Messenger rồi chọn ứng dụng trong bảng chia sẻ: ảnh, tiêu đề và liên kết được gửi cùng nhau.", shCopied:"Đã sao chép tiêu đề và liên kết. Hãy dán vào Zalo hoặc Messenger để gửi.", shCopyErr:"Không sao chép được. Hãy lưu ảnh và gửi thủ công.", shNoLink:"Ứng dụng đang mở từ file nên chưa tạo được liên kết. Hãy đưa ứng dụng lên web (https) để chia sẻ bằng liên kết.", lkRecv:"Lịch nhận từ liên kết chia sẻ. Hãy kiểm tra, chỉnh sửa nếu cần rồi bấm Lưu.", lkBad:"Liên kết lịch không hợp lệ hoặc đã bị cắt bớt. Hãy nhờ người gửi chia sẻ lại.", lkTab:"Bạn đang xem trong cửa sổ tạm của Zalo/Messenger nên lịch chưa vào ứng dụng chính. Cách 1: bấm “Mở trong ứng dụng”. Cách 2: bấm ⋮ rồi “Mở bằng trình duyệt”. Cách 3: bấm “Sao chép liên kết”, mở ứng dụng, bấm nút QR rồi “Dán lịch đã sao chép”. Hoặc bấm Lưu để lưu ngay tại đây (chỉ lưu trong trình duyệt này, không vào ứng dụng đã cài).", lkOpen:"Mở trong ứng dụng", lkCopy:"Sao chép liên kết", qrPaste:"Dán lịch đã sao chép", qrPasteErr:"Không đọc được bộ nhớ tạm. Hãy cho phép dán rồi thử lại.", shSave:"Lưu ảnh", shSend:"Gửi", shLong:"Nội dung lịch quá dài để tạo mã QR. Hãy rút gọn nội dung rồi thử lại.",
+  nShare:"Chia sẻ", shT:"Chia sẻ lịch", shHint:"Người nhận bấm vào liên kết để mở ứng dụng và lưu lịch. Cũng có thể quét mã QR trong ảnh bằng nút QR của ứng dụng.", shZalo:"Zalo", shMess:"Messenger", shCopy:"Sao chép link", shGo:"Bấm Zalo hoặc Messenger rồi chọn ứng dụng trong bảng chia sẻ: ảnh, tiêu đề và liên kết được gửi cùng nhau.", shCopied:"Đã sao chép tiêu đề và liên kết. Hãy dán vào Zalo hoặc Messenger để gửi.", shCopyErr:"Không sao chép được. Hãy lưu ảnh và gửi thủ công.", shNoLink:"Ứng dụng đang mở từ file nên chưa tạo được liên kết. Hãy đưa ứng dụng lên web (https) để chia sẻ bằng liên kết.", lkRecv:"Lịch nhận từ liên kết chia sẻ. Hãy kiểm tra, chỉnh sửa nếu cần rồi bấm Lưu.", lkBad:"Liên kết lịch không hợp lệ hoặc đã bị cắt bớt. Hãy nhờ người gửi chia sẻ lại.", lkTab:"Bạn đang xem trong cửa sổ tạm của Zalo/Messenger nên lịch chưa vào ứng dụng chính. Cách 1: bấm “Mở trong ứng dụng”. Cách 2: bấm ⋮ rồi “Mở bằng trình duyệt”. Cách 3: bấm “Sao chép liên kết”, mở ứng dụng, bấm nút QR rồi “Dán lịch đã sao chép”. Hoặc bấm Lưu để lưu ngay tại đây (chỉ lưu trong trình duyệt này, không vào ứng dụng đã cài).", lkOpen:"Mở app", lkCopy:"Sao chép link", qrPaste:"Dán lịch", qrPasteErr:"Không đọc được bộ nhớ tạm. Hãy cho phép dán rồi thử lại.", shSave:"Lưu ảnh", shSend:"Gửi", shLong:"Nội dung lịch quá dài để tạo mã QR. Hãy rút gọn nội dung rồi thử lại.",
   qrBtn:"Quét QR", qrT:"Quét mã QR nhận lịch", qrPick:"Chọn ảnh QR", qrAim:"Đưa mã QR vào khung hình.", qrOpening:"Đang mở camera...", qrNoCam:"Không mở được camera. Hãy chọn ảnh QR có sẵn trong máy.", qrBad:"Mã QR không hợp lệ: đây không phải mã lịch của ứng dụng này.", qrNoRead:"Không đọc được mã QR trong ảnh. Hãy chọn ảnh rõ hơn.", qrLib:"Không tải được bộ đọc mã QR (cần có mạng ở lần đầu). Hãy kiểm tra kết nối rồi thử lại.", qrRecv:"Lịch nhận từ mã QR. Hãy kiểm tra, chỉnh sửa nếu cần rồi bấm Lưu.", qrReading:"Đang đọc ảnh...",
   dup:"Trùng lịch: đã có lịch cùng ngày, giờ và nội dung này.",
-  menu:"Menu", wxT:"Xem thời tiết", bkT:"Sao lưu - Đồng bộ", bkOut:"Sao lưu lịch ra file", bkOutD:"Tải về một file chứa toàn bộ lịch hiện có ({n} ghi chú).", bkIn:"Đồng bộ từ file sao lưu", bkInD:"Chọn file đã sao lưu trước đó để thêm lịch vào máy này.", bkEmpty:"Chưa có lịch nào để sao lưu.", bkSaved:"Đã tạo file sao lưu: {f}", bkBad:"File không hợp lệ: đây không phải file sao lưu lịch của ứng dụng này.", bkSum:"File có {a} lịch: {b} lịch mới, {c} lịch trùng (sẽ bỏ qua).", bkBadN:"Có {d} mục lỗi trong file, đã bỏ qua.", bkMerge:"Gộp {b} lịch mới", bkRep:"Thay thế toàn bộ", bkRepAsk:"Xóa {n} ghi chú hiện có và thay bằng {a} lịch trong file?", bkYes:"Đồng ý thay thế", bkDoneM:"Đã đồng bộ: thêm {b} lịch mới.", bkDoneR:"Đã khôi phục {a} lịch từ file.", bkNone:"Không có lịch mới để thêm.",
+  menu:"Menu", wxT:"Xem thời tiết", bkT:"Sao lưu", bkOut:"Xuất file", bkOutD:"Tải file chứa mọi lịch ({n} ghi chú).", bkIn:"Nhập từ file", bkInD:"Chọn file đã sao lưu để thêm lịch vào máy này.", bkEmpty:"Chưa có lịch nào để sao lưu.", bkSaved:"Đã tạo file sao lưu: {f}", bkBad:"File không hợp lệ: đây không phải file sao lưu lịch của ứng dụng này.", bkSum:"File có {a} lịch: {b} lịch mới, {c} lịch trùng (sẽ bỏ qua).", bkBadN:"Có {d} mục lỗi trong file, đã bỏ qua.", bkMerge:"Gộp {b} mới", bkRep:"Thay thế hết", bkRepAsk:"Xóa {n} ghi chú hiện có và thay bằng {a} lịch trong file?", bkYes:"Thay thế", bkDoneM:"Đã đồng bộ: thêm {b} lịch mới.", bkDoneR:"Đã khôi phục {a} lịch từ file.", bkNone:"Không có lịch mới để thêm.",
   abT:"Giới thiệu", abIntro:"Ứng dụng xem thời tiết, lịch âm dương và quản lý lịch cá nhân; có thể cài lên màn hình chính điện thoại.",
   abL:["🏠 Màn hình chính: lịch của bạn (7 ngày / tháng này / hôm nay, nhóm theo ngày), thời tiết hiện tại và đồ thị thời tiết theo giờ của thành phố đang chọn. Thanh chọn thành phố đồng bộ với màn hình Xem thời tiết.","🌤️ Menu › Xem thời tiết: thời tiết hiện tại, đồ thị theo giờ, dự báo 10 ngày, đồ thị tổng hợp và chỉ số không khí (AQI); bấm Thêm để thêm thành phố; giữ rồi kéo tên thành phố đã thêm để đổi thứ tự. Hình nền tĩnh tự đổi theo nơi đang chọn: ngày nắng, ngày mưa hoặc ban đêm; có giờ mặt trời mọc/lặn ở ô thời tiết hiện tại.","🗓️ Lịch dương kèm âm lịch (can chi); bấm vào dòng ngày ở đầu trang để mở lịch tháng.","📝 Lịch cá nhân: ghi chú theo ngày và giờ, lặp hằng tuần/tháng/năm (theo dương hoặc âm lịch), báo trùng lịch; có thể tạo báo thức theo giờ của lịch. Menu › Cài đặt: bật gửi thông báo trước khi có lịch (chọn số phút). Ba nút biểu tượng: Mở lịch, Quét QR, Tất cả lịch & nhật ký (có lọc từ ngày đến ngày, mặc định theo khoảng thời gian đang chọn ở màn hình chính; bấm Bỏ lọc để xem toàn bộ, lúc đó chọn lọc Lịch thì có nút Xóa tất cả lịch, nên sao lưu trước khi xóa).","📓 Nhật ký: ghi lại việc đã xảy ra (ngày không quá hôm nay, không lặp lại, có thể kèm giờ), hiển thị chung với lịch, phân biệt bằng biểu tượng 🗓️ / 📓 và có bộ lọc Tất cả / Lịch / Nhật ký. Mở một lịch rồi bấm “Chuyển thành nhật ký” khi đã thực hiện xong (không chuyển ngược lại; lịch gốc không hiện nữa).","🎤 Tạo lịch hoặc nhật ký bằng giọng nói (dùng thử 3 tháng từ lần đầu mở ứng dụng, sau đó nhập mã kích hoạt để gia hạn thêm 3 tháng): nói ngày, giờ, nội dung, ứng dụng tự điền vào form để bạn kiểm tra rồi lưu.","📤 Chia sẻ lịch qua Zalo, Messenger (ảnh + tiêu đề + liên kết) hoặc mã QR. Nếu liên kết mở trong cửa sổ tạm của Zalo/Messenger: bấm “Mở trong ứng dụng”, hoặc ⋮ › Mở bằng trình duyệt, hoặc sao chép liên kết rồi dùng “Dán lịch đã sao chép” ở nút QR.","💾 Sao lưu lịch ra file và đồng bộ lại từ file sao lưu. Menu › Cài đặt: bật “Tự động sao lưu khi tắt ứng dụng” để mỗi lần thoát, dữ liệu được lưu đè vào một bản sao lưu duy nhất trong ứng dụng (có thể khôi phục hoặc tải về máy).","↩️ Vuốt Back: đóng cửa sổ đang mở; từ màn hình Xem thời tiết quay về màn hình chính; chỉ ở màn hình chính mới thoát ứng dụng.","🔒 Lịch lưu ngay trên máy của bạn; dữ liệu thời tiết cần kết nối mạng."],
   vcBtn:"🎤 Nói để tạo lịch", vcStop:"⏹ Dừng nghe", vcHint:"Nói ngày, giờ, nội dung.", vcListen:"Đang nghe... Ví dụ: “Ngày mai 8 giờ sáng họp với khách hàng”", vcNo:"Trình duyệt này chưa hỗ trợ nhận giọng nói (hãy dùng Chrome hoặc Safari bản mới).", vcErr:"Không nghe được giọng nói. Hãy cho phép micro và kiểm tra kết nối mạng.", vcHeard:"Đã nghe", vcNoDate:"Chưa nhận ra ngày/giờ, hãy kiểm tra lại các ô bên dưới.", vcLimit:"Chức năng đã hết thời gian sử dụng. Vui lòng nhập mã kích hoạt để gia hạn, hoặc liên hệ để được hỗ trợ.", vcCodePh:"Nhập mã kích hoạt", vcCodeBtn:"Kích hoạt", vcCodeBad:"Mã kích hoạt không đúng. Vui lòng kiểm tra lại.", vcCodeOk:"Kích hoạt thành công. Chức năng dùng được đến hết ngày {d}.",
   nTime:"Giờ", vcBtnNk:"🎤 Nói để ghi nhật ký", vcListenNk:"Đang nghe... Ví dụ: “Hôm qua 8 giờ tối đi chợ Phú Gia”", vcHintNk:"Nói ngày, giờ, nội dung (có thể nói: hôm qua, hôm kia, thứ hai tuần trước...).",
-  setT:"Cài đặt", setAuto:"Tự động sao lưu khi tắt ứng dụng", setAutoD:"Mỗi lần thoát hoặc rời khỏi ứng dụng, lịch và nhật ký được lưu đè vào MỘT bản sao lưu duy nhất ngay trong ứng dụng (không tạo thêm file, không tốn thêm dung lượng). Chưa có ghi chú nào thì không sao lưu.", setLast:"Bản sao lưu gần nhất: {d} ({n} ghi chú)", setNone:"Chưa có bản sao lưu tự động.", setRest:"Khôi phục từ bản sao lưu tự động", setDl:"Tải bản sao lưu tự động về máy",
-  logT:"Lịch sử cập nhật", abHide:"Không hiển thị lại khi mở ứng dụng",
+  setT:"Cài đặt", setAuto:"Tự động sao lưu khi tắt ứng dụng", setAutoD:"Mỗi lần thoát hoặc rời khỏi ứng dụng, lịch và nhật ký được lưu đè vào MỘT bản sao lưu duy nhất ngay trong ứng dụng (không tạo thêm file, không tốn thêm dung lượng). Chưa có ghi chú nào thì không sao lưu.", setLast:"Bản sao lưu gần nhất: {d} ({n} ghi chú)", setNone:"Chưa có bản sao lưu tự động.", setRest:"Khôi phục bản tự động", setDl:"Tải bản tự động",
+  logT:"Cập nhật", abHide:"Không hiển thị lại khi mở ứng dụng",
   updated:"cập nhật lúc", feels:"cảm giác như", hum:"Độ ẩm", sunrise:"Mặt trời mọc", sunset:"Mặt trời lặn", nAlarm:"Tạo báo thức (theo giờ của lịch)", nAlarmNote:"Báo thức sẽ kêu đúng giờ của lịch (khi ứng dụng đang mở hoặc chạy nền).", nAlarmOn:"Có báo thức lúc", alT:"Báo thức", alOff:"Tắt báo thức", notiSoon:"Sắp có lịch lúc {g}", notiLeft:"còn {m} phút", notiTest:"Thông báo thử", notiTestB:"Thông báo đang hoạt động.",
-  setFs:"Cỡ chữ", setFsD:"Kéo thanh trượt để chỉnh; áp dụng ngay cho toàn bộ ứng dụng.", setFsReset:"Về mặc định (100%)",
+  setFs:"Cỡ chữ", setFsD:"Kéo thanh trượt để chỉnh; áp dụng ngay cho toàn bộ ứng dụng.", setFsReset:"Mặc định",
   anhT:"Ảnh", anhMay:"Chọn từ máy", anhCam:"Chụp ảnh", anhAdd:"Thêm", anhErr:"Không thêm được ảnh. Hãy thử ảnh khác (JPG/PNG).", anhUrlBad:"Đường dẫn ảnh phải bắt đầu bằng http:// hoặc https://.", anhLoi:"không tải được ảnh", anhMax:"Tối đa {n} ảnh cho mỗi nhật ký.",
   anhNote:"Nhật ký chỉ lưu đường dẫn ảnh (không lưu dữ liệu ảnh). Ảnh chọn từ máy hoặc chụp được giữ trong bộ nhớ của ứng dụng trên máy này; muốn xem trên máy khác, hãy dùng đường dẫn (URL) ảnh trên mạng.",
   setNotiSt:"Chưa bật.", setNotiAsk:"Đã lưu lựa chọn. Chưa được cấp quyền thông báo hệ thống nên thông báo sẽ hiện ngay trong ứng dụng khi đang mở; bấm Gửi thử để cấp quyền.",
-  setNoti:"Gửi thông báo trước khi có lịch", setNotiMin:"Báo trước", setNotiPh:"phút", setNotiD:"Thông báo gửi cho các lịch có giờ (không áp dụng cho lịch cả ngày và nhật ký). Thông báo và báo thức chỉ hoạt động khi ứng dụng đang mở hoặc đang chạy nền; nếu điện thoại đã tắt hẳn ứng dụng thì sẽ không báo được.", setNotiDeny:"Thông báo đang bị chặn. Hãy cho phép thông báo cho trang này trong cài đặt trình duyệt rồi bật lại.", setNotiNo:"Trình duyệt này không hỗ trợ thông báo.", setNotiTest:"🔔 Gửi thử thông báo", setNotiOk:"Đã bật thông báo.", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
+  setNoti:"Gửi thông báo trước khi có lịch", setNotiMin:"Báo trước", setNotiPh:"phút", setNotiD:"Thông báo gửi cho các lịch có giờ (không áp dụng cho lịch cả ngày và nhật ký). Thông báo và báo thức chỉ hoạt động khi ứng dụng đang mở hoặc đang chạy nền; nếu điện thoại đã tắt hẳn ứng dụng thì sẽ không báo được.", setNotiDeny:"Thông báo đang bị chặn. Hãy cho phép thông báo cho trang này trong cài đặt trình duyệt rồi bật lại.", setNotiNo:"Trình duyệt này không hỗ trợ thông báo.", setNotiTest:"🔔 Thử thông báo", setNotiOk:"Đã bật thông báo.", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
   hourly:"Theo giờ", next24:"24 giờ tới (từ {h}:00)", fullDay:"(0h – 23h)",
   tTemp:"Nhiệt độ", tRain:"Khả năng mưa", tWind:"Gió (km/h)",
   days:"10 ngày tới (bấm vào một ngày để xem theo giờ)", today:"Hôm nay", nowShort:"Nay",
@@ -1324,9 +1383,9 @@ en:{
   lunar:"Lunar", leap:"leap",
   upT:"Schedule & journal", r7:"7 days", rM:"This month", rT:"Today", tomorrow:"Tomorrow", nOpen:"Open calendar",
   nNone7:"Nothing scheduled in the next 7 days.", nNoneM:"Nothing scheduled this month.", nNoneT:"Nothing scheduled today.",
-  fFrom:"From date", fTo:"To date", fAllTime:"Clear filter", fOn:"📅 Filter by date", fEmpty:"No schedule or journal in this date range.", nAllBtn:"All schedule & journal", nAllT:"All schedule & journal", dAll:"Delete all", dAllAsk:"Delete all schedule items?", dAllN:"This will delete {n} schedule items (journal entries are kept). It cannot be undone.", dAllWarn:"Back up your notes before deleting everything.", dAllBk:"Back up now", dAllDone:"Backed up: {f}", nAllEmpty:"No schedule or journal yet.", nMonthT:"Month", nMonthEmpty:"No schedule or journal this month.", nWholeM:"Whole month",
+  fFrom:"From date", fTo:"To date", fAllTime:"Clear filter", fOn:"📅 Filter dates", fEmpty:"No schedule or journal in this date range.", nAllBtn:"All schedule & journal", nAllT:"All schedule & journal", dAll:"Delete all", dAllAsk:"Delete all schedule items?", dAllN:"This will delete {n} schedule items (journal entries are kept). It cannot be undone.", dAllWarn:"Back up your notes before deleting everything.", dAllBk:"Back up now", dAllDone:"Backed up: {f}", nAllEmpty:"No schedule or journal yet.", nMonthT:"Month", nMonthEmpty:"No schedule or journal this month.", nWholeM:"Whole month",
   nDelAsk1:"Delete this note?", nDelRep:"This note repeats: every repeat of it will be removed too.",
-  nAdd:"＋ Add", nAddT:"Add a note", nEditT:"Edit note", tLich:"Schedule", tNk:"Journal", locAll:"All", locLich:"🗓️ Schedule", locNk:"📓 Journal", lichTag:"Schedule", nkTag:"Journal", nkAddT:"Add journal entry", nkEditT:"Edit journal entry", nkSave:"Save journal entry", nkTo:"Move to journal", nkHint:"A journal entry records something that already happened. It defaults to the current date and time (you can edit them). The date cannot be later than today; it does not repeat and covers a single day.", nkErrFut:"A journal entry records what already happened; do not pick a time in the future.", nkConv:"Moved from a schedule item: check the date and time it really happened, then tap Save journal entry. The original item will no longer be shown and cannot be moved back.", nkConvRep:"This item repeats: only the occurrence on {d} is moved; other repeats stay.", nEmpty:"No schedule or journal for this day.", nAllDay:"All day", nSolar:"Solar",
+  nAdd:"＋ Add", nAddT:"Add a note", nEditT:"Edit note", tLich:"Schedule", tNk:"Journal", locAll:"All", locLich:"🗓️ Schedule", locNk:"📓 Journal", lichTag:"Schedule", nkTag:"Journal", nkAddT:"Add journal entry", nkEditT:"Edit journal entry", nkSave:"Save journal entry", nkTo:"Journal", nkHint:"A journal entry records something that already happened. It defaults to the current date and time (you can edit them). The date cannot be later than today; it does not repeat and covers a single day.", nkErrFut:"A journal entry records what already happened; do not pick a time in the future.", nkConv:"Moved from a schedule item: check the date and time it really happened, then tap Save journal entry. The original item will no longer be shown and cannot be moved back.", nkConvRep:"This item repeats: only the occurrence on {d} is moved; other repeats stay.", nEmpty:"No schedule or journal for this day.", nAllDay:"All day", nSolar:"Solar",
   nEdit:"Edit", nDel:"Delete", nCancel:"Cancel", nSave:"Save", nBack:"Back",
   nContent:"Content", nPh:"What to do...", nDate:"Date (solar)", nLunarOf:"Matching lunar date",
   nTimeOn:"Add a time",
@@ -1336,22 +1395,22 @@ en:{
   nSumYD:"Repeats every year on {d}/{m} (solar)", nSumYA:"Repeats every year on lunar {d}/{m}",
   nDelAsk:"Delete this note? Every repeat of it will be removed too.", nEditHint:"Editing changes every repeat of this note.",
   nErrC:"Please enter some content.", nErrD:"Please pick a date.", nErrR:"The end date must not be before the start date.", lichNote:"Large: solar date, small: lunar date", wd:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], wdF:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
-  nShare:"Share", shT:"Share note", shHint:"The receiver taps the link to open the app and save the note. They can also scan the QR code in the image with the app’s QR button.", shZalo:"Zalo", shMess:"Messenger", shCopy:"Copy link", shGo:"Tap Zalo or Messenger, then pick the app in the share sheet: the image, title and link are sent together.", shCopied:"Title and link copied. Paste them into Zalo or Messenger to send.", shCopyErr:"Could not copy. Save the image and send it manually.", shNoLink:"The app is opened from a file, so no link can be made. Host the app on the web (https) to share by link.", lkRecv:"Note received from a shared link. Check it, edit if needed, then tap Save.", lkBad:"This note link is invalid or was cut short. Ask the sender to share it again.", lkTab:"You are viewing this in a temporary Zalo/Messenger window, so the note is not in your main app yet. Option 1: tap “Open in app”. Option 2: tap ⋮ then “Open in browser”. Option 3: tap “Copy link”, open the app, tap the QR button and then “Paste copied note”. Or tap Save to keep it here (stored in this browser only, not in the installed app).", lkOpen:"Open in app", lkCopy:"Copy link", qrPaste:"Paste copied note", qrPasteErr:"Could not read the clipboard. Allow pasting and try again.", shSave:"Save image", shSend:"Send", shLong:"This note is too long for a QR code. Please shorten it and try again.",
+  nShare:"Share", shT:"Share note", shHint:"The receiver taps the link to open the app and save the note. They can also scan the QR code in the image with the app’s QR button.", shZalo:"Zalo", shMess:"Messenger", shCopy:"Copy link", shGo:"Tap Zalo or Messenger, then pick the app in the share sheet: the image, title and link are sent together.", shCopied:"Title and link copied. Paste them into Zalo or Messenger to send.", shCopyErr:"Could not copy. Save the image and send it manually.", shNoLink:"The app is opened from a file, so no link can be made. Host the app on the web (https) to share by link.", lkRecv:"Note received from a shared link. Check it, edit if needed, then tap Save.", lkBad:"This note link is invalid or was cut short. Ask the sender to share it again.", lkTab:"You are viewing this in a temporary Zalo/Messenger window, so the note is not in your main app yet. Option 1: tap “Open in app”. Option 2: tap ⋮ then “Open in browser”. Option 3: tap “Copy link”, open the app, tap the QR button and then “Paste copied note”. Or tap Save to keep it here (stored in this browser only, not in the installed app).", lkOpen:"Open app", lkCopy:"Copy link", qrPaste:"Paste note", qrPasteErr:"Could not read the clipboard. Allow pasting and try again.", shSave:"Save image", shSend:"Send", shLong:"This note is too long for a QR code. Please shorten it and try again.",
   qrBtn:"Scan QR", qrT:"Scan a QR code to receive a note", qrPick:"Pick QR image", qrAim:"Point the camera at the QR code.", qrOpening:"Opening camera...", qrNoCam:"Could not open the camera. Pick a QR image from your device instead.", qrBad:"Invalid QR code: this is not a note code from this app.", qrNoRead:"No QR code found in the image. Try a clearer picture.", qrLib:"Could not load the QR reader (needs internet the first time). Check your connection and try again.", qrRecv:"Note received from a QR code. Check it, edit if needed, then tap Save.", qrReading:"Reading image...",
   dup:"Duplicate: a note with the same date, time and content already exists.",
-  menu:"Menu", wxT:"View weather", bkT:"Backup - Sync", bkOut:"Back up notes to a file", bkOutD:"Download a file with all your notes ({n} notes).", bkIn:"Sync from a backup file", bkInD:"Pick a previously saved backup file to add its notes to this device.", bkEmpty:"No notes to back up yet.", bkSaved:"Backup file created: {f}", bkBad:"Invalid file: this is not a notes backup file from this app.", bkSum:"The file has {a} notes: {b} new, {c} duplicates (will be skipped).", bkBadN:"{d} invalid entries in the file were skipped.", bkMerge:"Merge {b} new notes", bkRep:"Replace everything", bkRepAsk:"Delete your {n} current notes and replace them with the {a} notes in the file?", bkYes:"Yes, replace", bkDoneM:"Synced: {b} new notes added.", bkDoneR:"Restored {a} notes from the file.", bkNone:"No new notes to add.",
+  menu:"Menu", wxT:"View weather", bkT:"Backup", bkOut:"Export file", bkOutD:"Download a file with all notes ({n} notes).", bkIn:"Import file", bkInD:"Pick a backup file to add its notes here.", bkEmpty:"No notes to back up yet.", bkSaved:"Backup file created: {f}", bkBad:"Invalid file: this is not a notes backup file from this app.", bkSum:"The file has {a} notes: {b} new, {c} duplicates (will be skipped).", bkBadN:"{d} invalid entries in the file were skipped.", bkMerge:"Merge {b} new", bkRep:"Replace all", bkRepAsk:"Delete your {n} current notes and replace them with the {a} notes in the file?", bkYes:"Replace", bkDoneM:"Synced: {b} new notes added.", bkDoneR:"Restored {a} notes from the file.", bkNone:"No new notes to add.",
   abT:"About", abIntro:"Weather, lunar calendar and personal schedule in one app; can be installed on your home screen.",
   abL:["🏠 Main screen: your schedule (7 days / this month / today, grouped by day), current weather and the hourly chart for the selected city. The city bar stays in sync with the View weather screen.","🌤️ Menu › View weather: current weather, hourly chart, 10-day forecast, summary chart and air quality (AQI); tap Add to add a city; press and drag a saved city to reorder. The background changes with the selected place: sunny day, rainy day or night; sunrise/sunset times are shown.","🗓️ Solar calendar with lunar dates (can chi); tap the date line at the top to open the month calendar.","📝 Personal schedule: notes by date and time, repeating weekly/monthly/yearly (solar or lunar), duplicate notes are rejected; you can set an alarm at the schedule time. Menu › Settings: turn on notifications before a schedule (choose the minutes). Three icon buttons: Open calendar, Scan QR, All schedule & journal (with a from-date to to-date filter, defaulting to the range chosen on the home screen; tap Clear filter to see everything, where the Schedule filter then shows a Delete all button; back up first).","📓 Journal: record things that already happened (date no later than today, no repeat, time optional). It is shown together with the schedule, told apart by the 🗓️ / 📓 icons, with an All / Schedule / Journal filter. Open a schedule item and tap “Move to journal” once it is done (cannot be moved back; the original is no longer shown).","🎤 Create a schedule item or journal entry by voice (3-month trial from the first launch, then enter an activation code to extend it by another 3 months): say the date, time and content and the form is filled in for you to review and save.","📤 Share a note via Zalo, Messenger (image + title + link) or a QR code. If the link opens in a temporary Zalo/Messenger window: tap “Open in app”, or ⋮ › Open in browser, or copy the link and use “Paste copied note” under the QR button.","💾 Back up notes to a file and sync them back from a backup file. Menu › Settings: turn on “Auto backup when closing the app” to save your data over a single backup inside the app each time you leave it (restore it or download it any time).","↩️ Swipe Back: closes the open window; from the View weather screen it returns to the main screen; only on the main screen does it leave the app.","🔒 Notes are stored on your device; weather data needs an internet connection."],
   vcBtn:"🎤 Speak to create", vcStop:"⏹ Stop listening", vcHint:"Say the date, time and content (in Vietnamese).", vcListen:"Listening... e.g. “Ngày mai 8 giờ sáng họp với khách hàng”", vcNo:"This browser does not support speech recognition (use a recent Chrome or Safari).", vcErr:"Could not hear anything. Allow the microphone and check your connection.", vcHeard:"Heard", vcNoDate:"No date/time recognised, please check the fields below.", vcLimit:"This feature’s usage period has ended. Enter an activation code to extend it, or contact us for support.", vcCodePh:"Enter activation code", vcCodeBtn:"Activate", vcCodeBad:"Wrong activation code. Please check it and try again.", vcCodeOk:"Activated. This feature works until the end of {d}.",
   nTime:"Time", vcBtnNk:"🎤 Speak to journal", vcListenNk:"Listening... e.g. “Hôm qua 8 giờ tối đi chợ Phú Gia”", vcHintNk:"Say the date, time and content in Vietnamese (e.g. hôm qua, hôm kia, thứ hai tuần trước).",
-  setT:"Settings", setAuto:"Auto backup when closing the app", setAutoD:"Each time you leave or close the app, your schedule and journal are saved over ONE single backup kept inside the app (no extra files, no extra storage). Nothing is saved while there are no notes.", setLast:"Latest backup: {d} ({n} notes)", setNone:"No automatic backup yet.", setRest:"Restore from the automatic backup", setDl:"Download the automatic backup",
-  logT:"Update history", abHide:"Do not show again when opening the app",
+  setT:"Settings", setAuto:"Auto backup when closing the app", setAutoD:"Each time you leave or close the app, your schedule and journal are saved over ONE single backup kept inside the app (no extra files, no extra storage). Nothing is saved while there are no notes.", setLast:"Latest backup: {d} ({n} notes)", setNone:"No automatic backup yet.", setRest:"Restore auto backup", setDl:"Download auto backup",
+  logT:"Updates", abHide:"Do not show again when opening the app",
   updated:"updated at", feels:"feels like", hum:"Humidity", sunrise:"Sunrise", sunset:"Sunset", nAlarm:"Set an alarm (at the schedule time)", nAlarmNote:"The alarm rings at the schedule time (while the app is open or running in the background).", nAlarmOn:"Alarm at", alT:"Alarm", alOff:"Turn off alarm", notiSoon:"Schedule coming up at {g}", notiLeft:"{m} min left", notiTest:"Test notification", notiTestB:"Notifications are working.",
-  setFs:"Font size", setFsD:"Drag the slider to adjust; applies to the whole app immediately.", setFsReset:"Reset to default (100%)",
+  setFs:"Font size", setFsD:"Drag the slider to adjust; applies to the whole app immediately.", setFsReset:"Default",
   anhT:"Photos", anhMay:"From device", anhCam:"Camera", anhAdd:"Add", anhErr:"Could not add the photo. Try another one (JPG/PNG).", anhUrlBad:"The photo link must start with http:// or https://.", anhLoi:"photo failed to load", anhMax:"Up to {n} photos per journal entry.",
   anhNote:"The journal stores photo links only (no image data). Photos picked from the device or taken with the camera are kept in this app's storage on this device; to see them on another device, use an online photo link (URL).",
   setNotiSt:"Off.", setNotiAsk:"Saved. System notification permission is not granted yet, so notices will appear inside the app while it is open; tap Send test to grant it.",
-  setNoti:"Send a notification before a schedule", setNotiMin:"Notify", setNotiPh:"minutes before", setNotiD:"Notifications are sent for schedules with a time (not all-day items or journal entries). Notifications and alarms only work while the app is open or running in the background; if the phone has fully closed the app, nothing can be sent.", setNotiDeny:"Notifications are blocked. Allow notifications for this site in the browser settings, then turn this on again.", setNotiNo:"This browser does not support notifications.", setNotiTest:"🔔 Send a test notification", setNotiOk:"Notifications enabled.", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
+  setNoti:"Send a notification before a schedule", setNotiMin:"Notify", setNotiPh:"minutes before", setNotiD:"Notifications are sent for schedules with a time (not all-day items or journal entries). Notifications and alarms only work while the app is open or running in the background; if the phone has fully closed the app, nothing can be sent.", setNotiDeny:"Notifications are blocked. Allow notifications for this site in the browser settings, then turn this on again.", setNotiNo:"This browser does not support notifications.", setNotiTest:"🔔 Test notification", setNotiOk:"Notifications enabled.", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
   hourly:"Hourly", next24:"next 24 hours (from {h}:00)", fullDay:"(0:00 – 23:00)",
   tTemp:"Temperature", tRain:"Chance of rain", tWind:"Wind (km/h)",
   days:"Next 10 days (tap a day for the hourly view)", today:"Today", nowShort:"Now",
@@ -1790,11 +1849,11 @@ function ctDetail(n){
     + (n.lap!=="none" ? '<div class="note">🔁 '+lapText(n)+'</div>' : '')
     + (khoang ? '<div class="note">📆 '+khoang+'</div>' : '')
     + (n.bt && n.gio ? '<div class="note">⏰ '+t("nAlarmOn")+' '+n.gio+'</div>' : '')
-    + (lichDel ? '<div class="err" style="font-size:calc(13px * var(--fs,1))">'+t(n.lap!=="none" ? "nDelAsk" : "nDelAsk1")+'</div>' : '');
+    + (lichDel ? '<div class="err" style="font-size:calc(14px * var(--fs,1))">'+t(n.lap!=="none" ? "nDelAsk" : "nDelAsk1")+'</div>' : '');
   const foot = lichDel
     ? '<button class="btn d" data-a="delOk">'+t("nDel")+'</button><button class="btn" data-a="delNo">'+t("nCancel")+'</button>'
     : '<button class="btn p" data-a="edit">'+t("nEdit")+'</button>'
-      + (nk ? '' : '<button class="btn" data-a="toNk">📓 '+t("nkTo")+'</button><button class="btn" data-a="share">📤 '+t("nShare")+'</button>')
+      + (nk ? '' : '<button class="btn" data-a="toNk">＋ '+t("nkTo")+'</button><button class="btn" data-a="share">📤 '+t("nShare")+'</button>')
       + '<button class="btn d" data-a="del">'+t("nDel")+'</button>';
   return {title:(nk ? "📓 " : "🗓️ ")+t(nk ? "nkTag" : "lichTag"), nk, body, foot, err:""};
 }
@@ -2146,6 +2205,12 @@ function moGioiThieu(dau){                          // dau = true: tự mở khi
 }
 // Lịch sử cập nhật: thêm phiên bản mới lên đầu danh sách
 const LOG = [
+  {v:"1.0.1.26", d:"23/10/2026",
+   vi:["Nút Thành nhật ký đổi thành ＋ Nhật ký.","Lịch tháng có viền bao quanh.","Thu nhỏ các nút bấm cho cân đối hơn."],
+   en:["The convert-to-journal button is now ＋ Journal.","Month calendar now has a border.","Smaller buttons for a more balanced look."]},
+  {v:"1.0.1.25", d:"23/10/2026",
+   vi:["Chỉnh lại giao diện: thống nhất cỡ chữ, nút bấm (cao 40px, 3 kiểu: chính / phụ / xóa), màu sắc và bo góc.","Rút gọn chữ trên các nút (Sao lưu, Chia sẻ, Cài đặt...)."],
+   en:["Refreshed the look: consistent type sizes, buttons (40px high, 3 styles: primary / secondary / delete), colors and corners.","Shortened button labels (Backup, Share, Settings...)."]},
   {v:"1.0.1.24", d:"23/10/2026",
    vi:["Đổi tên ứng dụng thành Lịch - Nhật ký.","Cài đặt: thêm chỉnh cỡ chữ (80% - 150%).","Sửa lỗi Gửi thông báo trước khi có lịch không giữ được thiết lập: nay lưu đúng lựa chọn, báo trạng thái ngay dưới ô bật; nếu trình duyệt không cho thông báo hệ thống thì hiện thông báo ngay trong ứng dụng.","Nhật ký: thêm danh sách ảnh (lưới 4 cột, chạm để xem lớn) - chọn từ máy, chụp từ camera hoặc nhập đường dẫn ảnh trên mạng; chỉ lưu đường dẫn, sao lưu cũng chỉ chứa đường dẫn."],
    en:["Renamed the app to Calendar - Journal.","Settings: added font size (80% - 150%).","Fixed the notify-before-schedule setting not being kept: the choice is now saved, its status shows right under the switch, and an in-app notice appears when system notifications are unavailable.","Journal: added a photo list (4-column grid, tap to view) - pick from device, take with camera or enter an online photo link; only links are stored, and backups contain only links."]},

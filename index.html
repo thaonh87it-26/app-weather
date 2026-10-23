@@ -296,8 +296,8 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,.btn:focus-visib
 .at{border-radius:10px}
 
 /* ===== v1.0.1.26: nút gọn hơn, viền lịch tháng ===== */
-.lich-w{margin:8px 10px 0;border:2px solid var(--chinh);border-bottom:0;border-radius:10px 10px 0 0;overflow:hidden}
-.lich-g{margin:0 10px 8px;border:2px solid var(--chinh);border-top:0;border-radius:0 0 10px 10px;overflow:hidden}
+.lich-w{margin:8px 10px 0;border:1px solid #d3e1ea;border-bottom:0;border-radius:10px 10px 0 0;overflow:hidden}
+.lich-g{margin:0 10px 8px;border:1px solid #d3e1ea;border-top:0;border-radius:0 0 10px 10px;overflow:hidden}
 .btn,.rg button,.lich-f button{min-height:34px;padding:0 12px;border-radius:9px}
 .ct-f .btn{padding:0 12px}
 .ct-f{padding:8px 12px;gap:6px}
@@ -1364,6 +1364,7 @@ vi:{
   anhT:"Ảnh", anhMay:"Chọn từ máy", anhCam:"Chụp ảnh", anhAdd:"Thêm", anhErr:"Không thêm được ảnh. Hãy thử ảnh khác (JPG/PNG).", anhUrlBad:"Đường dẫn ảnh phải bắt đầu bằng http:// hoặc https://.", anhLoi:"không tải được ảnh", anhMax:"Tối đa {n} ảnh cho mỗi nhật ký.",
   anhNote:"Nhật ký chỉ lưu đường dẫn ảnh (không lưu dữ liệu ảnh). Ảnh chọn từ máy hoặc chụp được giữ trong bộ nhớ của ứng dụng trên máy này; muốn xem trên máy khác, hãy dùng đường dẫn (URL) ảnh trên mạng.",
   setNotiSt:"Chưa bật.", setNotiAsk:"Đã lưu lựa chọn. Chưa được cấp quyền thông báo hệ thống nên thông báo sẽ hiện ngay trong ứng dụng khi đang mở; bấm Gửi thử để cấp quyền.",
+  dvT:"Đơn vị nhiệt độ", dvC:"Độ C (°C)", dvF:"Độ F (°F)",
   anhNoi:"Nơi lưu ảnh", anhNoiMay:"Vào máy", anhNoiApp:"Ứng dụng", anhNoiD:"Vào máy: ảnh chụp được tải về máy (Tải xuống/Thư viện), app chỉ giữ bản thu nhỏ để hiển thị. Ứng dụng: ảnh chỉ nằm trong app (nét hơn) và được quản lý bên dưới.",
   anhQl:"Quản lý ảnh", anhQlSum:"{n} ảnh · {s}", anhQlNone:"Chưa có ảnh nào trong ứng dụng.", anhDelAll:"Xóa tất cả", anhDelAllAsk:"Xóa tất cả {n} ảnh? Ảnh sẽ mất khỏi các nhật ký/lịch đang dùng. Không thể hoàn tác.", anhDelOk:"Xóa", anhSavedF:"Đã tải ảnh về máy: {f}",
   setNoti:"Gửi thông báo trước khi có lịch", setNotiMin:"Báo trước", setNotiPh:"phút", setNotiD:"Thông báo gửi cho các lịch có giờ (không áp dụng cho lịch cả ngày và nhật ký). Thông báo và báo thức chỉ hoạt động khi ứng dụng đang mở hoặc đang chạy nền; nếu điện thoại đã tắt hẳn ứng dụng thì sẽ không báo được.", setNotiDeny:"Thông báo đang bị chặn. Hãy cho phép thông báo cho trang này trong cài đặt trình duyệt rồi bật lại.", setNotiNo:"Trình duyệt này không hỗ trợ thông báo.", setNotiTest:"🔔 Thử thông báo", setNotiOk:"Đã bật thông báo.", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
@@ -1413,6 +1414,7 @@ en:{
   anhT:"Photos", anhMay:"From device", anhCam:"Camera", anhAdd:"Add", anhErr:"Could not add the photo. Try another one (JPG/PNG).", anhUrlBad:"The photo link must start with http:// or https://.", anhLoi:"photo failed to load", anhMax:"Up to {n} photos per journal entry.",
   anhNote:"The journal stores photo links only (no image data). Photos picked from the device or taken with the camera are kept in this app's storage on this device; to see them on another device, use an online photo link (URL).",
   setNotiSt:"Off.", setNotiAsk:"Saved. System notification permission is not granted yet, so notices will appear inside the app while it is open; tap Send test to grant it.",
+  dvT:"Temperature unit", dvC:"Celsius (°C)", dvF:"Fahrenheit (°F)",
   anhNoi:"Photo storage", anhNoiMay:"Device", anhNoiApp:"App", anhNoiD:"Device: camera photos are downloaded to your device (Downloads/Gallery) and the app keeps only a small copy to display. App: photos stay inside the app (sharper) and are managed below.",
   anhQl:"Manage photos", anhQlSum:"{n} photos · {s}", anhQlNone:"No photos in the app yet.", anhDelAll:"Delete all", anhDelAllAsk:"Delete all {n} photos? They will disappear from the journal entries/schedules using them. This cannot be undone.", anhDelOk:"Delete", anhSavedF:"Photo saved to device: {f}",
   setNoti:"Send a notification before a schedule", setNotiMin:"Notify", setNotiPh:"minutes before", setNotiD:"Notifications are sent for schedules with a time (not all-day items or journal entries). Notifications and alarms only work while the app is open or running in the background; if the phone has fully closed the app, nothing can be sent.", setNotiDeny:"Notifications are blocked. Allow notifications for this site in the browser settings, then turn this on again.", setNotiNo:"This browser does not support notifications.", setNotiTest:"🔔 Test notification", setNotiOk:"Notifications enabled.", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
@@ -1917,7 +1919,7 @@ ctPop.onclick = e => {
   else if(a==="anhCam"){ document.getElementById("anhCamIn").click(); }
   else if(a==="anhUrlAdd"){ anhUrlThem(); }
   else if(a==="anhXoa"){ if(FM && FM.anh){ FM.anh.splice(+el.dataset.k, 1); veCt(); } }
-  else if(a==="anhXem"){ const ds = (ctView==="form" && FM) ? FM.anh : ((GC.find(x=>x.id===lichId) || {}).anh || []); if(ds.length) moAnh(ds, +el.dataset.k); }
+  else if(a==="anhXem"){ const ds = (ctView==="form" && FM) ? FM.anh : ((GC.find(x=>x.id===lichId) || {}).anh || []); if(ds.length) moAnh(ds, +el.dataset.k, ctView==="form" ? "form" : "detail"); }
   else if(a==="mic"){ batGiongNoi(); }
   else if(a==="vcKich"){ kichHoat(); }
   else if(a==="openApp"){ moTrongApp(); }
@@ -2146,7 +2148,7 @@ appPop.onclick = e => {
   else if(a==="anhdelall") moAnhQL(true);
   else if(a==="anhdelallok"){ anhTatCa().then(ds=>anhXoaId(ds.map(x=>x.id))).then(()=>moAnhQL(false)); }
   else if(a==="anhdel"){ anhXoaId([el.dataset.k]).then(()=>moAnhQL(false)); }
-  else if(a==="anhview"){ const l = Array.from(appPop.querySelectorAll("img[data-r]")).map(x=>x.dataset.r); moAnh(l, +el.dataset.k); }
+  else if(a==="anhview"){ const l = Array.from(appPop.querySelectorAll("img[data-r]")).map(x=>x.dataset.r); moAnh(l, +el.dataset.k, "mgr"); }
   else if(a==="fsreset"){ fsSet(1); const r = document.getElementById("setFs"); if(r) r.value = 100; }
   else if(a==="autorest"){ const o = autoTin(); if(o) bkXet(o, "set"); }
   else if(a==="autodl") autoTai();
@@ -2164,6 +2166,7 @@ appPop.onclick = e => {
 };
 appPop.onchange = e => {
   const id0 = e.target.id;
+  if(e.target.name==="dvNhiet"){ try{ localStorage.setItem("tpDvNhiet", e.target.value); }catch(_){} if(chon) tai(chon); return; }
   if(e.target.name==="anhNoi"){ try{ localStorage.setItem("tpAnhNoi", e.target.value); }catch(_){} const b = document.getElementById("anhQlBtn"); if(b) b.hidden = e.target.value!=="app"; return; }
   if(id0==="introHide"){ try{ localStorage.setItem("tpIntroHide", e.target.checked ? "1" : "0"); }catch(_){} return; }
   if(id0==="setNoti"){                               // luôn lưu lựa chọn của người dùng, rồi mới xin quyền và báo trạng thái
@@ -2203,7 +2206,7 @@ const nutBackClose = () => '<div class="btns" style="margin-top:0"><button class
 
 // ----- Menu + Cài đặt + Lịch sử cập nhật + Giới thiệu -----
 function moMenu(){
-  moApp('<h3>☰ '+t("menu")+'</h3><button class="mi" data-p="wx">🌤️ '+t("wxT")+'</button><button class="mi" data-p="bk">💾 '+t("bkT")+'</button>'
+  moApp('<h3>☰ '+t("menu")+'</h3><button class="mi" data-p="wx">🌤️ '+t("wxT")+'</button><button class="mi" data-p="anhql">🖼️ '+t("anhQl")+'</button><button class="mi" data-p="bk">💾 '+t("bkT")+'</button>'
     + '<button class="mi" data-p="set">⚙️ '+t("setT")+'</button><button class="mi" data-p="log">🕘 '+t("logT")+'</button><button class="mi" data-p="about">ℹ️ '+t("abT")+'</button>'
     + btnDong.replace("{c}", t("close")));
 }
@@ -2216,6 +2219,9 @@ function moGioiThieu(dau){                          // dau = true: tự mở khi
 }
 // Lịch sử cập nhật: thêm phiên bản mới lên đầu danh sách
 const LOG = [
+  {v:"1.0.1.28", d:"23/10/2026",
+   vi:["Cài đặt: thêm đơn vị nhiệt độ (°C / °F, mặc định °C).","Menu: tách Quản lý ảnh thành mục riêng, dưới Xem thời tiết.","Xem ảnh: vuốt ngang để chuyển ảnh, thêm nút xóa ảnh.","Lịch tháng: viền bao quanh nhạt hơn. Lịch sử cập nhật chỉ giữ 7 bản gần nhất."],
+   en:["Settings: added temperature unit (°C / °F, default °C).","Menu: Manage photos is now its own item below View weather.","Photo viewer: swipe sideways to switch photos, plus a delete button.","Month calendar: lighter border. Update history keeps the last 7 versions."]},
   {v:"1.0.1.27", d:"23/10/2026",
    vi:["Cài đặt: thêm Nơi lưu ảnh (Vào máy / Ứng dụng, mặc định Vào máy). Vào máy: ảnh chụp được tải về máy, app giữ bản thu nhỏ. Ứng dụng: có mục Quản lý ảnh - xem dung lượng, xem tất cả ảnh, xóa từng ảnh hoặc xóa tất cả."],
    en:["Settings: added Photo storage (Device / App, default Device). Device: camera photos are downloaded to the device and the app keeps a small copy. App: Manage photos - see usage, view all photos, delete one or all."]},
@@ -2234,16 +2240,10 @@ const LOG = [
   {v:"1.0.1.22", d:"23/10/2026",
    vi:["Kéo thả (giữ rồi kéo) để thay đổi thứ tự các thành phố đã chọn.","Hình nền tự đổi theo nơi đang chọn: ngày nắng, ngày mưa, ban đêm.","Thêm giờ mặt trời mọc/lặn vào ô thời tiết hiện tại (ô này được thu nhỏ gọn hơn)."],
    en:["Press and drag to reorder saved cities.","Background changes with the selected place: sunny day, rainy day, night.","Added sunrise/sunset times to the current weather box (now more compact)."]},
-  {v:"1.0.1.21", d:"23/10/2026",
-   vi:["Màn hình Tất cả lịch & nhật ký: thêm lọc từ ngày đến ngày (mặc định theo khoảng thời gian đang chọn ở màn hình chính; bấm Bỏ lọc để xem toàn bộ)."],
-   en:["All schedule & journal: added a from-date to to-date filter (defaults to the range chosen on the home screen; tap Clear filter to see everything)."]},
-  {v:"1.0.1.20", d:"23/10/2026",
-   vi:["Thêm tính năng tạo nhật ký bằng giọng nói.","Tính năng tự động sao lưu."],
-   en:["Create journal entries by voice.","Automatic backup."]}
 ];
 function moLichSu(){
   moApp2('🕘 '+t("logT"),
-    LOG.map(x=>'<p style="margin:8px 0 2px"><b>Ver-'+x.v+'</b> · '+x.d+'</p><ul>'+x[lang].map(s=>'<li>'+s+'</li>').join("")+'</ul>').join(""),
+    LOG.slice(0,7).map(x=>'<p style="margin:8px 0 2px"><b>Ver-'+x.v+'</b> · '+x.d+'</p><ul>'+x[lang].map(s=>'<li>'+s+'</li>').join("")+'</ul>').join(""),
     nutBackClose());
 }
 
@@ -2267,11 +2267,14 @@ function moCaiDat(msg, cls){
     '<label class="ck" style="display:block;margin-bottom:2px"><b>'+t("setFs")+'</b> <span id="fsVal">'+Math.round(fsGet()*100)+'%</span></label>'
     + '<div style="display:flex;align-items:center;gap:10px"><span>A</span><input type="range" id="setFs" min="80" max="150" step="5" value="'+Math.round(fsGet()*100)+'" style="flex:1"><span style="font-size:22px">A</span></div>'
     + '<p class="note" style="opacity:.85">'+t("setFsD")+'</p><button class="mi" data-p="fsreset">'+t("setFsReset")+'</button><hr style="border:0;border-top:1px solid #e3ebf0;margin:10px 0">'
+    + '<b>'+t("dvT")+'</b>'
+    + '<label class="ck"><input type="radio" name="dvNhiet" value="C"'+(dvNhiet()==="C" ? ' checked' : '')+'> '+t("dvC")+'</label>'
+    + '<label class="ck"><input type="radio" name="dvNhiet" value="F"'+(dvNhiet()==="F" ? ' checked' : '')+'> '+t("dvF")+'</label><hr style="border:0;border-top:1px solid #e3ebf0;margin:10px 0">'
     + '<b>'+t("anhNoi")+'</b>'
     + '<label class="ck"><input type="radio" name="anhNoi" value="may"'+(anhNoi()==="may" ? ' checked' : '')+'> '+t("anhNoiMay")+'</label>'
     + '<label class="ck"><input type="radio" name="anhNoi" value="app"'+(anhNoi()==="app" ? ' checked' : '')+'> '+t("anhNoiApp")+'</label>'
     + '<p class="note" style="opacity:.85">'+t("anhNoiD")+'</p>'
-    + '<button class="mi" id="anhQlBtn" data-p="anhql"'+(anhNoi()==="app" ? '' : ' hidden')+'>🖼️ '+t("anhQl")+'</button><hr style="border:0;border-top:1px solid #e3ebf0;margin:10px 0">'
+    + '<hr style="border:0;border-top:1px solid #e3ebf0;margin:10px 0">'
     + '<label class="ck"><input type="checkbox" id="setNoti"'+(notiBat() ? ' checked' : '')+'> <b>'+t("setNoti")+'</b></label>'
     + '<div style="display:flex;align-items:center;gap:8px;margin:2px 0 4px 28px;font-size:calc(14px * var(--fs,1))">'+t("setNotiMin")+' <input type="number" id="setNotiMin" min="1" max="1440" step="1" inputmode="numeric" value="'+notiPhut()+'" style="width:76px;padding:6px 8px;border:1px solid #b8c7d0;border-radius:8px;font:inherit"> '+t("setNotiPh")+'</div>'
     + '<div id="notiSt" class="note"></div>'
@@ -2305,6 +2308,7 @@ async function xinQuyen(){
   if(Notification.permission==="default"){ try{ return await Notification.requestPermission(); }catch(e){ return Notification.permission; } }
   return Notification.permission;
 }
+const dvNhiet = () => { try{ return localStorage.getItem("tpDvNhiet")==="F" ? "F" : "C"; }catch(e){ return "C"; } };
 const FS_KEY = "tpFs";
 const fsGet = () => { let v = 1; try{ v = parseFloat(localStorage.getItem(FS_KEY)); }catch(e){} return (v>=.8 && v<=1.5) ? v : 1; };
 function fsSet(v){
@@ -2512,7 +2516,7 @@ async function moAnhQL(xac){
   const tong = ds.reduce((a,x)=>a+x.size, 0);
   const foot = xac
     ? '<div class="btns" style="margin-top:0"><button class="btn d" data-p="anhdelallok">'+t("anhDelOk")+'</button><button class="btn" data-p="anhql">'+t("nCancel")+'</button></div>'
-    : '<div class="btns" style="margin-top:0"><button class="btn" data-p="set">'+t("nBack")+'</button>'+(ds.length ? '<button class="btn d" data-p="anhdelall">'+t("anhDelAll")+'</button>' : '')+'<button class="btn p" data-p="close">'+t("close")+'</button></div>';
+    : '<div class="btns" style="margin-top:0"><button class="btn" data-p="menu">'+t("nBack")+'</button>'+(ds.length ? '<button class="btn d" data-p="anhdelall">'+t("anhDelAll")+'</button>' : '')+'<button class="btn p" data-p="close">'+t("close")+'</button></div>';
   const body = xac ? '<p class="err">'+t("anhDelAllAsk").replace("{n}", ds.length)+'</p>'
     : (ds.length ? '<p class="note"><b>'+t("anhQlSum").replace("{n}", ds.length).replace("{s}", dungLuong(tong))+'</b></p><div class="ag">'
         + ds.map((x,i)=>'<div class="at" data-p="anhview" data-k="'+i+'"><img data-r="local:'+esc(x.id)+'" alt="" loading="lazy"><span class="sz">'+dungLuong(x.size)+'</span><button type="button" class="xa" data-p="anhdel" data-k="'+esc(x.id)+'" aria-label="'+t("nDel")+'">✕</button></div>').join("")+'</div>'
@@ -2520,24 +2524,56 @@ async function moAnhQL(xac){
   moApp2('🖼️ '+t("anhQl"), body, foot);
   anhNap(appPop);
 }
-// Xem ảnh lớn (chạm vào ảnh trong lưới)
-const imPop = document.getElementById("imPop"); let imDs = [], imI = 0;
+// Xem ảnh lớn (chạm vào ảnh trong lưới): vuốt ngang để chuyển ảnh, có nút xóa
+const imPop = document.getElementById("imPop"); let imDs = [], imI = 0, imKind = "", imXn = false;
 async function imVe(){
   const r = imDs[imI], el = document.getElementById("imImg"); if(!el) return;
   el.removeAttribute("src"); document.getElementById("imCnt").textContent = (imI+1)+" / "+imDs.length;
   const s = await anhSrc(r); if(imDs[imI]===r && s) el.src = s; else if(!s) document.getElementById("imCnt").textContent += " · "+t("anhLoi");
 }
-function moAnh(ds, i){
-  imDs = ds.slice(); imI = Math.max(0, Math.min(i, ds.length-1));
-  imPop.innerHTML = '<img id="imImg" alt="" referrerpolicy="no-referrer"><div class="im-n"><button type="button" data-v="prev">‹</button><span id="imCnt"></span><button type="button" data-v="next">›</button><button type="button" data-v="x" aria-label="'+t("close")+'">✕</button></div>';
+function imHuyXoa(){ imXn = false; const b = imPop.querySelector('[data-v="del"]'); if(b){ b.textContent = "🗑"; b.removeAttribute("style"); } }
+function moAnh(ds, i, kind){
+  imDs = ds.slice(); imI = Math.max(0, Math.min(i, ds.length-1)); imKind = kind || ""; imXn = false;
+  imPop.innerHTML = '<img id="imImg" alt="" referrerpolicy="no-referrer"><div class="im-n"><button type="button" data-v="prev">‹</button><span id="imCnt"></span><button type="button" data-v="next">›</button><button type="button" data-v="del" aria-label="'+t("nDel")+'">🗑</button><button type="button" data-v="x" aria-label="'+t("close")+'">✕</button></div>';
   imPop.hidden = false; imVe();
 }
-function dongIm(){ imPop.hidden = true; imPop.innerHTML = ""; }
+function dongIm(){ imPop.hidden = true; imPop.innerHTML = ""; imDs = []; }
+function imDi(n){ if(imDs.length<2) return; imHuyXoa(); imI = (imI + n + imDs.length) % imDs.length; imVe(); }
+async function anhBoNeuMoi(r){                              // xóa ảnh khỏi kho nếu không còn nhật ký/lịch nào dùng
+  if(!laLocal(r)) return;
+  if(GC.some(n=>(n.anh || []).indexOf(r)>=0) || (FM && FM.anh && FM.anh.indexOf(r)>=0)) return;
+  try{ await dbDo("readwrite", s=>s.delete(r.slice(6))); }catch(e){}
+  if(anhUrls[r]){ URL.revokeObjectURL(anhUrls[r]); delete anhUrls[r]; }
+}
+async function imXoa(){
+  const r = imDs[imI];
+  if(imKind==="form"){ if(FM && FM.anh){ const k = FM.anh.indexOf(r); if(k>=0) FM.anh.splice(k,1); veCt(); } await anhBoNeuMoi(r); }
+  else if(imKind==="detail"){
+    const n = GC.find(x=>x.id===lichId);
+    if(n && n.anh){ n.anh = n.anh.filter(x=>x!==r); if(!n.anh.length) delete n.anh; luuGC(); veSapToi(); if(!lichPop.hidden) veLich(); veCt(); }
+    await anhBoNeuMoi(r);
+  }
+  else if(imKind==="mgr"){ await anhXoaId([r.slice(6)]); if(!appPop.hidden) moAnhQL(false); }
+  imDs.splice(imI, 1);
+  if(!imDs.length){ dongIm(); return; }
+  imI = Math.min(imI, imDs.length-1); imHuyXoa(); imVe();
+}
 imPop.onclick = e => {
   const v = e.target.closest("[data-v]");
-  if(v){ const a = v.dataset.v; if(a==="x") dongIm(); else { imI = (imI + (a==="next" ? 1 : -1) + imDs.length) % imDs.length; imVe(); } return; }
+  if(v){ const a = v.dataset.v;
+    if(a==="x") dongIm();
+    else if(a==="del"){ if(!imXn){ imXn = true; v.textContent = "Xóa?"; v.setAttribute("style","width:auto;padding:0 14px;background:#c62f3a;font-size:15px"); } else imXoa(); }
+    else imDi(a==="next" ? 1 : -1);
+    return; }
   if(e.target===imPop) dongIm();
 };
+let imX0 = 0, imY0 = 0;
+imPop.addEventListener("touchstart", e => { if(e.touches.length===1){ imX0 = e.touches[0].clientX; imY0 = e.touches[0].clientY; } }, {passive:true});
+imPop.addEventListener("touchend", e => {
+  const c = e.changedTouches[0]; if(!c) return;
+  const dx = c.clientX-imX0, dy = c.clientY-imY0;
+  if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.5) imDi(dx<0 ? 1 : -1);        // vuốt trái: ảnh kế tiếp, vuốt phải: ảnh trước
+}, {passive:true});
 imPop.addEventListener("error", e => { if(e.target.id==="imImg") document.getElementById("imCnt").textContent += " · "+t("anhLoi"); }, true);
 
 // ----- Chia sẻ lịch bằng mã QR -----
@@ -3263,12 +3299,12 @@ function layViTri(){
 
 // ----- Tải và hiển thị dữ liệu -----
 async function layDuLieu(p){
-  const kc = p.lat+","+p.lon, cu = CACHE[kc];
+  const kc = p.lat+","+p.lon+","+dvNhiet(), cu = CACHE[kc];
   if(cu && Date.now()-cu.t < 600000) return cu;   // dùng lại dữ liệu mới tải trong 10 phút
   const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}`
     +`&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,cloud_cover,precipitation,is_day`
     +`&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,sunrise,sunset`
-    +`&hourly=relative_humidity_2m,temperature_2m,precipitation_probability,wind_speed_10m&timezone=auto&forecast_days=10`).then(r=>r.json());
+    +`&hourly=relative_humidity_2m,temperature_2m,precipitation_probability,wind_speed_10m&timezone=auto&forecast_days=10`+(dvNhiet()==="F" ? "&temperature_unit=fahrenheit" : "")).then(r=>r.json());
   let aqi = {}, aqiNow = null;
   try{
     const a = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${p.lat}&longitude=${p.lon}`
@@ -3295,7 +3331,7 @@ async function tai(p){
     // Ô 1: thông số hiện tại
     const boxNow = '<div class="box"><h2>'+esc(ten(p))+' · '+t("updated")+' '+c.time.slice(11,16)+'</h2>'
       +'<div class="gio dongho"></div>'
-      +'<div class="now"><div class="icon">'+icon+'</div><div><div class="temp">'+Math.round(c.temperature_2m)+'°C</div>'
+      +'<div class="now"><div class="icon">'+icon+'</div><div><div class="temp">'+Math.round(c.temperature_2m)+'°'+dvNhiet()+'</div>'
       +'<div>'+chu+' · '+t("feels")+' '+Math.round(c.apparent_temperature)+'°</div></div></div>'
       +'<div class="chips">'
       +'<div class="chip">'+t("hum")+'<b>'+Math.round(c.relative_humidity_2m)+'%</b></div>'

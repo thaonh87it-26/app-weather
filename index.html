@@ -12,6 +12,9 @@
 <meta property="og:image" content="icon-512.png">
 <script>(function(){function h(m){try{var b=document.getElementById("tpLoi");if(!b){b=document.createElement("div");b.id="tpLoi";b.style.cssText="position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#c62f3a;color:#fff;font:12px/1.4 sans-serif;padding:6px 10px;max-height:30vh;overflow:auto;white-space:pre-wrap";b.onclick=function(){b.remove()};(document.body||document.documentElement).appendChild(b)}if(b.textContent.length<800)b.textContent+=m+"\n"}catch(_){}}
 window.addEventListener("error",function(e){h("Lỗi: "+e.message+" ("+(e.lineno||"?")+")")});window.addEventListener("unhandledrejection",function(e){h("Lỗi: "+(e.reason&&e.reason.message||e.reason))})})();</script>
+<script>(function(){
+if(/[?&]reset=1/.test(location.search)){(async function(){try{var rs=await navigator.serviceWorker.getRegistrations();for(var r of rs)await r.unregister();var ks=await caches.keys();for(var k of ks)await caches.delete(k)}catch(e){}location.replace(location.pathname)})()}
+setTimeout(function(){if(window.__tpReady)return;var b=document.createElement("div");b.id="tpFixBox";b.style.cssText="position:fixed;left:8px;right:8px;top:8px;z-index:9999;background:#12303f;color:#fff;padding:10px 12px;border-radius:12px;font:14px/1.4 sans-serif";b.innerHTML='Ứng dụng khởi động chậm. <button id="tpFix" style="margin-left:8px;padding:6px 12px;border:0;border-radius:8px;background:#fff;color:#12303f;font-weight:700">Làm mới</button>';(document.body||document.documentElement).appendChild(b);document.getElementById("tpFix").onclick=function(){location.href=location.pathname+"?reset=1"}},6000)})();</script>
 <script>try{var f=parseFloat(localStorage.getItem("tpFs"));if(f>=.8&&f<=1.5)document.documentElement.style.setProperty("--fs",f)}catch(e){}</script>
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -326,7 +329,200 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,.btn:focus-visib
 .gc-it>div:nth-child(2){flex:1;min-width:0}
 .gc-it .ti{flex:none;align-self:center;display:flex;gap:5px;font-size:calc(14px * var(--fs,1))}
 .seg button{padding-left:10px;padding-right:10px}
+
+/* ===== v1.0.1.31 ===== */
+.tim{margin-bottom:6px}
+.tim input{width:100%;box-sizing:border-box;min-height:36px;padding:6px 10px;border:1px solid var(--vien);border-radius:10px;font:inherit;font-size:calc(14px * var(--fs,1))}
+
 </style>
+<style id="styDem" media="not all">
+/* ===== v1.0.1.32: giao diện kính tối (thẻ mờ bo tròn, chữ sáng, nút viên thuốc) ===== */
+:root{--chu:#eef2fb;--chinh:#4a9be8;--nk:#3fbf8a;--do:#e5484d;--phu:rgba(255,255,255,.13);--vien:rgba(255,255,255,.18);--mo:rgba(238,242,251,.62);--kinh:rgba(14,22,52,.68);color-scheme:dark}
+/* thẻ trên màn hình chính */
+.box{border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:12px 14px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 4px 18px rgba(0,0,0,.2)}
+.box h2{font-weight:500;opacity:.7}
+#up{padding:10px 14px}
+.now .temp{font-size:calc(44px * var(--fs,1));font-weight:300;letter-spacing:-1px}
+.now .icon{font-size:calc(40px * var(--fs,1))}
+.chip{background:rgba(255,255,255,.08);border-radius:14px;padding:5px 4px}
+.day{background:rgba(255,255,255,.07);border-radius:16px}
+.day.sel{background:rgba(255,255,255,.16);border-color:#f5c542}
+.cao{color:#ffc94d}.thap{color:#6ec1ff}
+.tabs button{background:rgba(255,255,255,.16);color:#fff}
+.tabs button.on{background:#fff;color:#14204a}
+.seg button{background:rgba(255,255,255,.12);color:var(--chu)}
+.seg button.on{background:#fff;color:#14204a}
+.kieu button.on{border-color:#f5c542}
+.up-it{border-top-color:rgba(255,255,255,.1)}
+.up-it .u,.gc-it .g{color:#8fcaff}
+.up-it.nk .nd{color:#7fe0b4}
+.up-list .up-mh{background:#263f78;color:#b9dcff;border-left-color:#4a9be8}
+.up-list .up-mh.hn{background:#5b4a1b;color:#ffd873;border-left-color:#f5c542}
+.mh{color:var(--mo)}.mh.hn{color:#8fcaff}
+.ib{background:rgba(255,255,255,.15);color:#fff}
+.xd{background:rgba(229,72,77,.22);color:#ff9aa0}
+.wx{background:linear-gradient(180deg,#1b2d63 0%,#2d57a0 62%,#69a0d8 100%)}
+/* hộp thoại / form */
+.lich-bg{background:rgba(3,8,24,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.lich,.ct,.ap{background:linear-gradient(180deg,#1c2a58 0%,#131c40 100%);color:var(--chu);border:1px solid rgba(255,255,255,.1);border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.lich-h{background:transparent;padding:12px 14px 8px}
+.lich-h b,.ct-h b{font-weight:600;color:#fff}
+.ct-h{background:linear-gradient(90deg,rgba(74,155,232,.32),rgba(74,155,232,0))}
+.ct-h.nk{background:linear-gradient(90deg,rgba(63,191,138,.34),rgba(63,191,138,0))}
+.ct-f,.ap2-f{background:transparent;border-top:1px solid rgba(255,255,255,.1)}
+.ap hr{border-top:1px solid rgba(255,255,255,.12)!important}
+.ct-e{background:rgba(229,72,77,.2);color:#ff9aa0}
+.err,.al-it b{color:#ff8a91}
+.ok{color:#7fe0b4}
+.lich-w div{background:rgba(255,255,255,.06);color:var(--mo);font-weight:600}
+.lich-w{border-color:rgba(255,255,255,.18)}
+.lich-g{border-color:rgba(255,255,255,.18)}
+.lich-g div{border-color:rgba(255,255,255,.08)}
+.lich-g .a{color:rgba(238,242,251,.6)}
+.t7{color:#ff9e9e}.cn{color:#ff7b7b}
+.lich-g .gc{background:rgba(245,197,66,.26)}
+.lich-g .nk{background:rgba(63,191,138,.26)}
+.lich-g .nay,.lich-g .nay.gc,.lich-g .nay.nk,.lich-g .nay.gc.nk{background:rgba(74,155,232,.55)}
+.lich-g .nay .a{color:#fff}
+.lich-g .chon{outline-color:#8fcaff}
+.lich-f{color:var(--mo)}
+.lich-f button{background:rgba(255,255,255,.14);color:#fff}
+.lich-f button.dg{background:rgba(229,72,77,.22);color:#ff9aa0}
+.gcp,.ap2-f{border-top-color:rgba(255,255,255,.1)}
+.lich>.gcp .gcp-h{background:#18224a}
+.gc-it{background:rgba(255,255,255,.07)}
+.gc-it.nk{background:rgba(63,191,138,.14);border-left-color:var(--nk)}
+.btn,.rg button,.mi,.loai button{color:#fff}
+.btn.p{background:linear-gradient(135deg,#4aa3f0,#3a7bd5);color:#fff}
+.ct-h.nk ~ .ct-f .btn.p{background:linear-gradient(135deg,#46cf97,#2e9d6b)}
+.loai button{background:rgba(255,255,255,.08);border-color:var(--vien)}
+.loai button.on{background:var(--chinh);border-color:var(--chinh);color:#fff}
+.fm .rd label,.fm .ck{color:var(--chu)}
+.rg label{color:var(--mo)}
+.vc,.lkb{background:rgba(255,255,255,.08)}
+.qr-c{background:#fff;padding:8px;border:0}
+.at{background:rgba(255,255,255,.1)}
+/* ô nhập */
+.lich input:not([type=checkbox]):not([type=radio]):not([type=range]),.lich select,.lich textarea,.ct input:not([type=checkbox]):not([type=radio]):not([type=range]),.ct select,.ct textarea,.ap input:not([type=checkbox]):not([type=radio]):not([type=range]),.ap select,.ap textarea,.tim input,.rg input,.fm input:not([type=checkbox]):not([type=radio]),.fm select,.fm textarea,[style*="#b8c7d0"]{background:rgba(255,255,255,.08)!important;color:#fff!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:14px!important}
+[style*="background:#fff"]{background:transparent!important}
+input::placeholder,textarea::placeholder{color:rgba(238,242,251,.45)}
+input[type=checkbox],input[type=radio],input[type=range]{accent-color:#4aa3f0}
+.seg{overflow-x:auto}
+.seg button{white-space:nowrap;flex:none;min-height:0;padding:5px 9px;font-size:calc(14px * var(--fs,1))}
+.ap2-b>b{display:block;font-size:calc(14px * var(--fs,1));margin-top:2px}
+</style>
+<style id="stySang">
+/* Bầu trời (nền sáng): số nhiệt độ trên biểu đồ cần màu đậm hơn */
+svg.chart text[fill="#f5c542"]{fill:#c77d00}
+svg.chart text[fill="#5db7ef"]{fill:#0f5f8c}
+</style>
+<style id="styIos" media="not all">
+/* ===== Kiểu iPhone: font hệ thống, thẻ trong mờ, bảng trượt từ dưới, công tắc, nút xanh iOS ===== */
+:root{--chu:#fff;--chinh:#007aff;--nk:#34c759;--do:#ff3b30;--phu:rgba(118,118,128,.14);--vien:#c6c6c8;--mo:#8e8e93;--kinh:rgba(38,58,92,.4)}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",system-ui,"Helvetica Neue",Arial,sans-serif;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+.box{border:.5px solid rgba(255,255,255,.28);border-radius:20px;padding:12px 14px;-webkit-backdrop-filter:blur(24px) saturate(1.6);backdrop-filter:blur(24px) saturate(1.6);box-shadow:none;color:#fff}
+.box h2{font-size:calc(12px * var(--fs,1));font-weight:600;text-transform:uppercase;letter-spacing:.03em;opacity:.7}
+#up{padding:10px 14px}
+svg.chart{color:#fff}
+.now .temp{font-size:calc(48px * var(--fs,1));font-weight:200;letter-spacing:-2px}
+.now .icon{font-size:calc(40px * var(--fs,1))}
+.chip{background:rgba(255,255,255,.14);border-radius:12px}
+.day{background:rgba(255,255,255,.12);border-radius:14px}
+.day.sel{background:rgba(255,255,255,.28);border-color:#fff}
+.cao{color:#ffd60a}.thap{color:#64d2ff}
+.tabs button{background:rgba(255,255,255,.26);color:#fff;font-weight:500}
+.tabs button.on{background:#fff;color:#007aff;font-weight:600}
+.seg{background:rgba(118,118,128,.32);border-radius:9px;padding:2px;gap:0;overflow-x:auto}
+.seg button{white-space:nowrap;flex:1 0 auto;min-height:0;padding:5px 9px;border-radius:7px;background:transparent;color:#fff;font-weight:500}
+.seg button.on{background:#fff;color:#000;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.up-it{border-top:.5px solid rgba(255,255,255,.22)}
+.up-it .u,.gc-it .g{color:#9fd0ff}
+.up-it.nk .nd{color:#7be0a0}
+.up-list .up-mh{background:rgba(255,255,255,.16);color:#fff;border-left:0;border-radius:8px;padding:4px 8px}
+.up-list .up-mh.hn{background:rgba(255,149,0,.5);color:#fff}
+.mh{color:var(--mo)}.mh.hn{color:#9fd0ff}
+.ib{background:rgba(255,255,255,.22);color:#fff}
+.xd{background:rgba(255,59,48,.28);color:#ffb3ae}
+.btn.up-add{background:#007aff;color:#fff;box-shadow:0 2px 8px rgba(0,122,255,.5)}
+.wx{background:linear-gradient(180deg,#2b6cc4 0%,#5aa0e8 62%,#a8d4f7 100%)}
+/* bảng trượt từ dưới lên */
+.lich-bg{background:rgba(0,0,0,.4);align-items:flex-end;padding:0}
+.lich,.ct,.ap{--chu:#000;background:#f2f2f7;color:#000;border-radius:20px 20px 0 0;box-shadow:0 -4px 30px rgba(0,0,0,.25);border:0;max-width:560px;max-height:min(92%, calc(100dvh - 30px));padding-bottom:env(safe-area-inset-bottom,0px)}
+#xnPop,#alPop{align-items:center;padding:20px}
+#xnPop .lich,#alPop .lich,#xnPop .xn-box,#alPop .xn-box{border-radius:14px;max-width:320px}
+.lich-h,.ct-h{background:transparent;color:#000;border-bottom:.5px solid #c6c6c8}
+.lich-h b,.ct-h b{color:#000;font-weight:600}
+.ct-h.nk{background:transparent}.ct-h.nk b{color:#34c759}
+.lich-h button,.ct-h button{background:rgba(118,118,128,.14);color:#8e8e93}
+.ct-f,.ap2-f{background:#f2f2f7;border-top:.5px solid #c6c6c8}
+.ct-e{background:#ffe5e3;color:#ff3b30}
+.err,.al-it b{color:#ff3b30}
+.ok{color:#34c759}
+.ap hr{border-top:.5px solid #c6c6c8!important}
+.ap2-b>b{display:block;font-size:calc(13px * var(--fs,1));text-transform:uppercase;letter-spacing:.02em;color:#8e8e93;margin:10px 0 4px 4px}
+/* lịch tháng */
+.lich-w,.lich-g{border:0;margin:0 8px;border-radius:0;overflow:visible}
+.lich-w div{background:transparent;color:#8e8e93;font-weight:600}
+.lich-g div{border:0;height:calc(46px * var(--fs,1))}
+.lich-g .a{color:#8e8e93}
+.t7{color:#000}.cn{color:#8e8e93}.lich-w .t7,.lich-w .cn{color:#8e8e93}
+.lich-g .gc{background:#fff3c8;border-radius:10px}
+.lich-g .nk{background:#d9f4e3;border-radius:10px}
+.lich-g .nay,.lich-g .nay.gc,.lich-g .nay.nk,.lich-g .nay.gc.nk{background:transparent;box-shadow:none}
+.lich-g .nay .s{background:#ff3b30;color:#fff;border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;margin:-3px 0 0 -5px}
+.lich-g .chon{outline:2px solid #007aff;border-radius:10px}
+.lich-f{color:#8e8e93}
+.lich-f button{background:rgba(118,118,128,.14);color:#007aff;border-radius:10px}
+.lich-f button.dg{background:#ffe5e3;color:#ff3b30}
+.lich>.gcp .gcp-h{background:#f2f2f7}
+.gcp{border-top:.5px solid #c6c6c8}
+.gc-it{background:#fff;border-radius:12px}
+.gc-it.nk{background:#fff;border-left:4px solid #34c759}
+/* nút */
+.btn,.rg button,.mi{border-radius:12px;background:rgba(118,118,128,.14);color:#007aff;font-weight:600}
+.mi{background:#fff;color:#000;font-weight:500}
+.btn.p{background:#007aff;color:#fff}
+.ct-h.nk ~ .ct-f .btn.p{background:#34c759}
+.btn.d{background:#ff3b30;color:#fff}
+.btn.zl,.btn.ms{background:rgba(118,118,128,.14);color:#007aff;box-shadow:none}
+.loai{background:rgba(118,118,128,.14);padding:2px;border-radius:9px;gap:0}
+.loai button{border:0;background:transparent;color:#000;border-radius:7px;min-height:30px}
+.loai button.on{background:#fff;color:#000;box-shadow:0 1px 3px rgba(0,0,0,.25);font-weight:600}
+.fm .rd label,.fm .ck,.ap .ck{color:#000}
+.rg label{color:#8e8e93}
+.vc,.lkb{background:#fff}
+.qr-c{background:#fff;padding:8px;border:0}
+.at{background:#e5e5ea}
+/* ô nhập: nền trắng bo tròn như nhóm nhập liệu của iOS */
+.lich input:not([type=checkbox]):not([type=radio]):not([type=range]),.lich select,.lich textarea,.ct input:not([type=checkbox]):not([type=radio]):not([type=range]),.ct select,.ct textarea,.ap input:not([type=checkbox]):not([type=radio]):not([type=range]),.ap select,.ap textarea,.rg input,.fm input:not([type=checkbox]):not([type=radio]),.fm select,.fm textarea,[style*="#b8c7d0"]{background:#fff!important;color:#000!important;border:0!important;border-radius:10px!important;padding:10px!important}
+.lich .tim input{background:rgba(118,118,128,.14)!important}
+.box .tim input{background:rgba(255,255,255,.2)!important;color:#fff!important}
+[style*="background:#fff"]{background:transparent!important}
+input::placeholder,textarea::placeholder{color:#8e8e93}
+input[type=range]{accent-color:#007aff}
+/* công tắc kiểu iOS cho ô chọn, dấu ✓ cho lựa chọn một */
+.fm .ck,.ap .ck{flex-direction:row-reverse;justify-content:space-between;background:#fff;padding:9px 14px;border-radius:12px;margin:4px 0}
+.ck input[type=checkbox]{-webkit-appearance:none;appearance:none;width:51px!important;height:31px!important;border-radius:16px;background:#e9e9ea;position:relative;flex:none;margin:0!important;border:0;cursor:pointer;transition:background .2s}
+.ck input[type=checkbox]::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.3);transition:transform .2s}
+.ck input[type=checkbox]:checked{background:#34c759}
+.ck input[type=checkbox]:checked::after{transform:translateX(20px)}
+.ck input[type=radio]{-webkit-appearance:none;appearance:none;width:22px!important;height:22px!important;margin:0!important;border:0;background:transparent;position:relative;flex:none}
+.ck input[type=radio]:checked::after{content:"✓";position:absolute;inset:0;color:#007aff;font-size:20px;line-height:22px;text-align:center;font-weight:700}
+#toast{background:rgba(40,40,44,.92);border-radius:16px}
+
+/* ===== v1.0.1.35: tìm kiếm ẩn, bấm 🔍 mới hiện ===== */
+.lich-hb{display:flex;gap:6px;align-items:center}
+.tc-s.on{box-shadow:inset 0 0 0 2px rgba(255,255,255,.95)}
+.tim{margin-bottom:4px}
+.tim input{min-height:32px!important;padding:4px 10px!important}
+
+/* ===== v1.0.1.36: lọc ngày một hàng ngang ===== */
+.rg1{align-items:center;flex-wrap:nowrap;gap:6px}
+.rg1 input{flex:1 1 0;min-width:0;min-height:34px!important;padding:4px 6px}
+.rg1 .rg-m{flex:none;opacity:.55;align-self:center;line-height:1;margin:0;padding:0}
+.rg1 button{flex:none;width:34px;min-height:34px!important;height:34px;padding:0!important;border-radius:50%}
+</style>
+<script>try{var _v=localStorage.getItem("tpStyle");if(_v==="dem"||_v==="ios"){document.getElementById("stySang").media="not all";document.getElementById(_v==="dem"?"styDem":"styIos").media="all";document.querySelector('meta[name="theme-color"]').content=_v==="dem"?"#101a3f":"#3a7bd5"}}catch(e){}</script>
 </head>
 <body>
 <div class="bg">
@@ -1350,7 +1546,7 @@ vi:{
   loading:"Đang tải dữ liệu...", loadErr:"Không tải được dữ liệu. Hãy kiểm tra kết nối mạng, rồi vào Menu › Xem thời tiết và bấm lại tên địa điểm.",
   empty:"Chưa có thành phố nào. Vào Menu › Xem thời tiết, bấm Thêm để chọn thành phố.", findAddr:"Đang xác định địa chỉ...",
   lunar:"Âm lịch", leap:"nhuận",
-  upT:"Lịch & nhật ký", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", rY:"Hôm qua", nNoneY:"Hôm qua không có lịch nào.", tomorrow:"Ngày mai", nOpen:"Mở lịch",
+  upT:"Lịch & nhật ký", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", tcFind:"Tìm theo nội dung (mọi ngày)", rY:"Hôm qua", nNoneY:"Hôm qua không có lịch nào.", tomorrow:"Ngày mai", nOpen:"Mở lịch",
   nNone7:"Không có lịch nào trong 7 ngày tới.", nNoneM:"Tháng này chưa có lịch nào.", nNoneT:"Hôm nay chưa có lịch nào.",
   fFrom:"Từ ngày", fTo:"Đến ngày", fAllTime:"Bỏ lọc", fOn:"📅 Lọc ngày", fEmpty:"Không có lịch hoặc nhật ký nào trong khoảng ngày này.", nAllBtn:"Tất cả lịch & nhật ký", nAllT:"Tất cả lịch & nhật ký", dAll:"Xóa tất cả", dAllAsk:"Xóa tất cả lịch?", dAllN:"Sẽ xóa {n} lịch (nhật ký được giữ nguyên). Không thể hoàn tác.", dAllWarn:"Nên sao lưu trước khi xóa tất cả.", dAllBk:"Sao lưu ngay", dAllDone:"Đã sao lưu: {f}", nAllEmpty:"Chưa có lịch hay nhật ký nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có lịch hoặc nhật ký nào.", nWholeM:"Cả tháng",
   nDelAsk1:"Xóa ghi chú này?", nDelRep:"Ghi chú này có lặp lại: tất cả các ngày lặp lại cũng sẽ bị xóa.",
@@ -1379,7 +1575,9 @@ vi:{
   anhT:"Ảnh", anhMay:"Chọn từ máy", anhCam:"Chụp ảnh", anhAdd:"Thêm", anhErr:"Không thêm được ảnh. Hãy thử ảnh khác (JPG/PNG).", anhUrlBad:"Đường dẫn ảnh phải bắt đầu bằng http:// hoặc https://.", anhLoi:"không tải được ảnh", anhMax:"Tối đa {n} ảnh cho mỗi nhật ký.",
   anhNote:"Nhật ký chỉ lưu đường dẫn ảnh (không lưu dữ liệu ảnh). Ảnh chọn từ máy hoặc chụp được giữ trong bộ nhớ của ứng dụng trên máy này; muốn xem trên máy khác, hãy dùng đường dẫn (URL) ảnh trên mạng.",
   setNotiSt:"Chưa bật.", setNotiAsk:"Đã lưu lựa chọn. Chưa được cấp quyền thông báo hệ thống nên thông báo sẽ hiện ngay trong ứng dụng khi đang mở; bấm Gửi thử để cấp quyền.",
+  styT:"Giao diện", styDem:"Đêm sao", styDemD:"kính tối, thẻ mờ bo tròn", stySang:"Bầu trời", stySangD:"nền sáng, xanh dương", styIos:"iPhone", styIosD:"trong mờ, công tắc, bảng trượt từ dưới",
   dvT:"Đơn vị nhiệt độ", dvC:"Độ C (°C)", dvF:"Độ F (°F)",
+  lmApp:"Làm mới ứng dụng", updT:"Có bản mới", updB:"Đóng rồi mở lại ứng dụng để dùng bản mới.",
   anhNoi:"Nơi lưu ảnh", anhNoiMay:"Vào máy", anhNoiApp:"Ứng dụng", anhNoiD:"Vào máy: ảnh chụp được tải về máy (Tải xuống/Thư viện), app chỉ giữ bản thu nhỏ để hiển thị. Ứng dụng: ảnh chỉ nằm trong app (nét hơn) và được quản lý bên dưới.",
   anhQl:"Quản lý ảnh", anhQlSum:"{n} ảnh · {s}", anhQlNone:"Chưa có ảnh nào trong ứng dụng.", anhDelAll:"Xóa tất cả", anhDelAllAsk:"Xóa tất cả {n} ảnh? Ảnh sẽ mất khỏi các nhật ký/lịch đang dùng. Không thể hoàn tác.", anhDelOk:"Xóa", anhSavedF:"Đã tải ảnh về máy: {f}",
   setNoti:"Gửi thông báo trước khi có lịch", setNotiMin:"Báo trước", setNotiPh:"phút", setNotiD:"Thông báo gửi cho các lịch có giờ (không áp dụng cho lịch cả ngày và nhật ký). Thông báo và báo thức chỉ hoạt động khi ứng dụng đang mở hoặc đang chạy nền; nếu điện thoại đã tắt hẳn ứng dụng thì sẽ không báo được.", setNotiDeny:"Thông báo đang bị chặn. Hãy cho phép thông báo cho trang này trong cài đặt trình duyệt rồi bật lại.", setNotiNo:"Trình duyệt này không hỗ trợ thông báo.", setNotiTest:"🔔 Thử thông báo", setNotiOk:"Đã bật thông báo.", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
@@ -1400,7 +1598,7 @@ en:{
   loading:"Loading data...", loadErr:"Could not load data. Check your connection, then open Menu › View weather and tap the place name again.",
   empty:"No city yet. Open Menu › View weather and tap Add to choose one.", findAddr:"Finding address...",
   lunar:"Lunar", leap:"leap",
-  upT:"Schedule & journal", r7:"7 days", rM:"This month", rT:"Today", rY:"Yesterday", nNoneY:"Nothing scheduled yesterday.", tomorrow:"Tomorrow", nOpen:"Open calendar",
+  upT:"Schedule & journal", r7:"7 days", rM:"This month", rT:"Today", tcFind:"Search text (all dates)", rY:"Yesterday", nNoneY:"Nothing scheduled yesterday.", tomorrow:"Tomorrow", nOpen:"Open calendar",
   nNone7:"Nothing scheduled in the next 7 days.", nNoneM:"Nothing scheduled this month.", nNoneT:"Nothing scheduled today.",
   fFrom:"From date", fTo:"To date", fAllTime:"Clear filter", fOn:"📅 Filter dates", fEmpty:"No schedule or journal in this date range.", nAllBtn:"All schedule & journal", nAllT:"All schedule & journal", dAll:"Delete all", dAllAsk:"Delete all schedule items?", dAllN:"This will delete {n} schedule items (journal entries are kept). It cannot be undone.", dAllWarn:"Back up your notes before deleting everything.", dAllBk:"Back up now", dAllDone:"Backed up: {f}", nAllEmpty:"No schedule or journal yet.", nMonthT:"Month", nMonthEmpty:"No schedule or journal this month.", nWholeM:"Whole month",
   nDelAsk1:"Delete this note?", nDelRep:"This note repeats: every repeat of it will be removed too.",
@@ -1429,7 +1627,9 @@ en:{
   anhT:"Photos", anhMay:"From device", anhCam:"Camera", anhAdd:"Add", anhErr:"Could not add the photo. Try another one (JPG/PNG).", anhUrlBad:"The photo link must start with http:// or https://.", anhLoi:"photo failed to load", anhMax:"Up to {n} photos per journal entry.",
   anhNote:"The journal stores photo links only (no image data). Photos picked from the device or taken with the camera are kept in this app's storage on this device; to see them on another device, use an online photo link (URL).",
   setNotiSt:"Off.", setNotiAsk:"Saved. System notification permission is not granted yet, so notices will appear inside the app while it is open; tap Send test to grant it.",
+  styT:"Appearance", styDem:"Starry night", styDemD:"dark glass, rounded cards", stySang:"Clear sky", stySangD:"light, blue tones", styIos:"iPhone", styIosD:"frosted glass, switches, bottom sheets",
   dvT:"Temperature unit", dvC:"Celsius (°C)", dvF:"Fahrenheit (°F)",
+  lmApp:"Refresh app", updT:"New version", updB:"Close and reopen the app to use the new version.",
   anhNoi:"Photo storage", anhNoiMay:"Device", anhNoiApp:"App", anhNoiD:"Device: camera photos are downloaded to your device (Downloads/Gallery) and the app keeps only a small copy to display. App: photos stay inside the app (sharper) and are managed below.",
   anhQl:"Manage photos", anhQlSum:"{n} photos · {s}", anhQlNone:"No photos in the app yet.", anhDelAll:"Delete all", anhDelAllAsk:"Delete all {n} photos? They will disappear from the journal entries/schedules using them. This cannot be undone.", anhDelOk:"Delete", anhSavedF:"Photo saved to device: {f}",
   setNoti:"Send a notification before a schedule", setNotiMin:"Notify", setNotiPh:"minutes before", setNotiD:"Notifications are sent for schedules with a time (not all-day items or journal entries). Notifications and alarms only work while the app is open or running in the background; if the phone has fully closed the app, nothing can be sent.", setNotiDeny:"Notifications are blocked. Allow notifications for this site in the browser settings, then turn this on again.", setNotiNo:"This browser does not support notifications.", setNotiTest:"🔔 Test notification", setNotiOk:"Notifications enabled.", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
@@ -1800,6 +2000,7 @@ function moLich(ds, xem){
   veLich(); lichPop.hidden = false;
 }
 // Lọc từ ngày đến ngày ở màn "Tất cả lịch & nhật ký": mặc định lấy khoảng đang chọn ở màn hình chính (7 ngày / tháng này / hôm nay)
+let tcQ = "", tcMo = false;                          // tcMo: ô tìm kiếm đang mở (mặc định ẩn)
 let lichXem = false;                              // true: mở từ ngày/âm lịch ở góc trên - chỉ xem ngày, không hiện lịch cá nhân/nhật ký
 let rgOn = true, rgTu = "", rgDen = "";
 function rgMacDinh(){
@@ -1810,7 +2011,7 @@ function rgMacDinh(){
   return [hom, addDays(hom,6)];
 }
 function moTatCa(){
-  lichXem = false; locLoai = "all"; lichView = "all"; lichSel = "";
+  tcQ = ""; tcMo = false; lichXem = false; locLoai = "all"; lichView = "all"; lichSel = "";
   rgOn = true; [rgTu, rgDen] = rgMacDinh(); veLich.vk = "";
   veLich(); lichPop.hidden = false;
 }
@@ -1837,7 +2038,7 @@ function chonNgay(ds){ lichSel = ds; const q2 = parseD(ds); lichY = q2[0]; lichM
 const ghiHead = (btn) => '<div class="gcp-h"><b>'+thuDai(lichSel)+', '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</b>'+(btn||"")+'</div>';
 function panelXem(){                 // chỉ xem ngày: không liệt kê lịch cá nhân / nhật ký
   const ds = lichSel || homNay(), [y,m,d] = parseD(ds);
-  return '<div class="gcp-h"><b>'+ngayNgan(ds)+'</b></div><div class="note" style="padding:6px 2px;font-size:calc(14px * var(--fs,1))"><b>'+t("lunar")+':</b> '+nhanAm(d,m,y)+'</div>';
+  return '<div class="gcp-h"><b>'+ngayNgan(ds)+'</b></div><div class="note" style="padding:6px 2px;font-size:calc(14px * var(--fs,1))">'+nhanAm(d,m,y)+'</div>';
 }
 function panelList(){              // lịch của MỘT ngày đã chọn
   const ls = ghiChuNgay(lichSel).filter(passLoc);
@@ -1998,14 +2199,16 @@ ctPop.onchange = e => {
   if(f!=="nd" && f!=="gio") veCt();
 };
 
-function veTatCa(){                // màn hình "Tất cả lịch & nhật ký": nhóm theo từng ngày, kèm nút xóa nhanh, có lọc từ ngày đến ngày
+const boDau = x => String(x).normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"d").toLowerCase();
+const passTim = n => !tcQ || boDau(n.nd).indexOf(boDau(tcQ.trim()))>=0;       // tìm theo nội dung, không phân biệt hoa thường và dấu
+function tcDs(){
   const hom = homNay(), items = [];
-  if(rgOn){                                          // trong khoảng ngày: mở rộng cả các lần lặp lại, giống màn hình chính
+  if(rgOn && !tcQ){                                          // trong khoảng ngày: mở rộng cả các lần lặp lại, giống màn hình chính
     const dif = x => { const [y,m,d] = parseD(x); return Date.UTC(y,m-1,d)/864e5; };
     const soNgay = Math.min(3660, dif(rgDen)-dif(rgTu)+1);
-    for(let i=0;i<soNgay;i++){ const day = addDays(rgTu,i); ghiChuNgay(day).filter(passLoc).forEach(n=>items.push({day, n})); }
+    for(let i=0;i<soNgay;i++){ const day = addDays(rgTu,i); ghiChuNgay(day).filter(n=>passLoc(n) && passTim(n)).forEach(n=>items.push({day, n})); }
   } else {                                           // bỏ lọc: toàn bộ ghi chú, mỗi ghi chú một dòng theo ngày gốc
-    GC.filter(passLoc).sort((a,b)=>a.ngay.localeCompare(b.ngay) || (a.gio||"").localeCompare(b.gio||"")).forEach(n=>items.push({day:n.ngay, n}));
+    GC.filter(n=>passLoc(n) && passTim(n)).sort((a,b)=>a.ngay.localeCompare(b.ngay) || (a.gio||"").localeCompare(b.gio||"")).forEach(n=>items.push({day:n.ngay, n}));
   }
   let body = "", cur = "";
   items.forEach(({day, n})=>{
@@ -2019,12 +2222,21 @@ function veTatCa(){                // màn hình "Tất cả lịch & nhật ký
       +'<button class="xd" data-del="'+n.id+'" title="'+t("nDel")+'" aria-label="'+t("nDel")+'">🗑</button></div>';
   });
   if(!items.length) body = '<div class="note">'+t(rgOn ? "fEmpty" : "nAllEmpty")+'</div>';
+  return {body, n:items.length};
+}
+function capNhatTim(){                                  // chỉ vẽ lại danh sách để ô nhập không mất con trỏ / bàn phím
+  const r = tcDs(), g = lichPop.querySelector(".gcp"); if(g) g.innerHTML = r.body;
+  const b = lichPop.querySelector(".lich-h b"); if(b) b.textContent = "📋 "+t("nAllT")+" ("+r.n+")";
+  const x = lichPop.querySelector('[data-a="delAll"]'); if(x) x.style.display = tcQ ? "none" : "";
+}
+function veTatCa(){                // màn hình "Tất cả lịch & nhật ký": nhóm theo từng ngày, kèm nút xóa nhanh, có lọc từ ngày đến ngày
+  const {body, n:soMuc} = tcDs();
   const rg = rgOn
-    ? '<div class="rg"><label>'+t("fFrom")+'<input type="date" data-rg="tu" value="'+rgTu+'"></label><label>'+t("fTo")+'<input type="date" data-rg="den" value="'+rgDen+'"></label><button type="button" data-a="rgOff">'+t("fAllTime")+'</button></div>'
+    ? '<div class="rg rg1"><input type="date" data-rg="tu" title="'+t("fFrom")+'" aria-label="'+t("fFrom")+'" value="'+rgTu+'"><span class="rg-m">–</span><input type="date" data-rg="den" title="'+t("fTo")+'" aria-label="'+t("fTo")+'" value="'+rgDen+'"><button type="button" data-a="rgOff" title="'+t("fAllTime")+'" aria-label="'+t("fAllTime")+'">✕</button></div>'
     : '<div class="rg"><button type="button" data-a="rgOn">'+t("fOn")+'</button></div>';
-  return '<div class="lich" role="dialog" aria-modal="true"><div class="lich-h"><b>📋 '+t("nAllT")+' ('+items.length+')</b><button data-a="close" aria-label="'+t("close")+'">✕</button></div>'
-    + '<div style="padding:8px 12px 0;background:#fff">'+locBar()+rg+'</div><div class="gcp" style="border-top:0">'+body+'</div>'
-    + '<div class="lich-f"><span>'+(!rgOn && locLoai==="lich" && items.length ? '<button class="dg" data-a="delAll">🗑 '+t("dAll")+'</button>' : '')+'</span><span class="bt"><button data-a="add">'+t("nAdd")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
+  return '<div class="lich" role="dialog" aria-modal="true"><div class="lich-h"><b>📋 '+t("nAllT")+' ('+soMuc+')</b><span class="lich-hb"><button data-a="tcTim" class="tc-s'+(tcMo ? ' on' : '')+'" aria-label="'+esc(t("tcFind"))+'" title="'+esc(t("tcFind"))+'">🔍</button><button data-a="close" aria-label="'+t("close")+'">✕</button></span></div>'
+    + '<div style="padding:8px 12px 0;background:#fff">'+(tcMo ? '<div class="tim"><input type="search" id="tcQ" autocomplete="off" placeholder="'+esc(t("tcFind"))+'" value="'+esc(tcQ)+'"></div>'+locBar() : '')+rg+'</div><div class="gcp" style="border-top:0">'+body+'</div>'
+    + '<div class="lich-f"><span>'+(!rgOn && !tcQ && locLoai==="lich" && soMuc ? '<button class="dg" data-a="delAll">🗑 '+t("dAll")+'</button>' : '')+'</span><span class="bt"><button data-a="add">'+t("nAdd")+'</button><button data-a="close">'+t("close")+'</button></span></div></div>';
 }
 function veLich(){
   const cu = lichPop.querySelector(".lich"), cuon = cu ? cu.scrollTop : 0;
@@ -2091,6 +2303,7 @@ lichPop.onclick = e => {
   else if(a==="next") doiThang(1);
   else if(a==="today") chonNgay(homNay());
   else if(a==="close") dongLich();
+  else if(a==="tcTim"){ tcMo = !tcMo; if(!tcMo){ tcQ = ""; locLoai = "all"; } veLich(); if(tcMo){ const i = document.getElementById("tcQ"); if(i) i.focus(); } }   // bấm 🔍: mở/đóng ô tìm; đóng thì bỏ từ khóa
   else if(a==="delAll") hoiXoaHet();
   else if(a==="wholeMonth"){ lichSel = ""; lichView = "list"; veLich(); }
   else if(a==="add") batDauThem(lichView==="all" ? homNay() : ngayMacDinh(), locLoai==="nk");   // đang lọc Nhật ký thì chọn sẵn Nhật ký
@@ -2102,6 +2315,7 @@ lichPop.onclick = e => {
   else if(a==="rgOff"){ rgOn = false; veLich.vk = ""; veLich(); }                                  // bỏ lọc: xem toàn bộ
   else if(a==="rgOn"){ rgOn = true; [rgTu, rgDen] = rgMacDinh(); veLich.vk = ""; veLich(); }       // bật lọc: quay về khoảng của màn hình chính
 };
+lichPop.oninput = e => { if(e.target.id==="tcQ"){ tcQ = e.target.value; capNhatTim(); } };
 lichPop.onchange = e => {
   const k = e.target.dataset && e.target.dataset.rg; if(!k) return;
   const v = e.target.value;
@@ -2172,6 +2386,7 @@ appPop.onclick = e => {
   else if(a==="set") moCaiDat();
   else if(a==="log") moLichSu();
   else if(a==="notitest") notiThu();
+  else if(a==="lammoi") lamMoiApp();
   else if(a==="anhql") moAnhQL(false);
   else if(a==="anhdelall") moAnhQL(true);
   else if(a==="anhdelallok"){ anhTatCa().then(ds=>anhXoaId(ds.map(x=>x.id))).then(()=>moAnhQL(false)); }
@@ -2195,6 +2410,7 @@ appPop.onclick = e => {
 };
 appPop.onchange = e => {
   const id0 = e.target.id;
+  if(e.target.name==="kieuGd"){ stySet(e.target.value); return; }
   if(e.target.name==="dvNhiet"){ try{ localStorage.setItem("tpDvNhiet", e.target.value); }catch(_){} if(chon) tai(chon); return; }
   if(e.target.name==="anhNoi"){ try{ localStorage.setItem("tpAnhNoi", e.target.value); }catch(_){} const b = document.getElementById("anhQlBtn"); if(b) b.hidden = e.target.value!=="app"; return; }
   if(id0==="introHide"){ try{ localStorage.setItem("tpIntroHide", e.target.checked ? "1" : "0"); }catch(_){} return; }
@@ -2248,27 +2464,27 @@ function moGioiThieu(dau){                          // dau = true: tự mở khi
 }
 // Lịch sử cập nhật: thêm phiên bản mới lên đầu danh sách
 const LOG = [
+  {v:"1.0.1.36", d:"26/10/2026",
+   vi:["Tất cả lịch & nhật ký: bộ lọc Tất cả/Lịch/Nhật ký nằm cùng ô tìm kiếm (bấm 🔍 mới hiện); lọc ngày gọn thành một hàng ngang."],
+   en:["All schedule & journal: the All/Schedule/Journal filter now sits with the search box (tap 🔍 to show); the date filter is a single compact row."]},
+  {v:"1.0.1.35", d:"26/10/2026",
+   vi:["Tất cả lịch & nhật ký: ô tìm kiếm được ẩn, bấm biểu tượng 🔍 ở góc trên mới hiện (bấm lần nữa để đóng và xóa từ khóa)."],
+   en:["All schedule & journal: the search box is now hidden; tap the 🔍 icon at the top to show it (tap again to close and clear)."]},
+  {v:"1.0.1.34", d:"25/10/2026",
+   vi:["Giao diện: Bầu trời lên đầu và là mặc định; thêm kiểu iPhone (thẻ trong mờ, công tắc, bảng trượt từ dưới, nút xanh iOS)."],
+   en:["Appearance: Clear sky first and now the default; added an iPhone style (frosted cards, switches, bottom sheets, iOS blue buttons)."]},
+  {v:"1.0.1.33", d:"25/10/2026",
+   vi:["Cài đặt: thêm chọn Giao diện - Đêm sao (kính tối, mặc định) hoặc Bầu trời (nền sáng như trước)."],
+   en:["Settings: added Appearance - Starry night (dark glass, default) or Clear sky (the previous light look)."]},
+  {v:"1.0.1.32", d:"25/10/2026",
+   vi:["Giao diện mới kiểu kính tối: thẻ mờ bo tròn, chữ sáng, nút viên thuốc, số nhiệt độ lớn.","Đổi tất cả hộp thoại và form (lịch tháng, thêm/sửa lịch và nhật ký, cài đặt, sao lưu, xác nhận, quản lý ảnh) sang cùng phong cách."],
+   en:["New dark glass look: rounded translucent cards, light text, pill buttons, large temperature.","All dialogs and forms (month calendar, add/edit schedule and journal, settings, backup, confirmations, photo manager) now share the same style."]},
+  {v:"1.0.1.31", d:"23/10/2026",
+   vi:["Tất cả lịch & nhật ký: thêm ô tìm theo nội dung (không phân biệt hoa thường, dấu; tìm trong mọi ngày).","Khởi động: mở ngay từ bộ nhớ đệm không chờ mạng, tự cập nhật ngầm và báo khi có bản mới; mạng treo quá 15 giây thì bỏ.","Thêm Cài đặt › Làm mới ứng dụng và địa chỉ ?reset=1 để thoát khỏi trạng thái kẹt khi mở app (không mất dữ liệu)."],
+   en:["All schedules & journal: added a text search (case/accent-insensitive; searches all dates).","Startup: opens instantly from cache without waiting for the network, updates silently and tells you when a new version is ready; network calls stop after 15 seconds.","Added Settings › Refresh app and the ?reset=1 address to recover from a stuck start (no data loss)."]},
   {v:"1.0.1.30", d:"23/10/2026",
    vi:["Màn hình chính: nút thêm chỉ còn dấu ＋ nổi bật; thêm lọc Hôm qua.","Danh sách lịch trong Tất cả lịch/nhật ký: icon ảnh, lặp lại, báo thức căn lề phải.","Bấm ngày/âm lịch góc trên trái: chỉ hiện lịch tháng để xem ngày.","Sao lưu: thêm Xuất sang lịch máy (tất cả lịch có giờ) để điện thoại nhắc kể cả khi thoát app.","Phòng lỗi treo trên một số máy tính bảng; lỗi nếu có sẽ hiện ở đáy màn hình."],
    en:["Home: the add button is now a prominent ＋ icon; added a Yesterday filter.","Schedule lists in All: photo, repeat and alarm icons are right-aligned.","Tapping the date/lunar date at the top left now shows only the month calendar.","Backup: added Export to phone calendar (all timed schedules) so your phone reminds you even when the app is closed.","Safeguards against freezing on some tablets; any error is shown at the bottom of the screen."]},
-  {v:"1.0.1.29", d:"23/10/2026",
-   vi:["Chi tiết lịch: thêm nút Lịch máy - xuất file .ics để điện thoại tự nhắc và báo thức kể cả khi đã thoát app.","Danh sách lịch: nhóm ngày nổi bật, rõ ràng hơn; các icon ảnh, lặp lại, báo thức căn lề phải."],
-   en:["Schedule details: added Phone cal. - exports an .ics file so your phone reminds/alarms even when the app is closed.","Schedule list: clearer day groups; photo, repeat and alarm icons are right-aligned."]},
-  {v:"1.0.1.28", d:"23/10/2026",
-   vi:["Cài đặt: thêm đơn vị nhiệt độ (°C / °F, mặc định °C).","Menu: tách Quản lý ảnh thành mục riêng, dưới Xem thời tiết.","Xem ảnh: vuốt ngang để chuyển ảnh, thêm nút xóa ảnh.","Lịch tháng: viền bao quanh nhạt hơn. Lịch sử cập nhật chỉ giữ 7 bản gần nhất."],
-   en:["Settings: added temperature unit (°C / °F, default °C).","Menu: Manage photos is now its own item below View weather.","Photo viewer: swipe sideways to switch photos, plus a delete button.","Month calendar: lighter border. Update history keeps the last 7 versions."]},
-  {v:"1.0.1.27", d:"23/10/2026",
-   vi:["Cài đặt: thêm Nơi lưu ảnh (Vào máy / Ứng dụng, mặc định Vào máy). Vào máy: ảnh chụp được tải về máy, app giữ bản thu nhỏ. Ứng dụng: có mục Quản lý ảnh - xem dung lượng, xem tất cả ảnh, xóa từng ảnh hoặc xóa tất cả."],
-   en:["Settings: added Photo storage (Device / App, default Device). Device: camera photos are downloaded to the device and the app keeps a small copy. App: Manage photos - see usage, view all photos, delete one or all."]},
-  {v:"1.0.1.26", d:"23/10/2026",
-   vi:["Nút Thành nhật ký đổi thành ＋ Nhật ký.","Lịch tháng có viền bao quanh.","Thu nhỏ các nút bấm cho cân đối hơn."],
-   en:["The convert-to-journal button is now ＋ Journal.","Month calendar now has a border.","Smaller buttons for a more balanced look."]},
-  {v:"1.0.1.25", d:"23/10/2026",
-   vi:["Chỉnh lại giao diện: thống nhất cỡ chữ, nút bấm (cao 40px, 3 kiểu: chính / phụ / xóa), màu sắc và bo góc.","Rút gọn chữ trên các nút (Sao lưu, Chia sẻ, Cài đặt...)."],
-   en:["Refreshed the look: consistent type sizes, buttons (40px high, 3 styles: primary / secondary / delete), colors and corners.","Shortened button labels (Backup, Share, Settings...)."]},
-  {v:"1.0.1.24", d:"23/10/2026",
-   vi:["Đổi tên ứng dụng thành Lịch - Nhật ký.","Cài đặt: thêm chỉnh cỡ chữ (80% - 150%).","Sửa lỗi Gửi thông báo trước khi có lịch không giữ được thiết lập: nay lưu đúng lựa chọn, báo trạng thái ngay dưới ô bật; nếu trình duyệt không cho thông báo hệ thống thì hiện thông báo ngay trong ứng dụng.","Nhật ký: thêm danh sách ảnh (lưới 4 cột, chạm để xem lớn) - chọn từ máy, chụp từ camera hoặc nhập đường dẫn ảnh trên mạng; chỉ lưu đường dẫn, sao lưu cũng chỉ chứa đường dẫn."],
-   en:["Renamed the app to Calendar - Journal.","Settings: added font size (80% - 150%).","Fixed the notify-before-schedule setting not being kept: the choice is now saved, its status shows right under the switch, and an in-app notice appears when system notifications are unavailable.","Journal: added a photo list (4-column grid, tap to view) - pick from device, take with camera or enter an online photo link; only links are stored, and backups contain only links."]},
 ];
 function moLichSu(){
   moApp2('🕘 '+t("logT"),
@@ -2293,7 +2509,10 @@ function moCaiDat(msg, cls){
   const o = autoTin();
   const fm = iso => { const d = new Date(iso); return dmy(dstr(d.getFullYear(), d.getMonth()+1, d.getDate()))+" "+p2(d.getHours())+":"+p2(d.getMinutes()); };
   moApp2('⚙️ '+t("setT"),
-    '<label class="ck" style="display:block;margin-bottom:2px"><b>'+t("setFs")+'</b> <span id="fsVal">'+Math.round(fsGet()*100)+'%</span></label>'
+    '<b>'+t("styT")+'</b>'
+    + ['sang','dem','ios'].map(k=>'<label class="ck"><input type="radio" name="kieuGd" value="'+k+'"'+(styGet()===k ? ' checked' : '')+'> <span><b>'+t({sang:"stySang",dem:"styDem",ios:"styIos"}[k])+'</b> · '+t({sang:"stySangD",dem:"styDemD",ios:"styIosD"}[k])+'</span></label>').join("")
+    + '<hr style="border:0;border-top:1px solid #e3ebf0;margin:10px 0">'
+    +     '<label class="ck" style="display:block;margin-bottom:2px"><b>'+t("setFs")+'</b> <span id="fsVal">'+Math.round(fsGet()*100)+'%</span></label>'
     + '<div style="display:flex;align-items:center;gap:10px"><span>A</span><input type="range" id="setFs" min="80" max="150" step="5" value="'+Math.round(fsGet()*100)+'" style="flex:1"><span style="font-size:22px">A</span></div>'
     + '<p class="note" style="opacity:.85">'+t("setFsD")+'</p><button class="mi" data-p="fsreset">'+t("setFsReset")+'</button><hr style="border:0;border-top:1px solid #e3ebf0;margin:10px 0">'
     + '<b>'+t("dvT")+'</b>'
@@ -2313,6 +2532,7 @@ function moCaiDat(msg, cls){
     + '<p class="note" style="font-size:calc(12px * var(--fs,1));opacity:.85">'+t("setAutoD")+'</p>'
     + '<p class="note" style="font-size:calc(12px * var(--fs,1))">'+(o ? t("setLast").replace("{d}", fm(o.taoLuc)).replace("{n}", o.lich.length) : t("setNone"))+'</p>'
     + (o ? '<button class="mi" data-p="autorest">♻️ '+t("setRest")+'</button><button class="mi" data-p="autodl">⬇️ '+t("setDl")+'</button>' : '')
+    + '<button class="mi" data-p="lammoi">🔄 '+t("lmApp")+'</button>'
     + '<div id="apSt" class="'+(cls || "note")+'">'+(msg || "")+'</div>',
     nutBackClose());
   notiHienTrang();
@@ -2338,6 +2558,13 @@ async function xinQuyen(){
   return Notification.permission;
 }
 const dvNhiet = () => { try{ return localStorage.getItem("tpDvNhiet")==="F" ? "F" : "C"; }catch(e){ return "C"; } };
+const styGet = () => { try{ const v = localStorage.getItem("tpStyle"); return (v==="dem" || v==="ios") ? v : "sang"; }catch(e){ return "sang"; } };
+function styAp(v){                                        // bật đúng bộ CSS của style đang chọn
+  const id = {sang:"stySang", dem:"styDem", ios:"styIos"}, tc = {sang:"#2f86c9", dem:"#101a3f", ios:"#3a7bd5"}, m = document.querySelector('meta[name="theme-color"]');
+  for(const k in id){ const el = document.getElementById(id[k]); if(el) el.media = k===v ? "all" : "not all"; }
+  if(m) m.content = tc[v];
+}
+function stySet(v){ try{ localStorage.setItem("tpStyle", v); }catch(e){} styAp(v); }
 const FS_KEY = "tpFs";
 const fsGet = () => { let v = 1; try{ v = parseFloat(localStorage.getItem(FS_KEY)); }catch(e){} return (v>=.8 && v<=1.5) ? v : 1; };
 function fsSet(v){
@@ -2491,6 +2718,11 @@ function taiIcsAll(){
   const ds = GC.filter(n=>!laNK(n) && n.gio);
   if(!ds.length){ toast("📅 "+t("icsAll"), t("icsNone")); return; }
   icsFile(ds, "lich_may_tatca.ics"); toast("📅 "+t("icsAll"), t("icsOk"));
+}
+function fetchT(u){ return fetch(u, (typeof AbortSignal!=="undefined" && AbortSignal.timeout) ? {signal:AbortSignal.timeout(15000)} : undefined); }   // mạng treo quá 15 giây thì bỏ, không chờ mãi
+async function lamMoiApp(){                               // xóa bộ nhớ đệm + service worker rồi tải lại (dữ liệu lịch, nhật ký, ảnh vẫn giữ nguyên)
+  try{ const rs = await navigator.serviceWorker.getRegistrations(); for(const r of rs) await r.unregister(); const ks = await caches.keys(); for(const k of ks) await caches.delete(k); }catch(e){}
+  location.reload();
 }
 // ----- Ảnh trong nhật ký: nhật ký chỉ giữ ĐƯỜNG DẪN -----
 // Ảnh trên mạng: lưu đúng URL. Ảnh chọn từ máy / chụp: trình duyệt không cho biết đường dẫn thật của file, nên ảnh được thu nhỏ rồi giữ
@@ -3136,8 +3368,8 @@ function veDoThi(d){
       +  '<text x="'+x(i)+'" y="174" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor">'+(i===0 ? t("nowShort") : ngay(new Date(tm+"T00:00:00"),"short"))+'</text>';
   });
   s += duong(hi,"#e08a00") + duong(lo,"#0f5f8c");
-  hi.forEach((v,i)=>{ s += '<text x="'+x(i)+'" y="'+(y(v)-7)+'" font-size="12" font-weight="700" text-anchor="middle" fill="#c77d00">'+Math.round(v)+'°</text>'; });
-  lo.forEach((v,i)=>{ s += '<text x="'+x(i)+'" y="'+(y(v)+15)+'" font-size="12" font-weight="700" text-anchor="middle" fill="#0f5f8c">'+Math.round(v)+'°</text>'; });
+  hi.forEach((v,i)=>{ s += '<text x="'+x(i)+'" y="'+(y(v)-7)+'" font-size="12" font-weight="700" text-anchor="middle" fill="#f5c542">'+Math.round(v)+'°</text>'; });
+  lo.forEach((v,i)=>{ s += '<text x="'+x(i)+'" y="'+(y(v)+15)+'" font-size="12" font-weight="700" text-anchor="middle" fill="#5db7ef">'+Math.round(v)+'°</text>'; });
   return s + '</svg><div class="legend"><b class="cao">●</b> '+t("hi")+' &nbsp; <b class="thap">●</b> '+t("lo")+' &nbsp; <b style="color:#4aa3df">▮</b> '+t("tRain")+'</div>';
 }
 
@@ -3198,7 +3430,7 @@ async function veDiaChi(){
   el.textContent = "📍 " + t("findAddr");
   let a = p.lat.toFixed(3) + ", " + p.lon.toFixed(3);   // nếu tra không được thì hiện tọa độ
   try{
-    const r = await fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude="+p.lat+"&longitude="+p.lon+"&localityLanguage="+L).then(r=>r.json());
+    const r = await fetchT("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude="+p.lat+"&longitude="+p.lon+"&localityLanguage="+L).then(r=>r.json());
     const ds = [r.locality, r.city, r.principalSubdivision, r.countryName].filter(Boolean);
     const rieng = ds.filter((v,i)=>ds.indexOf(v)===i);
     if(rieng.length) a = rieng.join(", ");
@@ -3327,7 +3559,7 @@ q.oninput = ()=>{
   if(tx.length<2){ gy.innerHTML = ""; return; }
   hen = setTimeout(async ()=>{
     try{
-      const r = await fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(tx)+"&count=6&language="+lang).then(r=>r.json());
+      const r = await fetchT("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(tx)+"&count=6&language="+lang).then(r=>r.json());
       const ds = r.results || [];
       gy.innerHTML = ds.length ? "" : '<li class="trong">'+t("none")+'</li>';
       ds.forEach(o=>{
@@ -3365,13 +3597,13 @@ function layViTri(){
 async function layDuLieu(p){
   const kc = p.lat+","+p.lon+","+dvNhiet(), cu = CACHE[kc];
   if(cu && Date.now()-cu.t < 600000) return cu;   // dùng lại dữ liệu mới tải trong 10 phút
-  const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}`
+  const w = await fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}`
     +`&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,cloud_cover,precipitation,is_day`
     +`&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,sunrise,sunset`
     +`&hourly=relative_humidity_2m,temperature_2m,precipitation_probability,wind_speed_10m&timezone=auto&forecast_days=10`+(dvNhiet()==="F" ? "&temperature_unit=fahrenheit" : "")).then(r=>r.json());
   let aqi = {}, aqiNow = null;
   try{
-    const a = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${p.lat}&longitude=${p.lon}`
+    const a = await fetchT(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${p.lat}&longitude=${p.lon}`
       +`&current=us_aqi&hourly=us_aqi&timezone=auto&forecast_days=7`).then(r=>r.json());
     aqi = trungBinhNgay(a.hourly.time, a.hourly.us_aqi);
     aqiNow = a.current ? a.current.us_aqi : null;
@@ -3497,7 +3729,11 @@ const ovMo = new MutationObserver(ovSync);
 OVS.forEach(el=>ovMo.observe(el, {attributes:true, attributeFilter:["hidden"]}));
 veDongHo();
 setInterval(veDongHo, 1000);
-if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+  navigator.serviceWorker.addEventListener("message", e => { if(e.data==="upd") toast("🔄 "+t("updT"), t("updB")); });
+}
+window.__tpReady = true; { const w = document.getElementById("tpFixBox"); if(w) w.remove(); }
 </script>
 </body>
 </html>

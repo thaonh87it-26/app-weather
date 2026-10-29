@@ -10,6 +10,26 @@
 <meta property="og:title" content="Lịch - Nhật ký">
 <meta property="og:description" content="Xem thời tiết, lịch âm và quản lý lịch cá nhân. Bấm vào liên kết để mở ứng dụng và lưu lịch được chia sẻ.">
 <meta property="og:image" content="icon-512.png">
+<script>(function(){
+var K="tpBootLog",boot={id:Date.now().toString(36),t:new Date().toISOString(),ua:(navigator.userAgent||"").slice(0,140),sa:0,sw:0,mem:0,ev:[],ok:0};
+function rd(){try{var a=JSON.parse(localStorage.getItem(K)||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
+function save(){try{var a=rd().filter(function(b){return b.id!==boot.id});a.push(boot);while(a.length>8)a.shift();localStorage.setItem(K,JSON.stringify(a))}catch(e){}}
+try{boot.sa=(matchMedia("(display-mode: standalone)").matches||navigator.standalone)?1:0;boot.sw=(navigator.serviceWorker&&navigator.serviceWorker.controller)?1:0;boot.mem=navigator.deviceMemory||0}catch(e){}
+window.tpBootPrev=rd();window.tpBoot=boot;window.tpLogRead=rd;
+window.tpLog=function(s){boot.ev.push([Math.round(performance.now()),String(s).slice(0,90)]);if(boot.ev.length>70)boot.ev.splice(2,1);save()};
+tpLog("head");
+document.addEventListener("DOMContentLoaded",function(){tpLog("dcl")});
+window.addEventListener("load",function(){try{var n=performance.getEntriesByType("navigation")[0];tpLog("load"+(n?" ttfb="+Math.round(n.responseStart)+" dom="+Math.round(n.domInteractive):""))}catch(e){tpLog("load")}});
+window.addEventListener("pagehide",function(){tpLog("pagehide")});
+document.addEventListener("visibilitychange",function(){tpLog("vis:"+document.visibilityState)});
+document.addEventListener("freeze",function(){tpLog("freeze")});document.addEventListener("resume",function(){tpLog("resume")});
+window.addEventListener("error",function(e){tpLog("ERR "+e.message+" @"+(e.lineno||"?"))});
+window.addEventListener("unhandledrejection",function(e){tpLog("REJ "+(e.reason&&e.reason.message||e.reason))});
+try{navigator.serviceWorker.addEventListener("controllerchange",function(){tpLog("sw controllerchange")})}catch(e){}
+try{new PerformanceObserver(function(l){l.getEntries().forEach(function(e){tpLog("paint:"+e.name)})}).observe({type:"paint",buffered:true})}catch(e){}
+try{new PerformanceObserver(function(l){l.getEntries().forEach(function(e){tpLog("longtask "+Math.round(e.duration)+"ms")})}).observe({type:"longtask",buffered:true})}catch(e){}
+var n=0,hb=setInterval(function(){n++;if(n>10){clearInterval(hb);return}tpLog("hb"+n)},2000);
+})();</script>
 <script>(function(){function h(m){try{var b=document.getElementById("tpLoi");if(!b){b=document.createElement("div");b.id="tpLoi";b.style.cssText="position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#c62f3a;color:#fff;font:12px/1.4 sans-serif;padding:6px 10px;max-height:30vh;overflow:auto;white-space:pre-wrap";b.onclick=function(){b.remove()};(document.body||document.documentElement).appendChild(b)}if(b.textContent.length<800)b.textContent+=m+"\n"}catch(_){}}
 window.addEventListener("error",function(e){h("Lỗi: "+e.message+" ("+(e.lineno||"?")+")")});window.addEventListener("unhandledrejection",function(e){h("Lỗi: "+(e.reason&&e.reason.message||e.reason))})})();</script>
 <script>(function(){
@@ -352,6 +372,9 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,.btn:focus-visib
 .sao i{font-style:normal;opacity:.28}
 .sao i.on{opacity:1;color:#f5b301}
 .hn .sao i.on{color:#e08a00}
+
+/* ===== v1.0.1.38: log khởi động ===== */
+.logpre{font:11px/1.35 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-all;max-height:55vh;overflow:auto;background:rgba(120,130,150,.14);padding:8px;border-radius:8px;user-select:text;-webkit-user-select:text}
 </style>
 <style id="styDem" media="not all">
 /* ===== v1.0.1.32: giao diện kính tối (thẻ mờ bo tròn, chữ sáng, nút viên thuốc) ===== */
@@ -1541,6 +1564,7 @@ window.QRLib={QRCode:R("index"),EC:R("QRErrorCorrectLevel")};})();
 </script>
 <script>
 /* ===== JavaScript: phần "điện nước" - xử lý khi bấm nút ===== */
+tpLog("main");
 
 // Toàn bộ chữ hiển thị nằm ở đây, mỗi ngôn ngữ một bộ
 const TXT = {
@@ -1553,7 +1577,7 @@ vi:{
   loading:"Đang tải dữ liệu...", loadErr:"Không tải được dữ liệu. Hãy kiểm tra kết nối mạng, rồi vào Menu › Xem thời tiết và bấm lại tên địa điểm.",
   empty:"Chưa có thành phố nào. Vào Menu › Xem thời tiết, bấm Thêm để chọn thành phố.", findAddr:"Đang xác định địa chỉ...",
   lunar:"Âm lịch", leap:"nhuận",
-  upT:"Lịch & nhật ký", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", saoT:"{n}/5 sao (mỗi nhật ký trong ngày được 1 sao, tối đa 5)", tcFind:"Tìm theo nội dung (mọi ngày)", rY:"Hôm qua", nNoneY:"Hôm qua không có lịch nào.", tomorrow:"Ngày mai", nOpen:"Mở lịch",
+  upT:"Lịch & nhật ký", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", saoT:"{n}/3 sao (mỗi nhật ký trong ngày được 1 sao, tối đa 3)", tcFind:"Tìm theo nội dung (mọi ngày)", rY:"Hôm qua", nNoneY:"Hôm qua không có lịch nào.", tomorrow:"Ngày mai", nOpen:"Mở lịch",
   nNone7:"Không có lịch nào trong 7 ngày tới.", nNoneM:"Tháng này chưa có lịch nào.", nNoneT:"Hôm nay chưa có lịch nào.",
   fFrom:"Từ ngày", fTo:"Đến ngày", fAllTime:"Bỏ lọc", fOn:"📅 Lọc ngày", fEmpty:"Không có lịch hoặc nhật ký nào trong khoảng ngày này.", nAllBtn:"Tất cả lịch & nhật ký", nAllT:"Tất cả lịch & nhật ký", dAll:"Xóa tất cả", dAllAsk:"Xóa tất cả lịch?", dAllN:"Sẽ xóa {n} lịch (nhật ký được giữ nguyên). Không thể hoàn tác.", dAllWarn:"Nên sao lưu trước khi xóa tất cả.", dAllBk:"Sao lưu ngay", dAllDone:"Đã sao lưu: {f}", nAllEmpty:"Chưa có lịch hay nhật ký nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có lịch hoặc nhật ký nào.", nWholeM:"Cả tháng",
   nDelAsk1:"Xóa ghi chú này?", nDelRep:"Ghi chú này có lặp lại: tất cả các ngày lặp lại cũng sẽ bị xóa.",
@@ -1584,7 +1608,7 @@ vi:{
   setNotiSt:"Chưa bật.", setNotiAsk:"Đã lưu lựa chọn. Chưa được cấp quyền thông báo hệ thống nên thông báo sẽ hiện ngay trong ứng dụng khi đang mở; bấm Gửi thử để cấp quyền.",
   styT:"Giao diện", styDem:"Đêm sao", styDemD:"kính tối, thẻ mờ bo tròn", stySang:"Bầu trời", stySangD:"nền sáng, xanh dương", styIos:"iPhone", styIosD:"trong mờ, công tắc, bảng trượt từ dưới",
   dvT:"Đơn vị nhiệt độ", dvC:"Độ C (°C)", dvF:"Độ F (°F)",
-  lmApp:"Làm mới ứng dụng", updT:"Có bản mới", updB:"Đóng rồi mở lại ứng dụng để dùng bản mới.",
+  lmApp:"Làm mới ứng dụng", logT2:"Nhật ký khởi động (log)", logHint:"Dùng khi app bị kẹt lúc mở: mở lại app, vào đây, bấm Sao chép rồi gửi nội dung cho người hỗ trợ.", logCopy:"Sao chép", logClr:"Xóa log", logCopied:"Đã sao chép log vào bộ nhớ tạm.", logStuckT:"Lần mở trước có thể bị kẹt", logStuckB:"Xem Cài đặt › Nhật ký khởi động (log) để biết kẹt ở bước nào.", updT:"Có bản mới", updB:"Đóng rồi mở lại ứng dụng để dùng bản mới.",
   anhNoi:"Nơi lưu ảnh", anhNoiMay:"Vào máy", anhNoiApp:"Ứng dụng", anhNoiD:"Vào máy: ảnh chụp được tải về máy (Tải xuống/Thư viện), app chỉ giữ bản thu nhỏ để hiển thị. Ứng dụng: ảnh chỉ nằm trong app (nét hơn) và được quản lý bên dưới.",
   anhQl:"Quản lý ảnh", anhQlSum:"{n} ảnh · {s}", anhQlNone:"Chưa có ảnh nào trong ứng dụng.", anhDelAll:"Xóa tất cả", anhDelAllAsk:"Xóa tất cả {n} ảnh? Ảnh sẽ mất khỏi các nhật ký/lịch đang dùng. Không thể hoàn tác.", anhDelOk:"Xóa", anhSavedF:"Đã tải ảnh về máy: {f}",
   setNoti:"Gửi thông báo trước khi có lịch", setNotiMin:"Báo trước", setNotiPh:"phút", setNotiD:"Thông báo gửi cho các lịch có giờ (không áp dụng cho lịch cả ngày và nhật ký). Thông báo và báo thức chỉ hoạt động khi ứng dụng đang mở hoặc đang chạy nền; nếu điện thoại đã tắt hẳn ứng dụng thì sẽ không báo được.", setNotiDeny:"Thông báo đang bị chặn. Hãy cho phép thông báo cho trang này trong cài đặt trình duyệt rồi bật lại.", setNotiNo:"Trình duyệt này không hỗ trợ thông báo.", setNotiTest:"🔔 Thử thông báo", setNotiOk:"Đã bật thông báo.", wind:"Gió", cloud:"Mây che phủ", precip:"Lượng mưa", air:"Không khí",
@@ -1605,7 +1629,7 @@ en:{
   loading:"Loading data...", loadErr:"Could not load data. Check your connection, then open Menu › View weather and tap the place name again.",
   empty:"No city yet. Open Menu › View weather and tap Add to choose one.", findAddr:"Finding address...",
   lunar:"Lunar", leap:"leap",
-  upT:"Schedule & journal", r7:"7 days", rM:"This month", rT:"Today", saoT:"{n}/5 stars (1 per journal entry that day, max 5)", tcFind:"Search text (all dates)", rY:"Yesterday", nNoneY:"Nothing scheduled yesterday.", tomorrow:"Tomorrow", nOpen:"Open calendar",
+  upT:"Schedule & journal", r7:"7 days", rM:"This month", rT:"Today", saoT:"{n}/3 stars (1 per journal entry that day, max 3)", tcFind:"Search text (all dates)", rY:"Yesterday", nNoneY:"Nothing scheduled yesterday.", tomorrow:"Tomorrow", nOpen:"Open calendar",
   nNone7:"Nothing scheduled in the next 7 days.", nNoneM:"Nothing scheduled this month.", nNoneT:"Nothing scheduled today.",
   fFrom:"From date", fTo:"To date", fAllTime:"Clear filter", fOn:"📅 Filter dates", fEmpty:"No schedule or journal in this date range.", nAllBtn:"All schedule & journal", nAllT:"All schedule & journal", dAll:"Delete all", dAllAsk:"Delete all schedule items?", dAllN:"This will delete {n} schedule items (journal entries are kept). It cannot be undone.", dAllWarn:"Back up your notes before deleting everything.", dAllBk:"Back up now", dAllDone:"Backed up: {f}", nAllEmpty:"No schedule or journal yet.", nMonthT:"Month", nMonthEmpty:"No schedule or journal this month.", nWholeM:"Whole month",
   nDelAsk1:"Delete this note?", nDelRep:"This note repeats: every repeat of it will be removed too.",
@@ -1636,7 +1660,7 @@ en:{
   setNotiSt:"Off.", setNotiAsk:"Saved. System notification permission is not granted yet, so notices will appear inside the app while it is open; tap Send test to grant it.",
   styT:"Appearance", styDem:"Starry night", styDemD:"dark glass, rounded cards", stySang:"Clear sky", stySangD:"light, blue tones", styIos:"iPhone", styIosD:"frosted glass, switches, bottom sheets",
   dvT:"Temperature unit", dvC:"Celsius (°C)", dvF:"Fahrenheit (°F)",
-  lmApp:"Refresh app", updT:"New version", updB:"Close and reopen the app to use the new version.",
+  lmApp:"Refresh app", logT2:"Startup log", logHint:"Use this when the app hangs on opening: reopen the app, come here, tap Copy and send the text to whoever is helping.", logCopy:"Copy", logClr:"Clear log", logCopied:"Log copied to the clipboard.", logStuckT:"The previous launch may have hung", logStuckB:"See Settings › Startup log to find which step it stopped at.", updT:"New version", updB:"Close and reopen the app to use the new version.",
   anhNoi:"Photo storage", anhNoiMay:"Device", anhNoiApp:"App", anhNoiD:"Device: camera photos are downloaded to your device (Downloads/Gallery) and the app keeps only a small copy to display. App: photos stay inside the app (sharper) and are managed below.",
   anhQl:"Manage photos", anhQlSum:"{n} photos · {s}", anhQlNone:"No photos in the app yet.", anhDelAll:"Delete all", anhDelAllAsk:"Delete all {n} photos? They will disappear from the journal entries/schedules using them. This cannot be undone.", anhDelOk:"Delete", anhSavedF:"Photo saved to device: {f}",
   setNoti:"Send a notification before a schedule", setNotiMin:"Notify", setNotiPh:"minutes before", setNotiD:"Notifications are sent for schedules with a time (not all-day items or journal entries). Notifications and alarms only work while the app is open or running in the background; if the phone has fully closed the app, nothing can be sent.", setNotiDeny:"Notifications are blocked. Allow notifications for this site in the browser settings, then turn this on again.", setNotiNo:"This browser does not support notifications.", setNotiTest:"🔔 Test notification", setNotiOk:"Notifications enabled.", wind:"Wind", cloud:"Cloud cover", precip:"Rainfall", air:"Air quality",
@@ -1874,8 +1898,8 @@ function khop(n, ds){
 const ghiChuNgay = ds => GC.filter(n=>khop(n,ds)).sort((a,b)=>(a.gio||"").localeCompare(b.gio||""));   // "cả ngày" lên trước
 const dong1 = n => esc(n.nd.split("\n")[0]);
 const laNK = n => n.loai==="nk";
-const saoNgay = ds => Math.min(5, GC.filter(n=>laNK(n) && n.ngay===ds).length);          // mỗi nhật ký trong ngày = 1 sao, tối đa 5
-const saoHtml = ds => { const k = saoNgay(ds); return '<span class="sao" title="'+esc(t("saoT").replace("{n}", k))+'">'+[0,1,2,3,4].map(i=>'<i'+(i<k ? ' class="on"' : '')+'>★</i>').join("")+'</span>'; };
+const saoNgay = ds => Math.min(3, GC.filter(n=>laNK(n) && n.ngay===ds).length);          // mỗi nhật ký trong ngày = 1 sao, tối đa 3
+const saoHtml = ds => { const k = saoNgay(ds); return '<span class="sao" title="'+esc(t("saoT").replace("{n}", k))+'">'+[0,1,2].map(i=>'<i'+(i<k ? ' class="on"' : '')+'>★</i>').join("")+'</span>'; };
 const icPhai = n => { const a = [];
   if(n.anh && n.anh.length) a.push('<span title="'+t("anhT")+'">📷</span>');
   if(n.lap && n.lap!=="none") a.push('<span>🔁</span>');
@@ -2396,6 +2420,9 @@ appPop.onclick = e => {
   else if(a==="log") moLichSu();
   else if(a==="notitest") notiThu();
   else if(a==="lammoi") lamMoiApp();
+  else if(a==="boolog") moLog();
+  else if(a==="logcopy"){ logText().then(txt=>{ const ok = ()=>toast("🧾 "+t("logT2"), t("logCopied")); if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, ()=>logCopyOld(txt, ok)); else logCopyOld(txt, ok); }); }
+  else if(a==="logclr"){ try{ localStorage.removeItem("tpBootLog"); }catch(e){} caches.delete("tplog").then(()=>moLog(), ()=>moLog()); }
   else if(a==="anhql") moAnhQL(false);
   else if(a==="anhdelall") moAnhQL(true);
   else if(a==="anhdelallok"){ anhTatCa().then(ds=>anhXoaId(ds.map(x=>x.id))).then(()=>moAnhQL(false)); }
@@ -2474,8 +2501,8 @@ function moGioiThieu(dau){                          // dau = true: tự mở khi
 // Lịch sử cập nhật: thêm phiên bản mới lên đầu danh sách
 const LOG = [
   {v:"1.0.1.38", d:"29/10/2026",
-   vi:["Sao của ngày: đổi tối đa thành 5 sao (mỗi nhật ký trong ngày được 1 sao), mặc định 5 sao mờ."],
-   en:["Day stars: the maximum is now 5 (each journal entry in a day earns 1 star), 5 dim stars by default."]},
+   vi:["Sao của ngày trở về tối đa 3 sao (mặc định 3 sao mờ).","Thêm Cài đặt › Nhật ký khởi động (log): ghi lại từng bước khi mở app (kể cả bước của service worker) để tìm nguyên nhân lỗi kẹt ở màn chờ; lần mở sau tự báo nếu lần trước có thể bị kẹt."],
+   en:["Day stars are back to a maximum of 3 (3 dim stars by default).","Added Settings › Startup log: records each step of opening the app (including service worker steps) to find why it sometimes hangs on the splash screen; the next launch warns if the previous one may have hung."]},
   {v:"1.0.1.37", d:"26/10/2026",
    vi:["Thêm sao của ngày: mỗi nhật ký trong ngày được 1 sao, tối đa 3 sao; hiện ở tiêu đề ngày trong danh sách lịch/nhật ký, căn lề phải, mặc định 3 sao mờ."],
    en:["Added day stars: each journal entry in a day earns 1 star, up to 3; shown on the day headers of the lists, right-aligned, 3 dim stars by default."]},
@@ -2542,6 +2569,7 @@ function moCaiDat(msg, cls){
     + '<p class="note" style="font-size:calc(12px * var(--fs,1))">'+(o ? t("setLast").replace("{d}", fm(o.taoLuc)).replace("{n}", o.lich.length) : t("setNone"))+'</p>'
     + (o ? '<button class="mi" data-p="autorest">♻️ '+t("setRest")+'</button><button class="mi" data-p="autodl">⬇️ '+t("setDl")+'</button>' : '')
     + '<button class="mi" data-p="lammoi">🔄 '+t("lmApp")+'</button>'
+    + '<button class="mi" data-p="boolog">🧾 '+t("logT2")+'</button>'
     + '<div id="apSt" class="'+(cls || "note")+'">'+(msg || "")+'</div>',
     nutBackClose());
   notiHienTrang();
@@ -2728,6 +2756,26 @@ function taiIcsAll(){
   if(!ds.length){ toast("📅 "+t("icsAll"), t("icsNone")); return; }
   icsFile(ds, "lich_may_tatca.ics"); toast("📅 "+t("icsAll"), t("icsOk"));
 }
+const tpGio = ms => (ms/1000).toFixed(1)+"s";
+async function logSW(){ try{ const c = await caches.open("tplog"), r = await c.match("/__log"); return r ? await r.json() : []; }catch(e){ return []; } }
+async function logText(){
+  const a = (window.tpLogRead ? tpLogRead() : []).slice().reverse(), sw = await logSW();
+  let o = "LOG KHỞI ĐỘNG · app "+(LOG[0] ? LOG[0].v : "?")+" · "+new Date().toISOString()+"\n";
+  a.forEach((b,i)=>{
+    const last = b.ev[b.ev.length-1] || [0,""], ready = b.ev.filter(e=>e[1]==="ready")[0];
+    o += "\n["+(i===0 ? "lần này" : "trước "+i)+"] "+b.t+" · "+(b.sa ? "app đã cài" : "trình duyệt")+" · SW "+(b.sw ? "có" : "chưa")+" · RAM "+(b.mem||"?")+"GB · "
+      + (b.ok ? "OK, sẵn sàng sau "+tpGio(ready ? ready[0] : 0) : "CHƯA XONG, dừng ở \""+last[1]+"\" tại "+tpGio(last[0]))+"\n  "+b.ua+"\n";
+    b.ev.forEach(e=>{ o += "  "+String(e[0]).padStart(6)+"ms  "+e[1]+"\n"; });
+  });
+  o += "\nSERVICE WORKER\n"; sw.forEach(e=>{ o += "  "+new Date(e[0]).toISOString().slice(11,23)+"  "+e[1]+"\n"; });
+  return o;
+}
+async function moLog(){
+  const txt = await logText();
+  moApp2("🧾 "+t("logT2"), '<p class="note">'+t("logHint")+'</p><pre class="logpre">'+esc(txt)+'</pre>',
+    '<div class="btns" style="margin-top:0"><button class="btn" data-p="set">'+t("nBack")+'</button><button class="btn" data-p="logcopy">'+t("logCopy")+'</button><button class="btn d" data-p="logclr">'+t("logClr")+'</button><button class="btn p" data-p="close">'+t("close")+'</button></div>');
+}
+function logCopyOld(txt, ok){ const ta = document.createElement("textarea"); ta.value = txt; ta.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); ok(); }catch(e){} ta.remove(); }
 function fetchT(u){ return fetch(u, (typeof AbortSignal!=="undefined" && AbortSignal.timeout) ? {signal:AbortSignal.timeout(15000)} : undefined); }   // mạng treo quá 15 giây thì bỏ, không chờ mãi
 async function lamMoiApp(){                               // xóa bộ nhớ đệm + service worker rồi tải lại (dữ liệu lịch, nhật ký, ảnh vẫn giữ nguyên)
   try{ const rs = await navigator.serviceWorker.getRegistrations(); for(const r of rs) await r.unregister(); const ks = await caches.keys(); for(const k of ks) await caches.delete(k); }catch(e){}
@@ -3590,20 +3638,23 @@ function themTP(p){
 // Lấy vị trí điện thoại khi mở app
 function layViTri(){
   veTabs();
+  tpLog("geo start");
   if(!navigator.geolocation){ moDauTien(); return; }
   setMsg("locating");
   navigator.geolocation.getCurrentPosition(
     pos=>{
+      tpLog("geo ok");
       viTri = {name:"", lat:pos.coords.latitude, lon:pos.coords.longitude};
       setTip(""); tai(viTri);
     },
-    ()=>{ setTip("noLoc"); moDauTien(); },
+    ()=>{ tpLog("geo fail"); setTip("noLoc"); moDauTien(); },
     {timeout:10000, maximumAge:600000}
   );
 }
 
 // ----- Tải và hiển thị dữ liệu -----
-async function layDuLieu(p){
+async function layDuLieu(p){ const t0 = Date.now(); tpLog("wx start"); try{ const r = await layDuLieu0(p); tpLog("wx ok "+(Date.now()-t0)+"ms"); return r; }catch(e){ tpLog("wx ERR "+(e && e.name)+" "+(Date.now()-t0)+"ms"); throw e; } }
+async function layDuLieu0(p){
   const kc = p.lat+","+p.lon+","+dvNhiet(), cu = CACHE[kc];
   if(cu && Date.now()-cu.t < 600000) return cu;   // dùng lại dữ liệu mới tải trong 10 phút
   const w = await fetchT(`https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}`
@@ -3695,11 +3746,15 @@ async function tai(p){
   const lap = () => { if(cho) return; cho = requestAnimationFrame(()=>{ cho = 0; dat(); }); };
   dat(); vv.addEventListener("resize", lap); vv.addEventListener("scroll", lap);
 })();
+tpLog("init");
 applyStatic();
+tpLog("applyStatic ok");
 hanGiong();                                  // lần mở đầu tiên: bắt đầu tính 3 tháng dùng thử chức năng giọng nói
+tpLog("layViTri");
 layViTri();
 nhanLink();
 nhanChiaSe();
+tpLog("link ok");
 if(!introAn() && [wxPop, lichPop, ctPop, xnPop, appPop].every(e=>e.hidden)) moGioiThieu(true);   // mở ứng dụng: hiện giới thiệu (có ô tích không hiển thị lại)
 window.addEventListener("hashchange", nhanLink);
 // Lịch có thể vừa được lưu ở một cửa sổ khác của cùng trang: nạp lại khi quay về ứng dụng để không mất hoặc ghi đè lịch mới
@@ -3742,6 +3797,9 @@ if("serviceWorker" in navigator){
   navigator.serviceWorker.register("sw.js").catch(()=>{});
   navigator.serviceWorker.addEventListener("message", e => { if(e.data==="upd") toast("🔄 "+t("updT"), t("updB")); });
 }
+tpBoot.ok = 1; tpLog("ready");
+setTimeout(()=>{ try{ const p = window.tpBootPrev || [], l = p[p.length-1]; if(l && !l.ok && l.ev && l.ev.length>=3){ tpLog("prev boot not ready: "+l.id); toast("🧾 "+t("logStuckT"), t("logStuckB")); } }catch(e){} }, 1500);
+if(/[?&]log=1/.test(location.search)) setTimeout(()=>moLog(), 800);
 window.__tpReady = true; { const w = document.getElementById("tpFixBox"); if(w) w.remove(); }
 </script>
 </body>

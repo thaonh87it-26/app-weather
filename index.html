@@ -334,6 +334,24 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,.btn:focus-visib
 .tim{margin-bottom:6px}
 .tim input{width:100%;box-sizing:border-box;min-height:36px;padding:6px 10px;border:1px solid var(--vien);border-radius:10px;font:inherit;font-size:calc(14px * var(--fs,1))}
 
+/* ===== v1.0.1.35: tìm kiếm ẩn, bấm 🔍 mới hiện ===== */
+.lich-hb{display:flex;gap:6px;align-items:center}
+.tc-s.on{box-shadow:inset 0 0 0 2px rgba(255,255,255,.95)}
+.tim{margin-bottom:4px}
+.tim input{min-height:32px!important;padding:4px 10px!important}
+
+/* ===== v1.0.1.36: lọc ngày một hàng ngang ===== */
+.rg1{align-items:center;flex-wrap:nowrap;gap:6px}
+.rg1 input{flex:1 1 0;min-width:0;min-height:34px!important;padding:4px 6px}
+.rg1 .rg-m{flex:none;opacity:.55;align-self:center;line-height:1;margin:0;padding:0}
+.rg1 button{flex:none;width:34px;min-height:34px!important;height:34px;padding:0!important;border-radius:50%}
+
+/* ===== v1.0.1.37: sao của ngày (mỗi nhật ký 1 sao, tối đa 3) ===== */
+.mh,.up-mh{display:flex;align-items:center;gap:8px}
+.sao{margin-left:auto;flex:none;white-space:nowrap;letter-spacing:1px;line-height:1;font-size:calc(14px * var(--fs,1));font-weight:400}
+.sao i{font-style:normal;opacity:.28}
+.sao i.on{opacity:1;color:#f5b301}
+.hn .sao i.on{color:#e08a00}
 </style>
 <style id="styDem" media="not all">
 /* ===== v1.0.1.32: giao diện kính tối (thẻ mờ bo tròn, chữ sáng, nút viên thuốc) ===== */
@@ -510,17 +528,6 @@ input[type=range]{accent-color:#007aff}
 .ck input[type=radio]:checked::after{content:"✓";position:absolute;inset:0;color:#007aff;font-size:20px;line-height:22px;text-align:center;font-weight:700}
 #toast{background:rgba(40,40,44,.92);border-radius:16px}
 
-/* ===== v1.0.1.35: tìm kiếm ẩn, bấm 🔍 mới hiện ===== */
-.lich-hb{display:flex;gap:6px;align-items:center}
-.tc-s.on{box-shadow:inset 0 0 0 2px rgba(255,255,255,.95)}
-.tim{margin-bottom:4px}
-.tim input{min-height:32px!important;padding:4px 10px!important}
-
-/* ===== v1.0.1.36: lọc ngày một hàng ngang ===== */
-.rg1{align-items:center;flex-wrap:nowrap;gap:6px}
-.rg1 input{flex:1 1 0;min-width:0;min-height:34px!important;padding:4px 6px}
-.rg1 .rg-m{flex:none;opacity:.55;align-self:center;line-height:1;margin:0;padding:0}
-.rg1 button{flex:none;width:34px;min-height:34px!important;height:34px;padding:0!important;border-radius:50%}
 </style>
 <script>try{var _v=localStorage.getItem("tpStyle");if(_v==="dem"||_v==="ios"){document.getElementById("stySang").media="not all";document.getElementById(_v==="dem"?"styDem":"styIos").media="all";document.querySelector('meta[name="theme-color"]').content=_v==="dem"?"#101a3f":"#3a7bd5"}}catch(e){}</script>
 </head>
@@ -1546,7 +1553,7 @@ vi:{
   loading:"Đang tải dữ liệu...", loadErr:"Không tải được dữ liệu. Hãy kiểm tra kết nối mạng, rồi vào Menu › Xem thời tiết và bấm lại tên địa điểm.",
   empty:"Chưa có thành phố nào. Vào Menu › Xem thời tiết, bấm Thêm để chọn thành phố.", findAddr:"Đang xác định địa chỉ...",
   lunar:"Âm lịch", leap:"nhuận",
-  upT:"Lịch & nhật ký", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", tcFind:"Tìm theo nội dung (mọi ngày)", rY:"Hôm qua", nNoneY:"Hôm qua không có lịch nào.", tomorrow:"Ngày mai", nOpen:"Mở lịch",
+  upT:"Lịch & nhật ký", r7:"7 ngày", rM:"Tháng này", rT:"Hôm nay", saoT:"{n}/3 sao (mỗi nhật ký trong ngày được 1 sao, tối đa 3)", tcFind:"Tìm theo nội dung (mọi ngày)", rY:"Hôm qua", nNoneY:"Hôm qua không có lịch nào.", tomorrow:"Ngày mai", nOpen:"Mở lịch",
   nNone7:"Không có lịch nào trong 7 ngày tới.", nNoneM:"Tháng này chưa có lịch nào.", nNoneT:"Hôm nay chưa có lịch nào.",
   fFrom:"Từ ngày", fTo:"Đến ngày", fAllTime:"Bỏ lọc", fOn:"📅 Lọc ngày", fEmpty:"Không có lịch hoặc nhật ký nào trong khoảng ngày này.", nAllBtn:"Tất cả lịch & nhật ký", nAllT:"Tất cả lịch & nhật ký", dAll:"Xóa tất cả", dAllAsk:"Xóa tất cả lịch?", dAllN:"Sẽ xóa {n} lịch (nhật ký được giữ nguyên). Không thể hoàn tác.", dAllWarn:"Nên sao lưu trước khi xóa tất cả.", dAllBk:"Sao lưu ngay", dAllDone:"Đã sao lưu: {f}", nAllEmpty:"Chưa có lịch hay nhật ký nào.", nMonthT:"Lịch tháng", nMonthEmpty:"Tháng này chưa có lịch hoặc nhật ký nào.", nWholeM:"Cả tháng",
   nDelAsk1:"Xóa ghi chú này?", nDelRep:"Ghi chú này có lặp lại: tất cả các ngày lặp lại cũng sẽ bị xóa.",
@@ -1598,7 +1605,7 @@ en:{
   loading:"Loading data...", loadErr:"Could not load data. Check your connection, then open Menu › View weather and tap the place name again.",
   empty:"No city yet. Open Menu › View weather and tap Add to choose one.", findAddr:"Finding address...",
   lunar:"Lunar", leap:"leap",
-  upT:"Schedule & journal", r7:"7 days", rM:"This month", rT:"Today", tcFind:"Search text (all dates)", rY:"Yesterday", nNoneY:"Nothing scheduled yesterday.", tomorrow:"Tomorrow", nOpen:"Open calendar",
+  upT:"Schedule & journal", r7:"7 days", rM:"This month", rT:"Today", saoT:"{n}/3 stars (1 per journal entry that day, max 3)", tcFind:"Search text (all dates)", rY:"Yesterday", nNoneY:"Nothing scheduled yesterday.", tomorrow:"Tomorrow", nOpen:"Open calendar",
   nNone7:"Nothing scheduled in the next 7 days.", nNoneM:"Nothing scheduled this month.", nNoneT:"Nothing scheduled today.",
   fFrom:"From date", fTo:"To date", fAllTime:"Clear filter", fOn:"📅 Filter dates", fEmpty:"No schedule or journal in this date range.", nAllBtn:"All schedule & journal", nAllT:"All schedule & journal", dAll:"Delete all", dAllAsk:"Delete all schedule items?", dAllN:"This will delete {n} schedule items (journal entries are kept). It cannot be undone.", dAllWarn:"Back up your notes before deleting everything.", dAllBk:"Back up now", dAllDone:"Backed up: {f}", nAllEmpty:"No schedule or journal yet.", nMonthT:"Month", nMonthEmpty:"No schedule or journal this month.", nWholeM:"Whole month",
   nDelAsk1:"Delete this note?", nDelRep:"This note repeats: every repeat of it will be removed too.",
@@ -1867,6 +1874,8 @@ function khop(n, ds){
 const ghiChuNgay = ds => GC.filter(n=>khop(n,ds)).sort((a,b)=>(a.gio||"").localeCompare(b.gio||""));   // "cả ngày" lên trước
 const dong1 = n => esc(n.nd.split("\n")[0]);
 const laNK = n => n.loai==="nk";
+const saoNgay = ds => Math.min(3, GC.filter(n=>laNK(n) && n.ngay===ds).length);          // mỗi nhật ký trong ngày = 1 sao, tối đa 3
+const saoHtml = ds => { const k = saoNgay(ds); return '<span class="sao" title="'+esc(t("saoT").replace("{n}", k))+'">'+[0,1,2].map(i=>'<i'+(i<k ? ' class="on"' : '')+'>★</i>').join("")+'</span>'; };
 const icPhai = n => { const a = [];
   if(n.anh && n.anh.length) a.push('<span title="'+t("anhT")+'">📷</span>');
   if(n.lap && n.lap!=="none") a.push('<span>🔁</span>');
@@ -1914,7 +1923,7 @@ function veSapToi(){
     ds.forEach(x=>{
       if(x.day!==cur){
         cur = x.day;
-        h += '<div class="mh up-mh'+(cur===hom ? ' hn' : '')+'">'+(cur===hom ? t("today")+' · ' : cur===ngMai ? t("tomorrow")+' · ' : '')+ngayNgan(cur, true)+' · '+t("lunar")+' '+amShort(amDS(cur))+'</div>';
+        h += '<div class="mh up-mh'+(cur===hom ? ' hn' : '')+'">'+(cur===hom ? t("today")+' · ' : cur===ngMai ? t("tomorrow")+' · ' : '')+ngayNgan(cur, true)+' · '+t("lunar")+' '+amShort(amDS(cur))+saoHtml(cur)+'</div>';
       }
       const nk = laNK(x.n), qua = !nk && (x.day<hom || (x.day===hom && x.n.gio && x.n.gio<hhmm));     // lịch đã qua thì làm mờ
       h += '<div class="up-it'+(nk ? ' nk' : qua ? ' qua' : '')+'" data-up="'+x.day+'|'+x.n.id+'"><span class="gi">'+(x.n.gio || "")+'</span>'
@@ -2035,7 +2044,7 @@ function doiThang(n){
 }
 function chonNgay(ds){ lichSel = ds; const q2 = parseD(ds); lichY = q2[0]; lichM = q2[1]; lichView = "list"; veLich(); }
 
-const ghiHead = (btn) => '<div class="gcp-h"><b>'+thuDai(lichSel)+', '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</b>'+(btn||"")+'</div>';
+const ghiHead = (btn) => '<div class="gcp-h"><b>'+thuDai(lichSel)+', '+dmy(lichSel)+' · '+t("lunar")+' '+amShort(amDS(lichSel))+'</b>'+saoHtml(lichSel)+(btn||"")+'</div>';
 function panelXem(){                 // chỉ xem ngày: không liệt kê lịch cá nhân / nhật ký
   const ds = lichSel || homNay(), [y,m,d] = parseD(ds);
   return '<div class="gcp-h"><b>'+ngayNgan(ds)+'</b></div><div class="note" style="padding:6px 2px;font-size:calc(14px * var(--fs,1))">'+nhanAm(d,m,y)+'</div>';
@@ -2053,7 +2062,7 @@ function panelMonth(){             // lịch của CẢ THÁNG đang xem, xếp 
   for(let d=1; d<=nd; d++){
     const ds = dstr(lichY, lichM, d), ls = ghiChuNgay(ds).filter(passLoc); if(!ls.length) continue;
     co = true;
-    h += '<div class="mh'+(ds===hom ? ' hn' : '')+'" data-d="'+ds+'">'+ngayNgan(ds)+' · '+t("lunar")+' '+amShort(amDS(ds))+(ds===hom ? ' · '+t("today") : '')+'</div>';
+    h += '<div class="mh'+(ds===hom ? ' hn' : '')+'" data-d="'+ds+'">'+ngayNgan(ds)+' · '+t("lunar")+' '+amShort(amDS(ds))+(ds===hom ? ' · '+t("today") : '')+saoHtml(ds)+'</div>';
     h += ls.map(n=>'<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'" data-day="'+ds+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div><div><b>'+bieuTuong(n)+dong1(n)+'</b></div>'+icPhai(n)+'</div>').join("");
   }
   return h + (co ? '' : '<div class="note">'+t("nMonthEmpty")+'</div>');
@@ -2214,7 +2223,7 @@ function tcDs(){
   items.forEach(({day, n})=>{
     if(day!==cur){                                   // tiêu đề của ngày mới: để thấy trong một ngày có những việc gì
       cur = day;
-      body += '<div class="mh'+(cur===hom ? ' hn' : '')+'" style="cursor:default">'+ngayNgan(cur)+' · '+t("lunar")+' '+amShort(amDS(cur))+(cur===hom ? ' · '+t("today") : '')+'</div>';
+      body += '<div class="mh'+(cur===hom ? ' hn' : '')+'" style="cursor:default">'+ngayNgan(cur)+' · '+t("lunar")+' '+amShort(amDS(cur))+(cur===hom ? ' · '+t("today") : '')+saoHtml(cur)+'</div>';
     }
     const lap = n.lap!=="none" ? ' · 🔁 '+lapText(n) : '';
     body += '<div class="gc-it'+(laNK(n) ? ' nk' : '')+'" data-a="open" data-id="'+n.id+'" data-day="'+day+'"><div class="g">'+(n.gio || t("nAllDay"))+'</div>'
@@ -2464,6 +2473,9 @@ function moGioiThieu(dau){                          // dau = true: tự mở khi
 }
 // Lịch sử cập nhật: thêm phiên bản mới lên đầu danh sách
 const LOG = [
+  {v:"1.0.1.37", d:"26/10/2026",
+   vi:["Thêm sao của ngày: mỗi nhật ký trong ngày được 1 sao, tối đa 3 sao; hiện ở tiêu đề ngày trong danh sách lịch/nhật ký, căn lề phải, mặc định 3 sao mờ."],
+   en:["Added day stars: each journal entry in a day earns 1 star, up to 3; shown on the day headers of the lists, right-aligned, 3 dim stars by default."]},
   {v:"1.0.1.36", d:"26/10/2026",
    vi:["Tất cả lịch & nhật ký: bộ lọc Tất cả/Lịch/Nhật ký nằm cùng ô tìm kiếm (bấm 🔍 mới hiện); lọc ngày gọn thành một hàng ngang."],
    en:["All schedule & journal: the All/Schedule/Journal filter now sits with the search box (tap 🔍 to show); the date filter is a single compact row."]},
@@ -2482,9 +2494,6 @@ const LOG = [
   {v:"1.0.1.31", d:"23/10/2026",
    vi:["Tất cả lịch & nhật ký: thêm ô tìm theo nội dung (không phân biệt hoa thường, dấu; tìm trong mọi ngày).","Khởi động: mở ngay từ bộ nhớ đệm không chờ mạng, tự cập nhật ngầm và báo khi có bản mới; mạng treo quá 15 giây thì bỏ.","Thêm Cài đặt › Làm mới ứng dụng và địa chỉ ?reset=1 để thoát khỏi trạng thái kẹt khi mở app (không mất dữ liệu)."],
    en:["All schedules & journal: added a text search (case/accent-insensitive; searches all dates).","Startup: opens instantly from cache without waiting for the network, updates silently and tells you when a new version is ready; network calls stop after 15 seconds.","Added Settings › Refresh app and the ?reset=1 address to recover from a stuck start (no data loss)."]},
-  {v:"1.0.1.30", d:"23/10/2026",
-   vi:["Màn hình chính: nút thêm chỉ còn dấu ＋ nổi bật; thêm lọc Hôm qua.","Danh sách lịch trong Tất cả lịch/nhật ký: icon ảnh, lặp lại, báo thức căn lề phải.","Bấm ngày/âm lịch góc trên trái: chỉ hiện lịch tháng để xem ngày.","Sao lưu: thêm Xuất sang lịch máy (tất cả lịch có giờ) để điện thoại nhắc kể cả khi thoát app.","Phòng lỗi treo trên một số máy tính bảng; lỗi nếu có sẽ hiện ở đáy màn hình."],
-   en:["Home: the add button is now a prominent ＋ icon; added a Yesterday filter.","Schedule lists in All: photo, repeat and alarm icons are right-aligned.","Tapping the date/lunar date at the top left now shows only the month calendar.","Backup: added Export to phone calendar (all timed schedules) so your phone reminds you even when the app is closed.","Safeguards against freezing on some tablets; any error is shown at the bottom of the screen."]},
 ];
 function moLichSu(){
   moApp2('🕘 '+t("logT"),
@@ -2695,7 +2704,7 @@ function icsSuKien(n){                                        // các dòng VEVE
   const dong = n.nd.split("\n");
   const L = ["BEGIN:VEVENT","UID:"+n.id+"@lich-nhatky","DTSTAMP:"+f(new Date()),"DTSTART:"+f(bd),"DTEND:"+f(kt),"SUMMARY:"+esc2(dong[0])];
   if(dong.length>1) L.push("DESCRIPTION:"+esc2(dong.slice(1).join("\n")));
-  if(n.lap && n.lap!=="none" && !n.am){                       // lịch âm không có quy tắc lặp tương ứng nên chỉ xuất 1 lần
+  if(n.lap && n.lap!=="none" && n.che!=="a"){                       // lịch âm không có quy tắc lặp tương ứng nên chỉ xuất 1 lần
     let r = "RRULE:FREQ="+({week:"WEEKLY", month:"MONTHLY", year:"YEARLY"}[n.lap] || "DAILY");
     if(n.lap==="month" && d<=28) r += ";BYMONTHDAY="+d;
     if(n.kt) r += ";UNTIL="+n.kt.replace(/-/g,"")+"T235959";

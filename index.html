@@ -17,9 +17,9 @@ function save(){try{var a=rd().filter(function(b){return b.id!==boot.id});a.push
 try{boot.sa=(matchMedia("(display-mode: standalone)").matches||navigator.standalone)?1:0;boot.sw=(navigator.serviceWorker&&navigator.serviceWorker.controller)?1:0;boot.mem=navigator.deviceMemory||0}catch(e){}
 window.tpBootPrev=rd();window.tpBoot=boot;window.tpLogRead=rd;
 window.tpLog=function(s){boot.ev.push([Math.round(performance.now()),String(s).slice(0,90)]);if(boot.ev.length>70)boot.ev.splice(2,1);save()};
-tpLog("head");
+tpLog("head");try{var n0=performance.getEntriesByType("navigation")[0];if(n0)tpLog("head nav type="+n0.type+" worker="+Math.round(n0.workerStart)+" fetch="+Math.round(n0.fetchStart)+" ttfb="+Math.round(n0.responseStart))}catch(e){}
 document.addEventListener("DOMContentLoaded",function(){tpLog("dcl")});
-window.addEventListener("load",function(){try{var n=performance.getEntriesByType("navigation")[0];tpLog("load"+(n?" ttfb="+Math.round(n.responseStart)+" dom="+Math.round(n.domInteractive):""))}catch(e){tpLog("load")}});
+window.addEventListener("load",function(){try{var n=performance.getEntriesByType("navigation")[0];tpLog("load"+(n?" type="+n.type+" worker="+Math.round(n.workerStart)+" fetch="+Math.round(n.fetchStart)+" ttfb="+Math.round(n.responseStart)+" end="+Math.round(n.responseEnd)+" dom="+Math.round(n.domInteractive):""))}catch(e){tpLog("load")}});
 window.addEventListener("pagehide",function(){tpLog("pagehide")});
 document.addEventListener("visibilitychange",function(){tpLog("vis:"+document.visibilityState)});
 document.addEventListener("freeze",function(){tpLog("freeze")});document.addEventListener("resume",function(){tpLog("resume")});
@@ -1609,7 +1609,7 @@ vi:{
   anhNote:"Nhật ký chỉ lưu đường dẫn ảnh (không lưu dữ liệu ảnh). Ảnh chọn từ máy hoặc chụp được giữ trong bộ nhớ của ứng dụng trên máy này; muốn xem trên máy khác, hãy dùng đường dẫn (URL) ảnh trên mạng.",
   setNotiSt:"Chưa bật.", setNotiAsk:"Đã lưu lựa chọn. Chưa được cấp quyền thông báo hệ thống nên thông báo sẽ hiện ngay trong ứng dụng khi đang mở; bấm Gửi thử để cấp quyền.",
   styT:"Giao diện", styDem:"Đêm sao", styDemD:"kính tối, thẻ mờ bo tròn", stySang:"Bầu trời", stySangD:"nền sáng, xanh dương", styIos:"iPhone", styIosD:"trong mờ, công tắc, bảng trượt từ dưới",
-  geoT:"Tự lấy vị trí khi mở app", geoD:"Tắt (mặc định): app mở nhanh và hiện thành phố đã lưu; bấm 📍 Vị trí của bạn khi cần. Bật: app xin vị trí ngay lúc mở.",
+  geoT:"Tự lấy vị trí khi mở app", geoD:"Bật (mặc định): app xin vị trí ngay lúc mở để hiện thời tiết nơi bạn đang ở. Tắt: app mở nhanh và hiện thành phố đã lưu; bấm 📍 Vị trí của bạn khi cần.",
   dvT:"Đơn vị nhiệt độ", dvC:"Độ C (°C)", dvF:"Độ F (°F)",
   lmApp:"Làm mới ứng dụng", logT2:"Nhật ký khởi động (log)", logHint:"Dùng khi app bị kẹt lúc mở: mở lại app, vào đây, bấm Sao chép rồi gửi nội dung cho người hỗ trợ.", logCopy:"Sao chép", logClr:"Xóa log", logCopied:"Đã sao chép log vào bộ nhớ tạm.", logStuckT:"Lần mở trước có thể bị kẹt", logStuckB:"Xem Cài đặt › Nhật ký khởi động (log) để biết kẹt ở bước nào.", updT:"Có bản mới", updB:"Đóng rồi mở lại ứng dụng để dùng bản mới.",
   anhNoi:"Nơi lưu ảnh", anhNoiMay:"Vào máy", anhNoiApp:"Ứng dụng", anhNoiD:"Vào máy: ảnh chụp được tải về máy (Tải xuống/Thư viện), app chỉ giữ bản thu nhỏ để hiển thị. Ứng dụng: ảnh chỉ nằm trong app (nét hơn) và được quản lý bên dưới.",
@@ -1662,7 +1662,7 @@ en:{
   anhNote:"The journal stores photo links only (no image data). Photos picked from the device or taken with the camera are kept in this app's storage on this device; to see them on another device, use an online photo link (URL).",
   setNotiSt:"Off.", setNotiAsk:"Saved. System notification permission is not granted yet, so notices will appear inside the app while it is open; tap Send test to grant it.",
   styT:"Appearance", styDem:"Starry night", styDemD:"dark glass, rounded cards", stySang:"Clear sky", stySangD:"light, blue tones", styIos:"iPhone", styIosD:"frosted glass, switches, bottom sheets",
-  geoT:"Get my location when the app opens", geoD:"Off (default): the app opens fast and shows your saved cities; tap 📍 Your location when needed. On: the app asks for your location right at launch.",
+  geoT:"Get my location when the app opens", geoD:"On (default): the app asks for your location at launch to show the weather where you are. Off: the app opens fast and shows your saved cities; tap 📍 Your location when needed.",
   dvT:"Temperature unit", dvC:"Celsius (°C)", dvF:"Fahrenheit (°F)",
   lmApp:"Refresh app", logT2:"Startup log", logHint:"Use this when the app hangs on opening: reopen the app, come here, tap Copy and send the text to whoever is helping.", logCopy:"Copy", logClr:"Clear log", logCopied:"Log copied to the clipboard.", logStuckT:"The previous launch may have hung", logStuckB:"See Settings › Startup log to find which step it stopped at.", updT:"New version", updB:"Close and reopen the app to use the new version.",
   anhNoi:"Photo storage", anhNoiMay:"Device", anhNoiApp:"App", anhNoiD:"Device: camera photos are downloaded to your device (Downloads/Gallery) and the app keeps only a small copy to display. App: photos stay inside the app (sharper) and are managed below.",
@@ -1707,7 +1707,7 @@ let DL = null;        // dữ liệu thời tiết đang xem
 let ngayChon = 0;     // ngày đang chọn (0 = hôm nay)
 let kieu = "nhiet";   // loại đồ thị theo giờ: nhiet / mua / gio
 const CACHE = {};
-const geoAuto = () => { try{ return localStorage.getItem("tpGeoAuto")==="1"; }catch(e){ return false; } };
+const geoAuto = () => { try{ return localStorage.getItem("tpGeoAuto")!=="0"; }catch(e){ return true; } };   // mặc định bật
 const tatCa = () => [viTri, ...daLuu].filter(Boolean);
 const ten = p => p===viTri ? t("here") : p.name.split(",")[0].trim();
 const gioMt = (a,k) => (a && a[k]) ? a[k].slice(11,16) : "–";     // "2026-10-23T05:58" -> "05:58"
@@ -2507,8 +2507,8 @@ function moGioiThieu(dau){                          // dau = true: tự mở khi
 // Lịch sử cập nhật: thêm phiên bản mới lên đầu danh sách
 const LOG = [
   {v:"1.0.1.39", d:"29/10/2026",
-   vi:["Không tự xin vị trí khi mở app nữa (nghi nguyên nhân gây kẹt ở màn chờ trên Android): mở nhanh với thành phố đã lưu, bấm nút 📍 Vị trí của bạn để lấy vị trí. Cài đặt có ô \"Tự lấy vị trí khi mở app\" nếu muốn bật lại."],
-   en:["The app no longer asks for your location at launch (suspected cause of the Android splash-screen hang): it opens fast with your saved cities; tap 📍 Your location to get it. Settings has a \"Get my location when the app opens\" switch to turn it back on."]},
+   vi:["Giữ nguyên việc tự lấy vị trí hiện tại khi mở app (mặc định bật, nút 📍 Vị trí của bạn đứng đầu); Cài đặt có ô \"Tự lấy vị trí khi mở app\" để tắt nếu muốn.","Log khởi động ghi thêm thời gian khởi động service worker, tải trang và loại điều hướng, để biết thời gian chờ nằm ở khâu nào."],
+   en:["Automatic location at launch is kept (on by default, the 📍 Your location button comes first); Settings has a \"Get my location when the app opens\" switch to turn it off.","The startup log now also records service-worker start, page load times and navigation type, to show where the waiting time goes."]},
   {v:"1.0.1.38", d:"29/10/2026",
    vi:["Sao của ngày trở về tối đa 3 sao (mặc định 3 sao mờ).","Thêm Cài đặt › Nhật ký khởi động (log): ghi lại từng bước khi mở app (kể cả bước của service worker) để tìm nguyên nhân lỗi kẹt ở màn chờ; lần mở sau tự báo nếu lần trước có thể bị kẹt."],
    en:["Day stars are back to a maximum of 3 (3 dim stars by default).","Added Settings › Startup log: records each step of opening the app (including service worker steps) to find why it sometimes hangs on the splash screen; the next launch warns if the previous one may have hung."]},
@@ -3541,7 +3541,7 @@ function veTabs(){                  // vẽ cùng một danh sách thành phố 
       const vt = document.createElement("button");
       vt.className = "vt"; vt.textContent = "📍 "+t("here");
       vt.onclick = ()=>{ layViTri(); };
-      box.appendChild(vt);
+      box.insertBefore(vt, box.firstChild);                  // nút 📍 luôn đứng đầu như trước
     }
     const nutThem = document.createElement("button");
     nutThem.className = "them"; nutThem.textContent = t("add");
@@ -3764,7 +3764,7 @@ applyStatic();
 tpLog("applyStatic ok");
 hanGiong();                                  // lần mở đầu tiên: bắt đầu tính 3 tháng dùng thử chức năng giọng nói
 if(geoAuto()){ tpLog("layViTri"); layViTri(); }
-else { tpLog("geo tắt"); veTabs(); moDauTien(); }      // mặc định không xin vị trí lúc mở app: hiện thành phố đã lưu, bấm 📍 khi cần
+else { tpLog("geo tắt"); veTabs(); moDauTien(); }      // người dùng đã tắt trong Cài đặt: hiện thành phố đã lưu, bấm 📍 khi cần
 nhanLink();
 nhanChiaSe();
 tpLog("link ok");
